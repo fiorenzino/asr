@@ -1,13 +1,29 @@
-package it.ictgroup.asr.flussoc.model;
+package it.ictgroup.asr.model;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import org.coury.jfilehelpers.annotations.FieldFixedLength;
+import org.coury.jfilehelpers.annotations.FieldIgnored;
 import org.coury.jfilehelpers.annotations.FieldOptional;
 import org.coury.jfilehelpers.annotations.FixedLengthRecord;
 import org.coury.jfilehelpers.enums.FixedMode;
 
 @FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
-public class Flussoc1
+@Entity
+public class Flussoc1 implements Serializable
 {
+
+   private static final long serialVersionUID = 1L;
+
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @FieldIgnored
+   private Long uid;
 
    @FieldFixedLength(2)
    @FieldOptional
@@ -438,6 +454,16 @@ public class Flussoc1
                         + modalitaRilevazioneCodiceFiscale + ", " : "")
                + (onereDellaPrestazione != null ? "onereDellaPrestazione=" + onereDellaPrestazione + ", " : "")
                + (id != null ? "id=" + id : "") + "]";
+   }
+
+   public Long getUid()
+   {
+      return uid;
+   }
+
+   public void setUid(Long uid)
+   {
+      this.uid = uid;
    }
 
 }

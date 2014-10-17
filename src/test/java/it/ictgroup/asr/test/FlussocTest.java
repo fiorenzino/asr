@@ -1,6 +1,6 @@
 package it.ictgroup.asr.test;
 
-import it.ictgroup.asr.flussoc.model.Flussoc1;
+import it.ictgroup.asr.model.Flussoc1;
 
 import java.util.ArrayList;
 import java.util.List;
