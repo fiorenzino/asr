@@ -9,139 +9,132 @@ import javax.persistence.Id;
 
 import org.coury.jfilehelpers.annotations.FieldFixedLength;
 import org.coury.jfilehelpers.annotations.FieldIgnored;
-import org.coury.jfilehelpers.annotations.FieldOptional;
 import org.coury.jfilehelpers.annotations.FixedLengthRecord;
-import org.coury.jfilehelpers.enums.FixedMode;
 
-@FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
+@FixedLengthRecord
 @Entity
 public class Flussoc1 implements Serializable
 {
-
+   @FieldIgnored
    private static final long serialVersionUID = 1L;
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
    @FieldIgnored
    private Long uid;
 
-   @FieldFixedLength(2)
-   @FieldOptional
-   // 1-3 Regione addebitante
+   @FieldFixedLength(3)
+   // 1-3 Regione addebitante 3
    private String regioneAddebitante;
 
-   // 4-6 Zona territoriale / Azienda Ospedaliera inviante
-   @FieldFixedLength(5)
+   // 4-6 Zona territoriale / Azienda Ospedaliera inviante 3
+   @FieldFixedLength(3)
    private String zonaTerritoriale;
 
-   // 7-12 Codice struttura accettante / richiedente
-   @FieldFixedLength(11)
+   // 7-12 Codice struttura accettante / richiedente 6
+   @FieldFixedLength(6)
    private String codiceStrutturaAccettante;
 
-   // 13-18 Codice struttura erogante la prestazione
-   @FieldFixedLength(17)
+   // 13-18 Codice struttura erogante la prestazione 6
+   @FieldFixedLength(6)
    private String codiceStrutturaErogante;
 
-   // 19 Tipologia del medico prescrittore
-   @FieldFixedLength(18)
+   // 19 Tipologia del medico prescrittore 1
+   @FieldFixedLength(1)
    private String tipologiaMedicoPrescrittore;
+
    // 20-35 Codice fiscale medico prescrittore
-   @FieldFixedLength(34)
+   @FieldFixedLength(16)
    private String codiceFiscalemedicoErogantePrescrittore;
-   // 36-51 Codice fiscale del medico che eroga la prestazione
-   @FieldFixedLength(50)
-   @FieldOptional
+
+   // 36-51 Codice fiscale del medico che eroga la prestazione 16
+   @FieldFixedLength(16)
    private String codiceFiscalemedicoErogantePrestazione;
-   // 52-81 Cognome dell’utente
-   @FieldFixedLength(80)
+
+   // 52-81 Cognome dell’utente 30
+   @FieldFixedLength(30)
    private String cognomeUtente;
-   // 82-101 Nome dell’utente
-   @FieldFixedLength(100)
+
+   // 82-101 Nome dell’utente 20
+   @FieldFixedLength(20)
    private String nomeUtente;
-   // 102 Sesso dell’utente
-   @FieldFixedLength(119)
-   @FieldOptional
+
+   // 102 Sesso dell’utente 1
+   @FieldFixedLength(1)
    private String sesso;
-   // 103-110 Data di nascita dell’utente
-   @FieldFixedLength(109)
-   @FieldOptional
+
+   // 103-110 Data di nascita dell’utente 8
+   @FieldFixedLength(8)
    private String dataNascitaUtente;
-   // 111-126 Codice fiscale dell’utente
-   @FieldFixedLength(125)
-   @FieldOptional
+
+   // 111-126 Codice fiscale dell’utente 16
+   @FieldFixedLength(16)
    private String codiceFiscaleUtente;
-   // 127-132 Comune di residenza dell’utente
-   @FieldFixedLength(131)
-   @FieldOptional
+
+   // 127-132 Comune di residenza dell’utente 3
+   @FieldFixedLength(6)
    private String comuneResidenzaUtente;
-   // 133-135 Regione di residenza dell’utente
-   @FieldFixedLength(134)
-   @FieldOptional
+
+   // 133-135 Regione di residenza dell’utente 3
+   @FieldFixedLength(3)
    private String regioneResidenzaUtente;
-   // 136-138 Zona Territoriale/azienda U.S.L. di residenza dell’utente
-   @FieldFixedLength(137)
-   @FieldOptional
+
+   // 136-138 Zona Territoriale/azienda U.S.L. di residenza dell’utente 3
+   @FieldFixedLength(3)
    private String zonaTerritorialeDiResidenza;
-   // 139-140 Stato estero risultante nella TEAM
-   @FieldFixedLength(139)
-   @FieldOptional
+
+   // 139-140 Stato estero risultante nella TEAM 2
+   @FieldFixedLength(2)
    private String statoEstero;
+
    // 141-168 Istituzione competente
-   @FieldFixedLength(167)
-   @FieldOptional
+   // (soggetti assicurati da istituzione estera)
+   // Campo 7 della TEAM 28
+   @FieldFixedLength(28)
    private String istituzioneCompetente;
 
-   // (soggetti assicurati da istituzione estera)
-   // Campo 7 della TEAM
    // 169-188 Numero identificazione personale
-   @FieldFixedLength(187)
-   @FieldOptional
+   // (soggetti assicurati da istituzione estera)
+   // Campo 6 della TEAM 20
+   @FieldFixedLength(20)
    private String numeroIdentificazionePersonale;
-   // (soggetti assicurati da istituzione estera)
-   // Campo 6 della TEAM
-   // 189-208 Numero identificativo tessera
-   @FieldFixedLength(207)
-   @FieldOptional
-   private String numeroIdentificativoTessera;
-   // (soggetti assicurati da istituzione estera)
-   // Campo 8 della TEAM
-   // 209-216 Scadenza della tessera
-   @FieldFixedLength(215)
-   @FieldOptional
-   private String scadenzaDellaTessera;
-   // Campo 9 della TEAM
-   // 217-232 Numero ricetta
-   @FieldFixedLength(231)
-   @FieldOptional
-   private String numeroRicetta;
-   // 233-234 Progressivo riga per ricetta
-   @FieldOptional
-   @FieldFixedLength(232)
-   private String progressivoPeRigaPerRicetta;
-   // 235 Posizione contabile
-   @FieldFixedLength(234)
-   @FieldOptional
-   private String posizioneContabile;
-   // 236 Modalità di compilazione ricetta
-   @FieldFixedLength(235)
-   @FieldOptional
-   private String modalitaCompilazioneRicetta;
-   // 237 Modalità di rilevazione del codice fiscale
-   @FieldFixedLength(236)
-   @FieldOptional
-   private String modalitaRilevazioneCodiceFiscale;
-   // 238 Onere della prestazione
-   @FieldFixedLength(237)
-   @FieldOptional
-   private String onereDellaPrestazione;
-   // 239-258 ID
-   @FieldFixedLength(257)
-   @FieldOptional
-   private String id;
 
-   public Flussoc1()
-   {
-   }
+   // 189-208 Numero identificativo tessera
+   // (soggetti assicurati da istituzione estera)
+   // Campo 8 della TEAM 20
+   @FieldFixedLength(20)
+   private String numeroIdentificativoTessera;
+
+   // 209-216 Scadenza della tessera
+   // Campo 9 della TEAM 8
+   @FieldFixedLength(8)
+   private String scadenzaDellaTessera;
+
+   // 217-232 Numero ricetta 16
+   @FieldFixedLength(16)
+   private String numeroRicetta;
+
+   // 233-234 Progressivo riga per ricetta 2
+   @FieldFixedLength(2)
+   private String progressivoPeRigaPerRicetta;
+
+   // 235 Posizione contabile 1
+   @FieldFixedLength(1)
+   private String posizioneContabile;
+
+   // 236 Modalità di compilazione ricetta 1
+   @FieldFixedLength(1)
+   private String modalitaCompilazioneRicetta;
+
+   // 237 Modalità di rilevazione del codice fiscale 1
+   @FieldFixedLength(1)
+   private String modalitaRilevazioneCodiceFiscale;
+
+   // 238 Onere della prestazione 1
+   @FieldFixedLength(1)
+   private String onereDellaPrestazione;
+
+   // 239-258 ID 20
+   @FieldFixedLength(20)
+   private String id;
 
    public String getRegioneAddebitante()
    {
@@ -413,6 +406,18 @@ public class Flussoc1 implements Serializable
       this.id = id;
    }
 
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   public Long getUid()
+   {
+      return uid;
+   }
+
+   public void setUid(Long uid)
+   {
+      this.uid = uid;
+   }
+
    @Override
    public String toString()
    {
@@ -454,16 +459,6 @@ public class Flussoc1 implements Serializable
                         + modalitaRilevazioneCodiceFiscale + ", " : "")
                + (onereDellaPrestazione != null ? "onereDellaPrestazione=" + onereDellaPrestazione + ", " : "")
                + (id != null ? "id=" + id : "") + "]";
-   }
-
-   public Long getUid()
-   {
-      return uid;
-   }
-
-   public void setUid(Long uid)
-   {
-      this.uid = uid;
    }
 
 }
