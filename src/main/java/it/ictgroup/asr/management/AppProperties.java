@@ -2,6 +2,7 @@ package it.ictgroup.asr.management;
 
 public enum AppProperties
 {
+   masterUrl
 
    ;
 
