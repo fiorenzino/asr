@@ -2,7 +2,7 @@ package it.ictgroup.asr.jms;
 
 import it.ictgroup.asr.management.AppConstants;
 import it.ictgroup.asr.management.AppKeys;
-import it.ictgroup.asr.model.enums.flussoc.TipologiaFlusso;
+import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import it.ictgroup.asr.service.FlussoaService;
 import it.ictgroup.asr.service.FlussocService;
 

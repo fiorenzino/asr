@@ -1,6 +1,6 @@
 package it.ictgroup.asr.model;
 
-import it.ictgroup.asr.model.enums.flussoc.TipologiaFlusso;
+import it.ictgroup.asr.model.enums.TipologiaFlusso;
 
 import java.io.Serializable;
 
