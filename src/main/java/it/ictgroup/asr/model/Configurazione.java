@@ -1,5 +1,7 @@
 package it.ictgroup.asr.model;
 
+import it.ictgroup.asr.model.enums.flussoc.TipologiaFlusso;
+
 import java.io.Serializable;
 
 import javax.persistence.Entity;

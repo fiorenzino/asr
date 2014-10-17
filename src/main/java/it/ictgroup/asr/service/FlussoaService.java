@@ -1,6 +1,6 @@
 package it.ictgroup.asr.service;
 
-import it.ictgroup.asr.model.TipologiaFlusso;
+import it.ictgroup.asr.model.enums.flussoc.TipologiaFlusso;
 
 import javax.ejb.Stateless;
 

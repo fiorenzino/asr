@@ -1,4 +1,4 @@
-package it.ictgroup.asr.model;
+package it.ictgroup.asr.model.enums.flussoc;
 
 public enum TipologiaQuotaFissaRicetta
 {
