@@ -1,7 +1,88 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>it.ictgroup.flussiasur</groupId>
-  <artifactId>asr</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>it.ictgroup.asr</groupId>
+	<artifactId>asr</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<name>progetto asr</name>
+	<description>progetto asr</description>
+	<url>https://ict-group.it</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<version.javaee-api>7.0</version.javaee-api>
+		<version.jboss-logging>3.1.2.GA</version.jboss-logging>
+		<version.junit>4.11</version.junit>
+		<version.hibernate-core>4.2.0.Final</version.hibernate-core>
+		<version.resteasy>3.0.6.Final</version.resteasy>
+		<version.commons-lang>2.6</version.commons-lang>
+		<version.jfilehelpers>0.3.0-SNAPSHOT</version.jfilehelpers>
+
+		<version.1_8_HOME>/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home</version.1_8_HOME>
+
+		<version.jdk>1.8</version.jdk>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>${version.javaee-api}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- JBoss stuff -->
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<version>${version.jboss-logging}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${version.hibernate-core}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.coury.jfilehelpers</groupId>
+			<artifactId>jfilehelpers</artifactId>
+			<version>${version.jfilehelpers}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>${version.commons-lang}</version>
+		</dependency>
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${version.junit}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<defaultGoal>clean install</defaultGoal>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<verbose>true</verbose>
+					<fork>false</fork>
+					<executable>${version.1_8_HOME}/bin/javac</executable>
+					<compilerVersion>1.8</compilerVersion>
+					<source>${version.jdk}</source>
+					<target>${version.jdk}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
