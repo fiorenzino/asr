@@ -9,7 +9,7 @@ import org.coury.jfilehelpers.engines.FileHelperEngine;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class FlussocTest
+public class FlussoC1Test
 {
    @Test
    public void test() throws Exception
