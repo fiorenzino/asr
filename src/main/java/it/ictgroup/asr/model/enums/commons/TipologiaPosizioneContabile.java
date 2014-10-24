@@ -1,4 +1,4 @@
-package it.ictgroup.asr.model.enums.flussoc;
+package it.ictgroup.asr.model.enums.commons;
 
 public enum TipologiaPosizioneContabile
 {
