@@ -14,5 +14,10 @@ public enum TipologiaMedicoPrescrittore
    Z, // altra specializzazione
    W, // medico di altra regione
    X, // medico pronto soccorso
-   Y, // medico SERT
+   Y; // medico SERT
+
+   public String getValue()
+   {
+      return this.name();
+   }
 }

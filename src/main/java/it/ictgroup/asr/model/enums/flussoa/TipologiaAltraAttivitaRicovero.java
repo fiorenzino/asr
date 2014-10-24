@@ -7,10 +7,15 @@ public enum TipologiaAltraAttivitaRicovero
    ASSISTENZA_ALBERGHIERA ("3"), // assistenza alberghiera per il genitore che assiste il bambino ricoverato
    IMPIANTO_PROTESI ("4"); // impianto di protesi (Allegato 3 D.G.R. n. 1621 del 10.09.2002
 
-   private String attivitaRicovero;
+   private String value;
 
-   TipologiaAltraAttivitaRicovero(String attivitaRicovero)
+   TipologiaAltraAttivitaRicovero(String value)
    {
-      this.attivitaRicovero = attivitaRicovero;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

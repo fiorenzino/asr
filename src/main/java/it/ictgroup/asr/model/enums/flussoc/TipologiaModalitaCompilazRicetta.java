@@ -7,10 +7,15 @@ public enum TipologiaModalitaCompilazRicetta
    INFORMATIZZATA_NO_CF ("2"), // ricetta informatizzata con presenza della biffatura “Stampa PC”, ma assenza del codice fiscale in modalità barcode
    INFORMATIZZATA_CON_CF ("3"); // ricetta informatizzata con presenza della biffatura “Stampa PC” e del codice fiscale in modalità barcode
 
-   private String modalita;
+   private String value;
 
-   TipologiaModalitaCompilazRicetta(String modalita)
+   TipologiaModalitaCompilazRicetta(String value)
    {
-      this.modalita = modalita;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

@@ -5,10 +5,15 @@ public enum TipologiaRegimeRicovero
    ORDINARIO ("1"), // ricovero ordinario
    DIURNO ("2"); // ricovero diurno
 
-   private String regimeRicovero;
+   private String value;
 
-   TipologiaRegimeRicovero(String regimeRicovero)
+   TipologiaRegimeRicovero(String value)
    {
-      this.regimeRicovero = regimeRicovero;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

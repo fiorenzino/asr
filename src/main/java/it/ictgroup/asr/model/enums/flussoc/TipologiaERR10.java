@@ -2,13 +2,18 @@ package it.ictgroup.asr.model.enums.flussoc;
 
 public enum TipologiaERR10
 {
-   NESSUN_ERRORE ("0"), // nessun errore
+   NESSUN_ERRORE ("0"), // nessun value
    COD_REGIONE_ASSENTE ("1"); // codice Regione/Azienda U.S.L. assente o errato
 
-   private String errore;
+   private String value;
 
-   TipologiaERR10(String errore)
+   TipologiaERR10(String value)
    {
-      this.errore = errore;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

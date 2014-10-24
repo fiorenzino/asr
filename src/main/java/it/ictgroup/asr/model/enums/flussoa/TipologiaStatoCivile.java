@@ -9,10 +9,15 @@ public enum TipologiaStatoCivile
    VEDOVO ("5"), // vedovo/a
    NON_DICHIRATO ("6"); // non dichiarato
 
-   private String statoCivile;
+   private String value;
 
-   TipologiaStatoCivile(String statoCivile)
+   TipologiaStatoCivile(String value)
    {
-      this.statoCivile = statoCivile;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

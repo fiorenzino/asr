@@ -9,10 +9,15 @@ public enum TipologiaTitoloStudio
    DIPLOMA_MATURITA ("4"), // diploma di maturità
    LAUREA ("5"); // diploma universitario, laurea
 
-   private String titoloStudio;
+   private String value;
 
-   TipologiaTitoloStudio(String titoloStudio)
+   TipologiaTitoloStudio(String value)
    {
-      this.titoloStudio = titoloStudio;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

@@ -7,10 +7,15 @@ public enum TipologiaMotivoRicoveroDiurno
    TERAPEUTICO ("3"), // ricovero diurno terapeutico
    RIABILITATIVO ("4"); // ricovero diurno riabilitativo
 
-   private String motivo;
+   private String value;
 
-   TipologiaMotivoRicoveroDiurno(String motivo)
+   TipologiaMotivoRicoveroDiurno(String value)
    {
-      this.motivo = motivo;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

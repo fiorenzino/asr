@@ -26,10 +26,15 @@ public enum TipologiaModalitaAccessoPrestazioni
    SPECIALISTICA_INTERNA  ("99"); //ricetta specialistica interna
 
 
-   private String accessoPrestaz;
+   private String value;
 
-   TipologiaModalitaAccessoPrestazioni (String accessoPrestaz)
+   TipologiaModalitaAccessoPrestazioni (String value)
    {
-      this.accessoPrestaz = accessoPrestaz;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

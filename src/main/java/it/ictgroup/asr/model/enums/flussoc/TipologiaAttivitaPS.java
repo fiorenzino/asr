@@ -5,10 +5,15 @@ public enum TipologiaAttivitaPS
    NO_PS("0"), // no pronto soccorso
    SI_PS("1"); // si pronto soccorso
 
-   private String attivita;
+   private String value;
 
-   TipologiaAttivitaPS(String attivita)
+   TipologiaAttivitaPS(String value)
    {
-      this.attivita = attivita;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

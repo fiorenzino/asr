@@ -5,10 +5,15 @@ public enum TipologiaSesso
    MASCHIO ("1"), // maschio
    FEMMINA ("2"); // femmina
 
-   private String sesso;
+   private String value;
 
-   TipologiaSesso(String sesso)
+   TipologiaSesso(String value)
    {
-      this.sesso = sesso;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

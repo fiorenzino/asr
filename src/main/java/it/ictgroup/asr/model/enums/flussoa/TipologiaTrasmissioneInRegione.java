@@ -8,10 +8,15 @@ public enum TipologiaTrasmissioneInRegione
    CORREZIONE ("4"), // correzione => scheda corretta sulla base degli errori segnalati nel file A3 relativo alla scheda non acquisita nel database regionale (campo posizione contabile"), // 4)
    ELIMINAZIONE ("5"); // eliminazione => scheda eliminata definitivamente
 
-   private String trasmissione;
+   private String value;
 
-   TipologiaTrasmissioneInRegione(String trasmissione)
+   TipologiaTrasmissioneInRegione(String value)
    {
-      this.trasmissione = trasmissione;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

@@ -11,4 +11,9 @@ public enum TipologiaTipoRicetta
    ST, // straniero in temporaneo soggiorno
    AD; // pazienti in assistenza domiciliare integrata
 
+   public String getValue()
+   {
+      return this.name();
+   }
+
 }

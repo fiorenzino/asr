@@ -11,10 +11,15 @@ public enum TipologiaTraumativi
    INCIDENTE_SPORTIVO ("7"), // incidente sportivo
    ALTRO ("9"); // altro tipo di incidente o di intossicazione
 
-   private String traumativi;
+   private String value;
 
-   TipologiaTraumativi(String traumativi)
+   TipologiaTraumativi(String value)
    {
-      this.traumativi = traumativi;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

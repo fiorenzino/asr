@@ -12,10 +12,15 @@ public enum TipologiaProvenienzaPaziente
    GUARDIA_MDICA ("8"), // guardia medica
    ALTRO ("9"); // altro
 
-   private String provenienza;
+   private String value;
 
-   TipologiaProvenienzaPaziente(String provenienza)
+   TipologiaProvenienzaPaziente(String value)
    {
-      this.provenienza = provenienza;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

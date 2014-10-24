@@ -5,10 +5,15 @@ public enum TipologiaTipoRicoveroDiurno
    PRIMO_CICLO ("1"), // primo ciclo per la specifica diagnosi
    CICLO_SUCCESSIVO ("2"); // ciclo successivo per la stessa diagnosi
 
-   private String tipo;
+   private String value;
 
-   TipologiaTipoRicoveroDiurno(String tipo)
+   TipologiaTipoRicoveroDiurno(String value)
    {
-      this.tipo = tipo;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

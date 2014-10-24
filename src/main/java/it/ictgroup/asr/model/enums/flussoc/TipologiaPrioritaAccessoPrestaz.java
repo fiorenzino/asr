@@ -7,4 +7,9 @@ public enum TipologiaPrioritaAccessoPrestaz
    B, // casella contrassegnata dalla lettera “B” per breve;
    D, // casella contrassegnata dalla lettera “D” per differita;
    P; // casella contrassegnata dalla lettera “P” per programmata;
+
+   public String getValue()
+   {
+      return this.name();
+   }
 }

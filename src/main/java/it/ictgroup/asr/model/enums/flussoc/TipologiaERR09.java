@@ -7,4 +7,9 @@ public enum TipologiaERR09
    B, // “tipo esenzione” assente o errato
    C, // “codice esenzione” assente o errato se il campo “tipo esenzione” assume valori diversi da 1
    D; // “tipo esenzione” non univoco nello stesso gruppo ricetta
+
+   public String getValue()
+   {
+      return this.name();
+   }
 }

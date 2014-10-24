@@ -5,10 +5,15 @@ public enum TipologiaCicloPrestazioni
    NO ("0"), // no prestazione a ciclo
    SI ("1"); // si prestazione a ciclo
 
-   private String cicloPrestaz;
+   private String value;
 
-   TipologiaCicloPrestazioni(String cicloPrestaz)
+   TipologiaCicloPrestazioni(String value)
    {
-      this.cicloPrestaz = cicloPrestaz;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

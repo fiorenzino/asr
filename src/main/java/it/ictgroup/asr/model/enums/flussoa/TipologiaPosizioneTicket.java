@@ -6,10 +6,15 @@ public enum TipologiaPosizioneTicket
    NON_ESENTE ("2"), // non esente
    QUOTA_RICETTA ("3"); // pagamento quota ricetta
 
-   private String posizioneTicket;
+   private String value;
 
-   TipologiaPosizioneTicket(String posizioneTicket)
+   TipologiaPosizioneTicket(String value)
    {
-      this.posizioneTicket = posizioneTicket;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

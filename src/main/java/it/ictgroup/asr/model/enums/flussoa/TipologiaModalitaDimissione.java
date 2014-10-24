@@ -12,10 +12,15 @@ public enum TipologiaModalitaDimissione
    TRASFER_ALTRO_ISTITUTO_RIABILITAZ ("8"), // trasferimento ad un Istituto pubblico o privato di riabilitazione
    DIMISS_ORDINARIA_ASSISTENZA ("9"); // dimissione ordinaria con attivazione di assistenza domiciliare integrata (ADI)
 
-   private String statoCivile;
+   private String value;
 
-   TipologiaModalitaDimissione(String statoCivile)
+   TipologiaModalitaDimissione(String value)
    {
-      this.statoCivile = statoCivile;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

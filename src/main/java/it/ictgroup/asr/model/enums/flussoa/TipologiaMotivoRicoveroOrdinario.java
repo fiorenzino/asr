@@ -7,10 +7,15 @@ public enum TipologiaMotivoRicoveroOrdinario
    RICOVERO_SUCCESSIVO ("3"), // ricovero successivo per la stessa diagnosi
    ALTRO ("9"); // altro
 
-   private String motivo;
+   private String value;
 
-   TipologiaMotivoRicoveroOrdinario(String motivo)
+   TipologiaMotivoRicoveroOrdinario(String value)
    {
-      this.motivo = motivo;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

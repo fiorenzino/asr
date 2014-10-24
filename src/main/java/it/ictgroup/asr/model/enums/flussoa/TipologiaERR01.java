@@ -6,10 +6,15 @@ public enum TipologiaERR01
    ID_UTENTE_ERR ("1"), //identificativo utente assente/errato
    UTENTE_NON_IN_ANAGRAFICA ("2"); //utente assente da anagrafe residenti
 
-   private String errore;
+   private String value;
 
-   TipologiaERR01(String errore)
+   TipologiaERR01(String value)
    {
-      this.errore = errore;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

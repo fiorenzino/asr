@@ -15,10 +15,15 @@ public enum TipologiaOnereDegenza
    CARICO_SSN_STRANIERI_TRASFERITI ("B"), // ricovero a carico del SSN di pazienti stranieri trasferiti in Italia per cure (programmi Umanitari ex art. 12 comma 2 lett. c del D. Lgs. 502/92)
    ALTRO ("9"); // altro
 
-   private String onereDegenza;
+   private String value;
 
-   TipologiaOnereDegenza(String onereDegenza)
+   TipologiaOnereDegenza(String value)
    {
-      this.onereDegenza = onereDegenza;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

@@ -10,10 +10,15 @@ public enum TipologiaEsenzione
    ESENTE_PER_ALTRA_ESENZIONE ("7"), // esente per reddito e presenza di altra esenzione
    PAGANTE_IN_PROPRIO ("A"); // utente pagante in proprio (libera professione, prestazioni fuori L.E.A.)
 
-   private String sesso;
+   private String value;
 
-   TipologiaEsenzione(String sesso)
+   TipologiaEsenzione(String value)
    {
-      this.sesso = sesso;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

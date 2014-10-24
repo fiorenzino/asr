@@ -5,10 +5,15 @@ public enum TipologiaPresenzaQuesitoDiagnostico
    SI ("0"), // si
    NO ("1"); // no
 
-   private String presenza;
+   private String value;
 
-   TipologiaPresenzaQuesitoDiagnostico(String presenza)
+   TipologiaPresenzaQuesitoDiagnostico(String value)
    {
-      this.presenza = presenza;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }

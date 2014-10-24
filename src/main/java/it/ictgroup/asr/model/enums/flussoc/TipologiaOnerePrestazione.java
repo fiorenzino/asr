@@ -7,10 +7,15 @@ public enum TipologiaOnerePrestazione
    ISTITUZ_ESTERE ("3"), // Istituzioni estere in base a norme comunitarie o Accordi bilaterali di sicurezza Sociale
    PAGANTI ("4"); // Paganti in proprio (libera professione, prestazioni fuori LEA)
 
-   private String onerePrestazione;
+   private String value;
 
-   TipologiaOnerePrestazione(String onerePrestazione)
+   TipologiaOnerePrestazione(String value)
    {
-      this.onerePrestazione = onerePrestazione;
+      this.value = value;
+   }
+
+   public String getValue()
+   {
+      return value;
    }
 }
