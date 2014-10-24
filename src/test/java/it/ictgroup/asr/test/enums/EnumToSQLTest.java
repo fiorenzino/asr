@@ -11,10 +11,10 @@ import java.util.Arrays;
 /**
  * Created by stefano on 24/10/14.
  */
-public class EnumTest
+public class EnumToSQLTest
 {
    @Test
-   public void test()
+   public void enumToSQLTest()
    {
       try
       {
