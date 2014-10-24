@@ -2,10 +2,24 @@ package it.ictgroup.asr.model.enums.flussoc;
 
 public enum TipologiaModalitaRilevazCF
 {
-   D; // da ricetta
+   D ("D", "da ricetta");
+
+   private String value;
+   private String description;
+
+   TipologiaModalitaRilevazCF(String value, String description)
+   {
+      this.value = value;
+      this.description = description;
+   }
 
    public String getValue()
    {
-      return this.name();
+      return value;
+   }
+
+   public String getDescription()
+   {
+      return description;
    }
 }
