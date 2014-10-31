@@ -60,12 +60,14 @@ public class FlussoaService implements Serializable
       FileHelperEngine<Flussoa1> fileHelperEngine = new FileHelperEngine<>(Flussoa1.class);
       List<Flussoa1> righe = new ArrayList<>();
       righe = fileHelperEngine.readFile(folder + nomeFile);
-      if (righe != null)
+      if (righe != null && righe.size() > 0)
       {
-
+         logger.info(righe.size());
+         int i = 0;
          for (Flussoa1 flussoa1 : righe)
          {
-            logger.info(flussoa1);
+            i++;
+            logger.info(i);
             // File A1: archivio contenente le informazioni anagrafiche dell’utente.
             // File A2: archivio contenente le informazioni sanitarie dell’utente. La segnalazione degli errori deve
             // essere effettuata in tale archivio anche in caso di errori riscontrati nell’archivio dei dati anagrafici.
