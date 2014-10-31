@@ -53,8 +53,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<version.javaee-api>7.0</version.javaee-api>
-		<version.jboss-logging>3.1.2.GA</version.jboss-logging>
-		<version.junit>4.11</version.junit>
 		<version.hibernate-core>4.2.0.Final</version.hibernate-core>
 		<version.resteasy>3.0.6.Final</version.resteasy>
 		<version.commons-lang>2.6</version.commons-lang>
@@ -111,14 +109,12 @@
 		<dependency>
 			<groupId>org.jboss.logging</groupId>
 			<artifactId>jboss-logging</artifactId>
-			<version>${version.jboss-logging}</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>${version.hibernate-core}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -136,7 +132,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${version.junit}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -178,5 +173,28 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		
+		<!-- Substitution of maven properties -->
+		<resources>
+			<!-- this doesn't work: perhaps src/main/webapp is not a well-known maven 
+				path <resource> <directory>src/main/webapp</directory> <filtering>true</filtering> 
+				<includes> <include>WEB-INF/web.xml</include> <include>WEB-INF/jboss-web.xml</include> 
+				<include>**/*.xhtml</include> </includes> </resource> -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>META-INF/persistence.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>META-INF/persistence.xml</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		
 	</build>
 </project>
