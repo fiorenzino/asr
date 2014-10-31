@@ -8,6 +8,6 @@ public class AppConstants
    public static final String HOSTNAME_PROPERTY = "jboss.qualified.host.name";
    
    
-   public static final String GENERA_XML_Q = "queue/flussiAsr.generaXml";
+   public static final String FLUSSI_ASR_QUEUE = "queue/flussiAsr";
 
 }

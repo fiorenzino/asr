@@ -392,9 +392,9 @@
                     <jms-queue name="DLQ">
                         <entry name="java:/jms/queue/DLQ"/>
                     </jms-queue>
-                      <jms-queue name="fatturePA.generaP7m">
-                        <entry name="queue/flussiAsr.generaXml"/>
-                        <entry name="java:jboss/exported/jms/queue/flussiAsr.generaXml"/>
+                    <jms-queue name="flussiAsr">
+                        <entry name="queue/flussiAsr"/>
+                        <entry name="java:jboss/exported/jms/queue/flussiAsr"/>
                     </jms-queue>
                 </jms-destinations>
             </hornetq-server>

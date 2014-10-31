@@ -17,7 +17,7 @@ import org.jboss.logging.Logger;
 
 @MessageDriven(name = "GeneraXmlMDB", activationConfig = {
          @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-         @ActivationConfigProperty(propertyName = "destination", propertyValue = AppConstants.GENERA_XML_Q),
+         @ActivationConfigProperty(propertyName = "destination", propertyValue = AppConstants.FLUSSI_ASR_QUEUE),
          @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
          @ActivationConfigProperty(propertyName = "maxSession", propertyValue = "5"),
          @ActivationConfigProperty(propertyName = "transactionTimeout", propertyValue = "3600"),

@@ -1,5 +1,6 @@
 package it.ictgroup.asr.service;
 
+import it.ictgroup.asr.management.AppConstants;
 import it.ictgroup.asr.management.AppKeys;
 import it.ictgroup.asr.model.Configurazione;
 import it.ictgroup.asr.model.Elaborazione;
@@ -33,7 +34,7 @@ public class FolderService
    @JMSConnectionFactory("jms/connectionFactory")
    private JMSContext context;
 
-   @Resource(lookup = "queue/fatturePA.generaXml")
+   @Resource(lookup = AppConstants.FLUSSI_ASR_QUEUE)
    private Queue flussiQueue;
 
    public void send(Map<String, Object> map)
