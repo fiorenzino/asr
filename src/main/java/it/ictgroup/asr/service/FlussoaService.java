@@ -3,8 +3,8 @@ package it.ictgroup.asr.service;
 import it.coopservice.commons2.domain.Search;
 import it.ictgroup.asr.model.Flussoa1;
 import it.ictgroup.asr.model.Flussoa2;
-import it.ictgroup.asr.model.Flussoc1;
 import it.ictgroup.asr.model.enums.TipologiaFlusso;
+import it.ictgroup.asr.repository.ElaborazioniRepository;
 import it.ictgroup.asr.repository.Flussoa1Repository;
 import it.ictgroup.asr.repository.Flussoa2Repository;
 
@@ -29,17 +29,23 @@ public class FlussoaService implements Serializable
    @Inject
    Flussoa2Repository flussoa2Repository;
 
+   @Inject
+   ElaborazioniRepository elaborazioniRepository;
+
    Logger logger = Logger.getLogger(this.getClass());
 
-   public void parse(TipologiaFlusso tipologiaFlusso, String nomeFile) throws Exception
+   public void parse(TipologiaFlusso tipologiaFlusso, String nomeFile, String folder,
+            Long idElaborazione) throws Exception
    {
       switch (tipologiaFlusso)
       {
       case A1:
-         elaboraA1(nomeFile);
+         elaboraA1(nomeFile, folder,
+                  idElaborazione);
          break;
       case A2:
-         elaboraA2(nomeFile);
+         elaboraA2(nomeFile, folder,
+                  idElaborazione);
          break;
 
       default:
@@ -47,12 +53,13 @@ public class FlussoaService implements Serializable
       }
    }
 
-   private void elaboraA1(String nomeFile) throws
+   private void elaboraA1(String nomeFile, String folder,
+            Long idElaborazione) throws
             Exception
    {
       FileHelperEngine<Flussoa1> fileHelperEngine = new FileHelperEngine<>(Flussoa1.class);
       List<Flussoa1> righe = new ArrayList<>();
-      righe = fileHelperEngine.readFile(nomeFile);
+      righe = fileHelperEngine.readFile(folder + nomeFile);
       if (righe != null)
       {
 
@@ -72,22 +79,24 @@ public class FlussoaService implements Serializable
             search.getObj().setCodiceIstitutoDiRicovero(flussoa1.getCodiceIstitutoDiRicovero());
             search.getObj().setNumeroDellaScheda(flussoa1.getNumeroDellaScheda());
             List<Flussoa1> resList = flussoa1Repository.getList(search, 0, 0);
-            if(resList != null && resList.size() > 0)
+            if (resList != null && resList.size() > 0)
                flussoa1Repository.update(flussoa1);
             else
                flussoa1Repository.persist(flussoa1);
          }
+         elaborazioniRepository.eseguito(idElaborazione);
          logger.info(righe.size());
       }
 
    }
 
-   private void elaboraA2(String nomeFile) throws
+   private void elaboraA2(String nomeFile, String folder,
+            Long idElaborazione) throws
             Exception
    {
       FileHelperEngine<Flussoa2> fileHelperEngine = new FileHelperEngine<>(Flussoa2.class);
       List<Flussoa2> righe = new ArrayList<>();
-      righe = fileHelperEngine.readFile(nomeFile);
+      righe = fileHelperEngine.readFile(folder + nomeFile);
       if (righe != null)
       {
          for (Flussoa2 flussoa2 : righe)
@@ -102,16 +111,18 @@ public class FlussoaService implements Serializable
             // TODO sufficiente per determinare se la riga è già in db???
             Search<Flussoa2> search = new Search<Flussoa2>(Flussoa2.class);
             search.getObj().setRegioneAddebitante(flussoa2.getRegioneAddebitante());
-//            search.getObj().setAziendaUsl(flussoa2.getAziendaUsl());  // TODO dov'è????
+            // search.getObj().setAziendaUsl(flussoa2.getAziendaUsl()); // TODO dov'è????
             search.getObj().setCodiceIstituto(flussoa2.getCodiceIstituto());
             search.getObj().setNumeroDellaScheda(flussoa2.getNumeroDellaScheda());
             List<Flussoa2> resList = flussoa2Repository.getList(search, 0, 0);
-            if(resList != null && resList.size() > 0)
+            if (resList != null && resList.size() > 0)
                flussoa2Repository.update(flussoa2);
             else
                flussoa2Repository.persist(flussoa2);
          }
+         elaborazioniRepository.eseguito(idElaborazione);
          logger.info(righe.size());
+
       }
    }
 

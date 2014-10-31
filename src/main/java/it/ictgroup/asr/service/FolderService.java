@@ -31,7 +31,7 @@ public class FolderService
    ElaborazioniRepository elaborazioniRepository;
 
    @Inject
-   @JMSConnectionFactory("jms/connectionFactory")
+   @JMSConnectionFactory("java:/ConnectionFactory")
    private JMSContext context;
 
    @Resource(lookup = AppConstants.FLUSSI_ASR_QUEUE)
