@@ -63,7 +63,7 @@
 		<coopservice.commons-fonts.version>3.3.2</coopservice.commons-fonts.version>
 
 
-		<primefaces.version>5.1</primefaces.version>
+		<primefaces.version>3.5</primefaces.version>
 
 		<version.jdk>1.8</version.jdk>
 	</properties>
@@ -95,7 +95,14 @@
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 			<version>${primefaces.version}</version>
-			<scope>provided</scope>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.2</version>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
@@ -173,7 +180,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		
+
 		<!-- Substitution of maven properties -->
 		<resources>
 			<!-- this doesn't work: perhaps src/main/webapp is not a well-known maven 
@@ -195,6 +202,6 @@
 				</excludes>
 			</resource>
 		</resources>
-		
+
 	</build>
 </project>

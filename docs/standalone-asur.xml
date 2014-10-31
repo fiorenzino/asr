@@ -31,6 +31,10 @@
         <extension module="org.wildfly.extension.undertow"/>
     </extensions>
 
+    <system-properties>
+        <property name="asr.masterUrl" value="http://localhost:8080/asr/rest/v1/master/checkRunning"/>
+    </system-properties>
+
 
     <management>
         <security-realms>
