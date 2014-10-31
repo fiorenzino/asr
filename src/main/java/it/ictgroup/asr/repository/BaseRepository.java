@@ -19,7 +19,7 @@ public abstract class BaseRepository<T> extends AbstractRepository<T>
 
    // --- JPA ---------------------------------
 
-   @PersistenceContext(unitName = "GestFattPaPU")
+   @PersistenceContext(unitName = "GestAsr")
    protected EntityManager em;
 
    @Override

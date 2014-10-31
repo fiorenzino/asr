@@ -53,7 +53,7 @@ public class _01_FolderPollerTimer implements Serializable
       isWorking = true;
       try
       {
-         folderService.verifica(10, 50);
+         folderService.verifica();
       }
       catch (Throwable e)
       {

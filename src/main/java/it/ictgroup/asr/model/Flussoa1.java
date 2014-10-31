@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.coury.jfilehelpers.annotations.FieldFixedLength;
 import org.coury.jfilehelpers.annotations.FieldIgnored;
@@ -144,6 +145,11 @@ public class Flussoa1 implements Serializable
    // 1
    @FieldFixedLength(1)
    public String posizioneContabile;
+
+   @FieldIgnored
+   private String nomeFile;
+   @FieldIgnored
+   private Elaborazione Elaborazione;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -389,6 +395,27 @@ public class Flussoa1 implements Serializable
                + (codiceRegionaleMedicoPrescrittore != null ? "codiceRegionaleMedicoPrescrittore="
                         + codiceRegionaleMedicoPrescrittore + ", " : "")
                + (posizioneContabile != null ? "posizioneContabile=" + posizioneContabile : "") + "]";
+   }
+
+   @ManyToOne
+   public Elaborazione getElaborazione()
+   {
+      return Elaborazione;
+   }
+
+   public void setElaborazione(Elaborazione elaborazione)
+   {
+      Elaborazione = elaborazione;
+   }
+
+   public String getNomeFile()
+   {
+      return nomeFile;
+   }
+
+   public void setNomeFile(String nomeFile)
+   {
+      this.nomeFile = nomeFile;
    }
 
 }

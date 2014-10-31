@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.coury.jfilehelpers.annotations.FieldFixedLength;
 import org.coury.jfilehelpers.annotations.FieldIgnored;
@@ -135,6 +136,11 @@ public class Flussoc1 implements Serializable
    // 239-258 ID 20
    @FieldFixedLength(20)
    private String id;
+
+   @FieldIgnored
+   private String nomeFile;
+   @FieldIgnored
+   private Elaborazione Elaborazione;
 
    public String getRegioneAddebitante()
    {
@@ -459,6 +465,27 @@ public class Flussoc1 implements Serializable
                         + modalitaRilevazioneCodiceFiscale + ", " : "")
                + (onereDellaPrestazione != null ? "onereDellaPrestazione=" + onereDellaPrestazione + ", " : "")
                + (id != null ? "id=" + id : "") + "]";
+   }
+
+   public String getNomeFile()
+   {
+      return nomeFile;
+   }
+
+   public void setNomeFile(String nomeFile)
+   {
+      this.nomeFile = nomeFile;
+   }
+
+   @ManyToOne
+   public Elaborazione getElaborazione()
+   {
+      return Elaborazione;
+   }
+
+   public void setElaborazione(Elaborazione elaborazione)
+   {
+      Elaborazione = elaborazione;
    }
 
 }

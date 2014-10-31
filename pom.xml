@@ -10,6 +10,46 @@
 	<description>progetto asr</description>
 	<url>https://ict-group.it</url>
 
+	<profiles>
+		<profile>
+			<id>postgresql</id>
+			<properties>
+				<default_schema>asrP</default_schema>
+				<hbm2ddl.auto></hbm2ddl.auto>
+				<show_sql>true</show_sql>
+				<format_sql>true</format_sql>
+				<jta-data-source>java:jboss/datasources/AsrDS</jta-data-source>
+				<hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
+			</properties>
+		</profile>
+		<profile>
+			<id>mysql</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<default_schema>asrM</default_schema>
+				<hbm2ddl.auto>update</hbm2ddl.auto>
+				<show_sql>true</show_sql>
+				<format_sql>true</format_sql>
+				<jta-data-source>java:jboss/datasources/AsrMysqlDS</jta-data-source>
+				<hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>production</id>
+			<properties>
+				<default_schema>asr</default_schema>
+				<hbm2ddl.auto></hbm2ddl.auto>
+				<show_sql>false</show_sql>
+				<format_sql>false</format_sql>
+				<jta-data-source>java:jboss/datasources/GestQuestionariDS</jta-data-source>
+				<hibernate.dialect>org.hibernate.dialect.DB2Dialect</hibernate.dialect>
+			</properties>
+		</profile>
+	</profiles>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<version.javaee-api>7.0</version.javaee-api>
@@ -90,33 +130,6 @@
 			<version>${coopservice.commons-fonts.version}</version>
 		</dependency>
 	</dependencies>
-
-	<profiles>
-		<profile>
-			<id>test</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<default_schema>gestord</default_schema>
-				<hbm2ddl.auto></hbm2ddl.auto>
-				<show_sql>true</show_sql>
-				<format_sql>true</format_sql>
-			</properties>
-		</profile>
-		<profile>
-			<id>production</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<properties>
-				<default_schema>asr</default_schema>
-				<hbm2ddl.auto>validate</hbm2ddl.auto>
-				<show_sql>false</show_sql>
-				<format_sql>false</format_sql>
-			</properties>
-		</profile>
-	</profiles>
 
 	<build>
 		<defaultGoal>clean install</defaultGoal>

@@ -5,6 +5,11 @@ import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Configurazione implements Serializable
@@ -18,6 +23,8 @@ public class Configurazione implements Serializable
    private TipologiaFlusso tipologiaFlusso;
    private String folder;
 
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    public Long getId()
    {
       return id;
@@ -28,6 +35,7 @@ public class Configurazione implements Serializable
       this.id = id;
    }
 
+   @Enumerated(EnumType.STRING)
    public TipologiaFlusso getTipologiaFlusso()
    {
       return tipologiaFlusso;
