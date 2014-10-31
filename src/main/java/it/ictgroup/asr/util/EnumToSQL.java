@@ -44,10 +44,10 @@ public class EnumToSQL
    {
       String val = null;
       String desc = null;
-      logger.info("//------------------- " + clz.getSimpleName() + " -------------------");
+      logger.info("------------------- " + clz.getSimpleName() + " -------------------");
       printStream.println();
-      printStream.println("//------------------- " + clz.getSimpleName() + " -------------------");
-      String createTableSql = "CREATE TABLE " + clz.getSimpleName() + " (name varchar(255), value varchar(255), description varchar(255));";
+//      printStream.println("------------------- " + clz.getSimpleName() + " -------------------");
+      String createTableSql = "CREATE TABLE " + clz.getSimpleName() + " (id int NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, value varchar(255), description varchar(255), PRIMARY KEY (id));";
       logger.info(createTableSql);
       printStream.println(createTableSql);
       for(Object constant : Arrays.asList(clz.getEnumConstants()))
@@ -76,7 +76,7 @@ public class EnumToSQL
          {}
          catch (IllegalAccessException e)
          {}
-         String insertSql = "INSERT INTO " + clz.getSimpleName() + " VALUES (" +
+         String insertSql = "INSERT INTO " + clz.getSimpleName() + " (name, value, description) VALUES (" +
                   "'" + ((Enum)constant).name() + "'" +
                   ", " + ((val != null) ? "'" + val + "'" : null) +
                   ", " + ((desc != null) ? "'" + desc + "'" : null) +
