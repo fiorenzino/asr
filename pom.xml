@@ -28,11 +28,11 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<default_schema>asrM</default_schema>
+				<default_schema>asr</default_schema>
 				<hbm2ddl.auto>update</hbm2ddl.auto>
 				<show_sql>true</show_sql>
 				<format_sql>true</format_sql>
-				<jta-data-source>java:jboss/datasources/AsrMysqlDS</jta-data-source>
+				<jta-data-source>java:jboss/datasources/MySQLDS</jta-data-source>
 				<hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
 			</properties>
 		</profile>
@@ -44,7 +44,7 @@
 				<hbm2ddl.auto></hbm2ddl.auto>
 				<show_sql>false</show_sql>
 				<format_sql>false</format_sql>
-				<jta-data-source>java:jboss/datasources/GestQuestionariDS</jta-data-source>
+				<jta-data-source>java:jboss/datasources/PostgreSQLDS</jta-data-source>
 				<hibernate.dialect>org.hibernate.dialect.DB2Dialect</hibernate.dialect>
 			</properties>
 		</profile>
