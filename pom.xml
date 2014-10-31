@@ -84,6 +84,14 @@
 
 	<dependencies>
 
+		<dependency>
+			<groupId>org.wildfly</groupId>
+			<artifactId>wildfly-ejb3</artifactId>
+			<version>8.1.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
+
 		<!-- prime -->
 		<dependency>
 			<groupId>org.primefaces</groupId>
