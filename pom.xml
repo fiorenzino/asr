@@ -140,7 +140,7 @@
 		<dependency>
 			<groupId>it.coopservice.commons</groupId>
 			<artifactId>commons-code</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 			<version>${coopservice.commons-code.version}</version>
 		</dependency>
 		<dependency>
