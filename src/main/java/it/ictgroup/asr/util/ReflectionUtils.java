@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by stefano on 24/10/14.
  */
-public class ReflectionsUtil
+public class ReflectionUtils
 {
    /**
     * Scans all classes accessible from the context class loader which belong to the given package and subpackages.
