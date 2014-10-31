@@ -1,9 +1,13 @@
 package it.ictgroup.asr.model;
 
+import it.ictgroup.asr.model.enums.StatoElaborazione;
+
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +21,7 @@ public class Elaborazione implements Serializable
    private Configurazione configurazione;
    private Date data;
    private String fileName;
+   private StatoElaborazione statoElaborazione;
 
    public Elaborazione()
    {
@@ -30,6 +35,7 @@ public class Elaborazione implements Serializable
       this.configurazione = configurazione;
       this.data = data;
       this.fileName = fileName;
+      this.statoElaborazione = StatoElaborazione.PIANIFICATO;
    }
 
    @Id
@@ -75,5 +81,16 @@ public class Elaborazione implements Serializable
    public void setFileName(String fileName)
    {
       this.fileName = fileName;
+   }
+
+   @Enumerated(EnumType.STRING)
+   public StatoElaborazione getStatoElaborazione()
+   {
+      return statoElaborazione;
+   }
+
+   public void setStatoElaborazione(StatoElaborazione statoElaborazione)
+   {
+      this.statoElaborazione = statoElaborazione;
    }
 }

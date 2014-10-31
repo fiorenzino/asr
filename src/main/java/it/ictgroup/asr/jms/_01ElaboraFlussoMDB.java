@@ -38,22 +38,26 @@ public class _01ElaboraFlussoMDB implements MessageListener
       MapMessage msg = (MapMessage) message;
       TipologiaFlusso tipologiaFlusso = null;
       String nomeFile = null;
-
+      String folder = null;
+      Long idElaborazione = null;
       try
       {
          tipologiaFlusso = TipologiaFlusso.valueOf(msg.getString(AppKeys.TIPOLOGIA_FLUSSO.name()));
          nomeFile = msg.getString(AppKeys.NOME_FILE.name());
+         folder = msg.getString(AppKeys.NOME_FOLDER.name());
+         idElaborazione = msg.getLong(AppKeys.ELABORAZIONE_ID.name());
+
          logger.info("onMessage(), tipologiaFlusso:" + tipologiaFlusso + " nomeFile = " + nomeFile);
          switch (tipologiaFlusso)
          {
          case A1:
          case A2:
-            flussoaService.parse(tipologiaFlusso, nomeFile);
+            flussoaService.parse(tipologiaFlusso, nomeFile, folder, idElaborazione);
             break;
 
          case C1:
          case C2:
-            flussocService.parse(tipologiaFlusso, nomeFile);
+            flussocService.parse(tipologiaFlusso, nomeFile, folder, idElaborazione);
             break;
          case B:
          case D:

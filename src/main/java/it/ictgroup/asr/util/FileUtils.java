@@ -38,7 +38,7 @@ public class FileUtils
             listFiles(entry.getFileName().toAbsolutePath().toString());
          }
          if (!filesList.contains(entry.getFileName().getName(0)))
-            result.add(entry.getFileName().toAbsolutePath().toString());
+            result.add(entry.getFileName().getName(0).toString());
       }
       return result;
    }

@@ -2,6 +2,7 @@ package it.ictgroup.asr.repository;
 
 import it.coopservice.commons2.domain.Search;
 import it.ictgroup.asr.model.Elaborazione;
+import it.ictgroup.asr.model.enums.StatoElaborazione;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,5 +60,12 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
          result.add(elaborazione.getFileName());
       }
       return result;
+   }
+
+   public void eseguito(Long id) throws Exception
+   {
+      getEm().createNativeQuery("UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO WHERE ID :ID")
+               .setParameter("ID", id)
+               .setParameter("STATO", StatoElaborazione.ESEGUITO.name()).executeUpdate();
    }
 }

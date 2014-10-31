@@ -4,6 +4,7 @@ import it.coopservice.commons2.domain.Search;
 import it.ictgroup.asr.model.Flussoc1;
 import it.ictgroup.asr.model.Flussoc2;
 import it.ictgroup.asr.model.enums.TipologiaFlusso;
+import it.ictgroup.asr.repository.ElaborazioniRepository;
 import it.ictgroup.asr.repository.Flussoc1Repository;
 import it.ictgroup.asr.repository.Flussoc2Repository;
 
@@ -28,17 +29,23 @@ public class FlussocService implements Serializable
    @Inject
    Flussoc2Repository flussoc2Repository;
 
+   @Inject
+   ElaborazioniRepository elaborazioniRepository;
+
    Logger logger = Logger.getLogger(this.getClass());
 
-   public void parse(TipologiaFlusso tipologiaFlusso, String nomeFile) throws Exception
+   public void parse(TipologiaFlusso tipologiaFlusso, String nomeFile, String folder,
+            Long idElaborazione) throws Exception
    {
       switch (tipologiaFlusso)
       {
       case C1:
-         elaboraC1(nomeFile);
+         elaboraC1(nomeFile, folder,
+                  idElaborazione);
          break;
       case C2:
-         elaboraC2(nomeFile);
+         elaboraC2(nomeFile, folder,
+                  idElaborazione);
          break;
 
       default:
@@ -46,12 +53,13 @@ public class FlussocService implements Serializable
       }
    }
 
-   private void elaboraC1(String nomeFile) throws
+   private void elaboraC1(String nomeFile, String folder,
+            Long idElaborazione) throws
             Exception
    {
       FileHelperEngine<Flussoc1> fileHelperEngine = new FileHelperEngine<>(Flussoc1.class);
       List<Flussoc1> righe = new ArrayList<>();
-      righe = fileHelperEngine.readFile(nomeFile);
+      righe = fileHelperEngine.readFile(folder + nomeFile);
       if (righe != null)
       {
 
@@ -71,17 +79,19 @@ public class FlussocService implements Serializable
             search.getObj().setId(flussoc1.getId());
             search.getObj().setProgressivoPeRigaPerRicetta(flussoc1.getProgressivoPeRigaPerRicetta());
             List<Flussoc1> resList = flussoc1Repository.getList(search, 0, 0);
-            if(resList != null && resList.size() > 0)
+            if (resList != null && resList.size() > 0)
                flussoc1Repository.update(flussoc1);
             else
                flussoc1Repository.persist(flussoc1);
          }
-         System.out.println(righe.size());
+         elaborazioniRepository.eseguito(idElaborazione);
+         logger.info(righe.size());
       }
 
    }
 
-   private void elaboraC2(String nomeFile) throws
+   private void elaboraC2(String nomeFile, String folder,
+            Long idElaborazione) throws
             Exception
    {
       FileHelperEngine<Flussoc2> fileHelperEngine = new FileHelperEngine<>(Flussoc2.class);
@@ -105,12 +115,13 @@ public class FlussocService implements Serializable
             search.getObj().setId(flussoc2.getId());
             search.getObj().setProgressivoRigaPerRicetta(flussoc2.getProgressivoRigaPerRicetta());
             List<Flussoc2> resList = flussoc2Repository.getList(search, 0, 0);
-            if(resList != null && resList.size() > 0)
+            if (resList != null && resList.size() > 0)
                flussoc2Repository.update(flussoc2);
             else
                flussoc2Repository.persist(flussoc2);
          }
-         System.out.println(righe.size());
+         elaborazioniRepository.eseguito(idElaborazione);
+         logger.info(righe.size());
       }
    }
 
