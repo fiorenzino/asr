@@ -64,10 +64,21 @@
 		<coopservice.commons-faces.version>3.3.1</coopservice.commons-faces.version>
 		<coopservice.commons-fonts.version>3.3.2</coopservice.commons-fonts.version>
 
+
+		<primefaces.version>5.1</primefaces.version>
+
 		<version.jdk>1.8</version.jdk>
 	</properties>
 
 	<dependencies>
+
+		<!-- prime -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>${primefaces.version}</version>
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>javax</groupId>

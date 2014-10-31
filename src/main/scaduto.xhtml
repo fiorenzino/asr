@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:coop="http://www.coopservice.it/taglib"
+	xmlns:form="http://www.coopservice.it/form"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Errore</title>
+	<h:outputStylesheet library="css" name="common.css" />
+</h:head>
+
+<h:body>
+	<p:panel header="Pagina scaduta">
+		<center>
+			<h:outputText value="La pagina richiesta e' scaduta. " />
+			<h:outputLink value="#{request.contextPath}">Ritornare alla pagina principale e selezionare nuovamente la risorsa su cui operare.</h:outputLink>
+		</center>
+
+	</p:panel>
+</h:body>
+</html>
