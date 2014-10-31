@@ -59,17 +59,11 @@ public class EnumToSQL
             val = (String) getValue.invoke(constant);
          }
          catch (NoSuchMethodException e)
-         {
-            e.printStackTrace();
-         }
+         {}
          catch (InvocationTargetException e)
-         {
-            e.printStackTrace();
-         }
+         {}
          catch (IllegalAccessException e)
-         {
-            e.printStackTrace();
-         }
+         {}
 
          try
          {
@@ -77,22 +71,16 @@ public class EnumToSQL
             desc = (String) getDescription.invoke(constant);
          }
          catch (NoSuchMethodException e)
-         {
-            e.printStackTrace();
-         }
+         {}
          catch (InvocationTargetException e)
-         {
-            e.printStackTrace();
-         }
+         {}
          catch (IllegalAccessException e)
-         {
-            e.printStackTrace();
-         }
+         {}
          String insertSql = "INSERT INTO " + clz.getSimpleName() + " VALUES (" +
                   "'" + ((Enum)constant).name() + "'" +
                   ", " + ((val != null) ? "'" + val + "'" : null) +
                   ", " + ((desc != null) ? "'" + desc + "'" : null) +
-                  ")";
+                  ");";
          logger.info(insertSql);
          printStream.println(insertSql);
          val = null;
