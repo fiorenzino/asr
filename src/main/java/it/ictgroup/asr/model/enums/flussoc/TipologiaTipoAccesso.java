@@ -2,14 +2,26 @@ package it.ictgroup.asr.model.enums.flussoc;
 
 public enum TipologiaTipoAccesso
 {
-   NON_CLASSIFICATO ("0"), // non classificato
-   PRMO_ACCESSO ("1"), // primo accesso
-   SECONDO_ACCESSO ("2"); // secondo accesso (per approfondimento, controlli, ecc)
+   NON_CLASSIFICATO ("0", "non classificato"),
+   PRMO_ACCESSO ("1", "primo value"),
+   SECONDO_ACCESSO ("2", "secondo value (per approfondimento, controlli, ecc)");
 
-   private String accesso;
+   private String value;
+   private String description;
 
-   TipologiaTipoAccesso(String accesso)
+   TipologiaTipoAccesso(String value, String description)
    {
-      this.accesso = accesso;
+      this.value = value;
+      this.description = description;
+   }
+
+   public String getValue()
+   {
+      return value;
+   }
+
+   public String getDescription()
+   {
+      return description;
    }
 }
