@@ -1,16 +1,10 @@
 package it.ictgroup.asr.test.enums;
 
 import it.ictgroup.asr.util.EnumToSQL;
-import it.ictgroup.asr.util.ReflectionUtils;
-import org.junit.Test;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.logging.Logger;
+
+import org.junit.Test;
 
 /**
  * Created by stefano on 24/10/14.
