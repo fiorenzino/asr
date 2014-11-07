@@ -15,7 +15,7 @@ import javax.jms.MessageListener;
 
 import org.jboss.logging.Logger;
 
-@MessageDriven(name = "GeneraXmlMDB", activationConfig = {
+@MessageDriven(name = "_01ElaboraFlussoMDB", activationConfig = {
          @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
          @ActivationConfigProperty(propertyName = "destination", propertyValue = AppConstants.FLUSSI_ASR_QUEUE),
          @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),

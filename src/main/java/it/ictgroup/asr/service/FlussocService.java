@@ -10,11 +10,13 @@ import it.ictgroup.asr.service.controller.FlussoC2Controller;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import org.coury.jfilehelpers.engines.FileHelperEngine;
+import org.jboss.ejb3.annotation.TransactionTimeout;
 import org.jboss.logging.Logger;
 
 @Stateless
@@ -33,6 +35,7 @@ public class FlussocService implements Serializable
 
    Logger logger = Logger.getLogger(this.getClass());
 
+   @TransactionTimeout(value = 18000, unit = TimeUnit.SECONDS)
    public void parse(TipologiaFlusso tipologiaFlusso, String nomeFile, String folder,
             Long idElaborazione) throws Exception
    {
