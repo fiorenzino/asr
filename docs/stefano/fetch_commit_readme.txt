@@ -8,7 +8,7 @@ git merge upstream/master
 Commit, push e request verso Fiorenzo:
 
 git add
-it commit
+git commit
 git push origin master
 
 dalla pag https://github.com/stefanopoli/asr creare una pull request
