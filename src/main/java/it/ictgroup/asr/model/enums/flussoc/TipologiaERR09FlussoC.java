@@ -1,17 +1,17 @@
 package it.ictgroup.asr.model.enums.flussoc;
 
-public enum TipologiaERR09
+public enum TipologiaERR09FlussoC
 {
    // Segnalazioni di errore nell’ambito dei controlli regionali:
    A ("A", "nessun errore"),
-   B ("B", "“tipo esenzione” assente o errato"),
-   C ("C", "“codice esenzione” assente o errato se il campo “tipo esenzione” assume valori diversi da 1"),
-   D ("D", "“tipo esenzione” non univoco nello stesso gruppo ricetta");
+   B ("B", "'tipo esenzione' assente o errato"),
+   C ("C", "'codice esenzione' assente o errato se il campo 'tipo esenzione' assume valori diversi da 1"),
+   D ("D", "'tipo esenzione' non univoco nello stesso gruppo ricetta");
    
    private String value;
    private String description;
 
-   TipologiaERR09(String value, String description)
+   TipologiaERR09FlussoC(String value, String description)
    {
       this.value = value;
       this.description = description;

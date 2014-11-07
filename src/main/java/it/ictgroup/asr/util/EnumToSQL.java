@@ -1,5 +1,7 @@
 package it.ictgroup.asr.util;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -47,7 +49,7 @@ public class EnumToSQL
       logger.info("------------------- " + clz.getSimpleName() + " -------------------");
       printStream.println();
 //      printStream.println("------------------- " + clz.getSimpleName() + " -------------------");
-      String createTableSql = "CREATE TABLE " + clz.getSimpleName() + " (id int NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, value varchar(255), description varchar(255), PRIMARY KEY (id));";
+      String createTableSql = "CREATE TABLE " + clz.getSimpleName() + " (id int NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, value varchar(255), description varchar(500), PRIMARY KEY (id));";
       logger.info(createTableSql);
       printStream.println(createTableSql);
       for(Object constant : Arrays.asList(clz.getEnumConstants()))
@@ -77,9 +79,9 @@ public class EnumToSQL
          catch (IllegalAccessException e)
          {}
          String insertSql = "INSERT INTO " + clz.getSimpleName() + " (name, value, description) VALUES (" +
-                  "'" + ((Enum)constant).name() + "'" +
-                  ", " + ((val != null) ? "'" + val + "'" : null) +
-                  ", " + ((desc != null) ? "'" + desc + "'" : null) +
+                  "'" + StringEscapeUtils.escapeSql(((Enum)constant).name()) + "'" +
+                  ", " + ((val != null) ? "'" + StringEscapeUtils.escapeSql(val) + "'" : null) +
+                  ", " + ((desc != null) ? "'" + StringEscapeUtils.escapeSql(desc) + "'" : null) +
                   ");";
          logger.info(insertSql);
          printStream.println(insertSql);

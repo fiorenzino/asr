@@ -9,10 +9,14 @@ import org.junit.Test;
 /**
  * Created by stefano on 24/10/14.
  */
+
+/* Importazione file sql in mysql:
+ * mysql < nome_file.sql --database db_name -u root -p
+ */
 public class EnumToSQLTest
 {
    private static final String enumsPkg = "it.ictgroup.asr.model.enums";
-   private static final String sqlFileName = "docs/data/enums-insert.sql";
+   private static final String sqlFileName = "docs/data/db/enums-insert.sql";
    private static Logger logger = Logger.getLogger(EnumToSQLTest.class.getSimpleName());
 
    @Test
