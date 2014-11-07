@@ -116,7 +116,15 @@ public class FlussocService implements Serializable
 
    private void valorizzaErrori(Flussoc2 riferimento, Flussoc2 conErrori)
    {
-
+      riferimento.setErroreRegioneZonaAddebito(conErrori.getErroreRegioneZonaAddebito());
+      riferimento.setErroriAnagrafici(conErrori.getErroriAnagrafici());
+      riferimento.setErroriDataPrestazione(conErrori.getErroriDataPrestazione());
+      riferimento.setErroriEsenzioni(conErrori.getErroriEsenzioni());
+      riferimento.setErroriIdentificativoStruttura(conErrori.getErroriIdentificativoStruttura());
+      riferimento.setErroriImporto(conErrori.getErroriImporto());
+      riferimento.setErroriNumeroPrestazioni(conErrori.getErroriNumeroPrestazioni());
+      riferimento.setErroriPrestazione(conErrori.getErroriPrestazione());
+      riferimento.setErroriRecord(conErrori.getErroriRecord());
+      riferimento.setErroriResidenza(conErrori.getErroriResidenza());
    }
-
 }
