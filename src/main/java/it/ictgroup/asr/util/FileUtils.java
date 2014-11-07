@@ -33,12 +33,13 @@ public class FileUtils
       DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(folderPath));
       for (Path entry : stream)
       {
+         String fileName = entry.getFileName().getName(0).toString();
          if (Files.isDirectory(entry))
          {
             listFiles(entry.getFileName().toAbsolutePath().toString());
          }
-         if (!filesList.contains(entry.getFileName().getName(0)))
-            result.add(entry.getFileName().getName(0).toString());
+         if (!filesList.contains(fileName))
+            result.add(fileName);
       }
       return result;
    }

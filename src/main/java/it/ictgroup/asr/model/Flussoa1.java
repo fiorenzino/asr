@@ -149,7 +149,7 @@ public class Flussoa1 implements Serializable
    @FieldIgnored
    private String nomeFile;
    @FieldIgnored
-   private Elaborazione Elaborazione;
+   private Elaborazione elaborazione;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -400,12 +400,14 @@ public class Flussoa1 implements Serializable
    @ManyToOne
    public Elaborazione getElaborazione()
    {
-      return Elaborazione;
+      if (this.elaborazione == null)
+         this.elaborazione = new Elaborazione();
+      return elaborazione;
    }
 
    public void setElaborazione(Elaborazione elaborazione)
    {
-      Elaborazione = elaborazione;
+      this.elaborazione = elaborazione;
    }
 
    public String getNomeFile()

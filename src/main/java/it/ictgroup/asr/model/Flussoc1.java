@@ -140,7 +140,7 @@ public class Flussoc1 implements Serializable
    @FieldIgnored
    private String nomeFile;
    @FieldIgnored
-   private Elaborazione Elaborazione;
+   private Elaborazione elaborazione;
 
    public String getRegioneAddebitante()
    {
@@ -480,12 +480,14 @@ public class Flussoc1 implements Serializable
    @ManyToOne
    public Elaborazione getElaborazione()
    {
-      return Elaborazione;
+      if (this.elaborazione == null)
+         this.elaborazione = new Elaborazione();
+      return elaborazione;
    }
 
    public void setElaborazione(Elaborazione elaborazione)
    {
-      Elaborazione = elaborazione;
+      this.elaborazione = elaborazione;
    }
 
 }

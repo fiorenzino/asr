@@ -1,15 +1,14 @@
 package it.ictgroup.asr.service;
 
-import it.coopservice.commons2.domain.Search;
 import it.ictgroup.asr.model.Flussoc1;
 import it.ictgroup.asr.model.Flussoc2;
 import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import it.ictgroup.asr.repository.ElaborazioniRepository;
 import it.ictgroup.asr.repository.Flussoc1Repository;
 import it.ictgroup.asr.repository.Flussoc2Repository;
+import it.ictgroup.asr.service.controller.FlussoC2Controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -58,34 +57,20 @@ public class FlussocService implements Serializable
             Exception
    {
       FileHelperEngine<Flussoc1> fileHelperEngine = new FileHelperEngine<>(Flussoc1.class);
-      List<Flussoc1> righe = new ArrayList<>();
-      righe = fileHelperEngine.readFile(folder + nomeFile);
-      if (righe != null)
+      List<Flussoc1> righe = fileHelperEngine.readFile(folder + nomeFile);
+      if (righe != null && righe.size() > 0)
       {
-
+         logger.info(righe.size());
+         int i = 0;
          for (Flussoc1 flussoc1 : righe)
          {
-            logger.info(flussoc1);
-            // File C1: archivio contenente le informazioni anagrafiche dell’utente.
-            // File C2: archivio contenente le informazioni sanitarie dell’utente. La segnalazione degli errori deve
-            // essere effettuata in tale archivio anche in caso di errori riscontrati nell’archivio dei dati anagrafici.
-            // Il collegamento delle informazioni contenute nei suddetti archivi è garantito dalla presenza di una
-            // chiave univoca costituita da:
-            // codice regione addebitante + codice ASL/Azienda + ID + progressivo riga.
-            // TODO sufficiente per determinare se la riga è già in db???
-            Search<Flussoc1> search = new Search<Flussoc1>(Flussoc1.class);
-            search.getObj().setRegioneAddebitante(flussoc1.getRegioneAddebitante());
-            search.getObj().setZonaTerritoriale(flussoc1.getZonaTerritoriale());
-            search.getObj().setId(flussoc1.getId());
-            search.getObj().setProgressivoPeRigaPerRicetta(flussoc1.getProgressivoPeRigaPerRicetta());
-            List<Flussoc1> resList = flussoc1Repository.getList(search, 0, 0);
-            if (resList != null && resList.size() > 0)
-               flussoc1Repository.update(flussoc1);
-            else
-               flussoc1Repository.persist(flussoc1);
+            i++;
+            logger.info(i + "/" + righe.size());
+            flussoc1.getElaborazione().setId(idElaborazione);
+            flussoc1Repository.persist(flussoc1);
          }
          elaborazioniRepository.eseguito(idElaborazione);
-         logger.info(righe.size());
+         logger.info("ESEGUITO");
       }
 
    }
@@ -94,35 +79,44 @@ public class FlussocService implements Serializable
             Long idElaborazione) throws
             Exception
    {
-      FileHelperEngine<Flussoc2> fileHelperEngine = new FileHelperEngine<>(Flussoc2.class);
-      List<Flussoc2> righe = new ArrayList<>();
-      righe = fileHelperEngine.readFile(nomeFile);
+
+      FlussoC2Controller flussoc2Controller = new FlussoC2Controller(folder + nomeFile);
+      List<Flussoc2> righe = flussoc2Controller.execute();
       if (righe != null)
       {
+         logger.info(righe.size());
+         int i = 0;
          for (Flussoc2 flussoc2 : righe)
          {
-            logger.info(flussoc2);
-            // File C1: archivio contenente le informazioni anagrafiche dell’utente.
-            // File C2: archivio contenente le informazioni sanitarie dell’utente. La segnalazione degli errori deve
-            // essere effettuata in tale archivio anche in caso di errori riscontrati nell’archivio dei dati anagrafici.
-            // Il collegamento delle informazioni contenute nei suddetti archivi è garantito dalla presenza di una
-            // chiave univoca costituita da:
-            // codice regione addebitante + codice ASL/Azienda + ID + progressivo riga.
-            // TODO sufficiente per determinare se la riga è già in db???
-            Search<Flussoc2> search = new Search<Flussoc2>(Flussoc2.class);
-            search.getObj().setRegioneAddebitante(flussoc2.getRegioneAddebitante());
-            search.getObj().setZonaTerritoriale(flussoc2.getZonaTerritoriale());
-            search.getObj().setId(flussoc2.getId());
-            search.getObj().setProgressivoRigaPerRicetta(flussoc2.getProgressivoRigaPerRicetta());
-            List<Flussoc2> resList = flussoc2Repository.getList(search, 0, 0);
-            if (resList != null && resList.size() > 0)
-               flussoc2Repository.update(flussoc2);
+            i++;
+            logger.info(i + "/" + righe.size());
+            if (flussoc2Controller.isWithErrori())
+            {
+               Flussoc2 riferimento = flussoc2Repository.getRiferimento(flussoc2);
+               if (riferimento != null)
+               {
+                  valorizzaErrori(riferimento, flussoc2);
+                  flussoc2Repository.update(riferimento);
+               }
+               else
+               {
+                  logger.info("non trovo per il flusso C2: " + flussoc2);
+               }
+            }
             else
+            {
+               flussoc2.getElaborazione().setId(idElaborazione);
                flussoc2Repository.persist(flussoc2);
+            }
          }
          elaborazioniRepository.eseguito(idElaborazione);
          logger.info(righe.size());
       }
+   }
+
+   private void valorizzaErrori(Flussoc2 riferimento, Flussoc2 conErrori)
+   {
+
    }
 
 }
