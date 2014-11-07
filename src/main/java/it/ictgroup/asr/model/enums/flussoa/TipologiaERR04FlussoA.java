@@ -1,8 +1,8 @@
 package it.ictgroup.asr.model.enums.flussoa;
 
-public enum TipologiaERR04
+public enum TipologiaERR04FlussoA
 {
-   NESSUN_ERRORE ("0", "nessun value"),
+   NESSUN_ERRORE ("0", "nessun errore"),
    REGIME_ASSENTE ("1", "regime di ricovero assente/errato"),
    REPARTO_DIMISSIONE_ASSENTE ("2", "reparto di dimissione assente e/o i primi due caratteri del reparto dimissione non nel dominio (da flussi ministeriali per l’anno di riferimento)"),
    MODALITA_DIMISSIONE_ASSENTE("3", "modalità di dimissione assente/errata (non esistente nel dominio)"),
@@ -12,7 +12,7 @@ public enum TipologiaERR04
    private String value;
    private String description;
 
-   TipologiaERR04(String value, String description)
+   TipologiaERR04FlussoA(String value, String description)
    {
       this.value = value;
       this.description = description;

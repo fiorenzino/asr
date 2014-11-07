@@ -1,14 +1,14 @@
-package it.ictgroup.asr.model.enums.flussoa;
+package it.ictgroup.asr.model.enums.flussoc;
 
-public enum TipologiaERR05
+public enum TipologiaERR10FlussoC
 {
-   NESSUN_ERRORE ("0", "nessun value"),
-   RICOVERO_RIPETUTO ("3", "ricovero ripetuto effettivo");
+   NESSUN_ERRORE ("0", "nessun errore"),
+   COD_REGIONE_ASSENTE ("1", "codice Regione/Azienda U.S.L. assente o errato");
 
    private String value;
    private String description;
 
-   TipologiaERR05(String value, String description)
+   TipologiaERR10FlussoC(String value, String description)
    {
       this.value = value;
       this.description = description;

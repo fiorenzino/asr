@@ -188,43 +188,43 @@ public class Flussoc2 implements Serializable
 
    // 186 ERR01 - Errori anagrafici
    @FieldFixedLength(1)
-   public String erroriAnagrafici;
+   public String err01;
 
    // 187 ERR02 - Errori sulla residenza
    @FieldFixedLength(1)
-   public String erroriResidenza;
+   public String err02;
 
    // 188 ERR03 - Errori sulla prestazione
    @FieldFixedLength(1)
-   public String erroriPrestazione;
+   public String err03;
 
    // 189 ERR04 - Errori sull’identificativo della struttura
    @FieldFixedLength(1)
-   public String erroriIdentificativoStruttura;
+   public String err04;
 
    // 190 ERR05 – Errori del record
    @FieldFixedLength(1)
-   public String erroriRecord;
+   public String err05;
 
    // 191 ERR06 - Errori sull’importo
    @FieldFixedLength(1)
-   public String erroriImporto;
+   public String err06;
 
    // 192 ERR07 – Errori sul numero delle prestazioni
    @FieldFixedLength(1)
-   public String erroriNumeroPrestazioni;
+   public String err07;
 
    // 193 ERR08 - Errori sulla data della prestazione
    @FieldFixedLength(1)
-   public String erroriDataPrestazione;
+   public String err08;
 
    // 194 ERR09 - Errori sulle esenzioni
    @FieldFixedLength(1)
-   public String erroriEsenzioni;
+   public String err09;
 
    // 195 ERR10 - Errore sulla Regione/Zona territoriale iniziale di addebito
    @FieldFixedLength(1)
-   public String erroreRegioneZonaAddebito;
+   public String err10;
 
    // 196-217 Prestazione erogata in concomitanza di ricovero ospedaliero
    @FieldFixedLength(22)
@@ -655,104 +655,104 @@ public class Flussoc2 implements Serializable
       this.trasmissioneInRegione = trasmissioneInRegione;
    }
 
-   public String getErroriAnagrafici()
+   public String getErr01()
    {
-      return erroriAnagrafici;
+      return err01;
    }
 
-   public void setErroriAnagrafici(String erroriAnagrafici)
+   public void setErr01(String err01)
    {
-      this.erroriAnagrafici = erroriAnagrafici;
+      this.err01 = err01;
    }
 
-   public String getErroriResidenza()
+   public String getErr02()
    {
-      return erroriResidenza;
+      return err02;
    }
 
-   public void setErroriResidenza(String erroriResidenza)
+   public void setErr02(String err02)
    {
-      this.erroriResidenza = erroriResidenza;
+      this.err02 = err02;
    }
 
-   public String getErroriPrestazione()
+   public String getErr03()
    {
-      return erroriPrestazione;
+      return err03;
    }
 
-   public void setErroriPrestazione(String erroriPrestazione)
+   public void setErr03(String err03)
    {
-      this.erroriPrestazione = erroriPrestazione;
+      this.err03 = err03;
    }
 
-   public String getErroriIdentificativoStruttura()
+   public String getErr04()
    {
-      return erroriIdentificativoStruttura;
+      return err04;
    }
 
-   public void setErroriIdentificativoStruttura(String erroriIdentificativoStruttura)
+   public void setErr04(String err04)
    {
-      this.erroriIdentificativoStruttura = erroriIdentificativoStruttura;
+      this.err04 = err04;
    }
 
-   public String getErroriRecord()
+   public String getErr05()
    {
-      return erroriRecord;
+      return err05;
    }
 
-   public void setErroriRecord(String erroriRecord)
+   public void setErr05(String err05)
    {
-      this.erroriRecord = erroriRecord;
+      this.err05 = err05;
    }
 
-   public String getErroriImporto()
+   public String getErr06()
    {
-      return erroriImporto;
+      return err06;
    }
 
-   public void setErroriImporto(String erroriImporto)
+   public void setErr06(String err06)
    {
-      this.erroriImporto = erroriImporto;
+      this.err06 = err06;
    }
 
-   public String getErroriNumeroPrestazioni()
+   public String getErr07()
    {
-      return erroriNumeroPrestazioni;
+      return err07;
    }
 
-   public void setErroriNumeroPrestazioni(String erroriNumeroPrestazioni)
+   public void setErr07(String err07)
    {
-      this.erroriNumeroPrestazioni = erroriNumeroPrestazioni;
+      this.err07 = err07;
    }
 
-   public String getErroriDataPrestazione()
+   public String getErr08()
    {
-      return erroriDataPrestazione;
+      return err08;
    }
 
-   public void setErroriDataPrestazione(String erroriDataPrestazione)
+   public void setErr08(String err08)
    {
-      this.erroriDataPrestazione = erroriDataPrestazione;
+      this.err08 = err08;
    }
 
-   public String getErroriEsenzioni()
+   public String getErr09()
    {
-      return erroriEsenzioni;
+      return err09;
    }
 
-   public void setErroriEsenzioni(String erroriEsenzioni)
+   public void setErr09(String err09)
    {
-      this.erroriEsenzioni = erroriEsenzioni;
+      this.err09 = err09;
    }
 
-   public String getErroreRegioneZonaAddebito()
+   public String getErr10()
    {
-      return erroreRegioneZonaAddebito;
+      return err10;
    }
 
-   public void setErroreRegioneZonaAddebito(String erroreRegioneZonaAddebito)
+   public void setErr10(String err10)
    {
-      this.erroreRegioneZonaAddebito = erroreRegioneZonaAddebito;
+      this.err10 = err10;
    }
 
    public String getPrestazioneErogataInConcomitanzaRicovero()
@@ -788,7 +788,7 @@ public class Flussoc2 implements Serializable
    @Override
    public String toString()
    {
-      return "FlussoC2{" +
+      return "FlussoC2 [" +
                "regioneAddebitante='" + regioneAddebitante + '\'' +
                ", zonaTerritoriale='" + zonaTerritoriale + '\'' +
                ", codiceStrutturaAccettante='" + codiceStrutturaAccettante + '\'' +
@@ -829,20 +829,20 @@ public class Flussoc2 implements Serializable
                ", importoTotale='" + importoTotale + '\'' +
                ", posizioneContabile='" + posizioneContabile + '\'' +
                ", trasmissioneInRegione='" + trasmissioneInRegione + '\'' +
-               ", erroriAnagrafici='" + erroriAnagrafici + '\'' +
-               ", erroriResidenza='" + erroriResidenza + '\'' +
-               ", erroriPrestazione='" + erroriPrestazione + '\'' +
-               ", erroriIdentificativoStruttura='" + erroriIdentificativoStruttura + '\'' +
-               ", erroriRecord='" + erroriRecord + '\'' +
-               ", erroriImporto='" + erroriImporto + '\'' +
-               ", erroriNumeroPrestazioni='" + erroriNumeroPrestazioni + '\'' +
-               ", erroriDataPrestazione='" + erroriDataPrestazione + '\'' +
-               ", erroriEsenzioni='" + erroriEsenzioni + '\'' +
-               ", erroreRegioneZonaAddebito='" + erroreRegioneZonaAddebito + '\'' +
+               ", err01='" + err01 + '\'' +
+               ", err02='" + err02 + '\'' +
+               ", err03='" + err03 + '\'' +
+               ", err04='" + err04 + '\'' +
+               ", err05='" + err05 + '\'' +
+               ", err06='" + err06 + '\'' +
+               ", err07='" + err07 + '\'' +
+               ", err08='" + err08 + '\'' +
+               ", err09='" + err09 + '\'' +
+               ", err10='" + err10 + '\'' +
                ", prestazioneErogataInConcomitanzaRicovero='" + prestazioneErogataInConcomitanzaRicovero + '\'' +
                ", id='" + id + '\'' +
                ", regioneInizialeAddebito='" + regioneInizialeAddebito + '\'' +
-               '}';
+               ']';
    }
 
    public String getNomeFile()
@@ -870,25 +870,25 @@ public class Flussoc2 implements Serializable
 
    public boolean containsErrors()
    {
-      if (this.getErroreRegioneZonaAddebito() != null && !this.getErroreRegioneZonaAddebito().trim().isEmpty())
+      if (this.getErr10() != null && !this.getErr10().trim().isEmpty())
          return true;
-      if (this.getErroriAnagrafici() != null && !this.getErroriAnagrafici().trim().isEmpty())
+      if (this.getErr01() != null && !this.getErr01().trim().isEmpty())
          return true;
-      if (this.getErroriDataPrestazione() != null && !this.getErroriDataPrestazione().trim().isEmpty())
+      if (this.getErr08() != null && !this.getErr08().trim().isEmpty())
          return true;
-      if (this.getErroriEsenzioni() != null && !this.getErroriEsenzioni().trim().isEmpty())
+      if (this.getErr09() != null && !this.getErr09().trim().isEmpty())
          return true;
-      if (this.getErroriIdentificativoStruttura() != null && !this.getErroriIdentificativoStruttura().trim().isEmpty())
+      if (this.getErr04() != null && !this.getErr04().trim().isEmpty())
          return true;
-      if (this.getErroriImporto() != null && !this.getErroriImporto().trim().isEmpty())
+      if (this.getErr06() != null && !this.getErr06().trim().isEmpty())
          return true;
-      if (this.getErroriNumeroPrestazioni() != null && !this.getErroriNumeroPrestazioni().trim().isEmpty())
+      if (this.getErr07() != null && !this.getErr07().trim().isEmpty())
          return true;
-      if (this.getErroriPrestazione() != null && !this.getErroriPrestazione().trim().isEmpty())
+      if (this.getErr03() != null && !this.getErr03().trim().isEmpty())
          return true;
-      if (this.getErroriRecord() != null && !this.getErroriRecord().trim().isEmpty())
+      if (this.getErr05() != null && !this.getErr05().trim().isEmpty())
          return true;
-      if (this.getErroriResidenza() != null && !this.getErroriResidenza().trim().isEmpty())
+      if (this.getErr02() != null && !this.getErr02().trim().isEmpty())
          return true;
       return false;
    }
