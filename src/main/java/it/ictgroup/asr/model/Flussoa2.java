@@ -1329,26 +1329,26 @@ public class Flussoa2 implements Serializable
    public boolean containsErrors()
    {
       if (this.getErr01() != null && !this.getErr01().trim().isEmpty() && this.getErr01().trim().equals("0"))
-         return true;
-      if (this.getErr02() != null && !this.getErr02().trim().isEmpty() && this.getErr01().trim().equals("0"))
-         return true;
-      if (this.getErr03() != null && !this.getErr03().trim().isEmpty() && this.getErr01().trim().equals("0"))
-         return true;
-      if (this.getErr04() != null && !this.getErr04().trim().isEmpty() && this.getErr01().trim().equals("0"))
-         return true;
-      if (this.getErr05() != null && !this.getErr05().trim().isEmpty() && this.getErr01().trim().equals("0"))
-         return true;
-      if (this.getErr06() != null && !this.getErr06().trim().isEmpty() && this.getErr01().trim().equals("0"))
-         return true;
-      if (this.getErr07() != null && !this.getErr07().trim().isEmpty() && this.getErr01().trim().equals("0"))
-         return true;
-      if (this.getErr08() != null && !this.getErr08().trim().isEmpty() && this.getErr01().trim().equals("0"))
-         return true;
-      if (this.getErr09() != null && !this.getErr09().trim().isEmpty() && this.getErr01().trim().equals("0"))
-         return true;
-      if (this.getErr10() != null && !this.getErr10().trim().isEmpty() && this.getErr01().trim().equals("0"))
-         return true;
-      return false;
+         return false;
+      if (this.getErr02() != null && !this.getErr02().trim().isEmpty() && this.getErr02().trim().equals("0"))
+         return false;
+      if (this.getErr03() != null && !this.getErr03().trim().isEmpty() && this.getErr03().trim().equals("0"))
+         return false;
+      if (this.getErr04() != null && !this.getErr04().trim().isEmpty() && this.getErr04().trim().equals("0"))
+         return false;
+      if (this.getErr05() != null && !this.getErr05().trim().isEmpty() && this.getErr05().trim().equals("0"))
+         return false;
+      if (this.getErr06() != null && !this.getErr06().trim().isEmpty() && this.getErr06().trim().equals("0"))
+         return false;
+      if (this.getErr07() != null && !this.getErr07().trim().isEmpty() && this.getErr07().trim().equals("0"))
+         return false;
+      if (this.getErr08() != null && !this.getErr08().trim().isEmpty() && this.getErr08().trim().equals("0"))
+         return false;
+      if (this.getErr09() != null && !this.getErr09().trim().isEmpty() && this.getErr09().trim().equals("0"))
+         return false;
+      if (this.getErr10() != null && !this.getErr10().trim().isEmpty() && this.getErr10().trim().equals("0"))
+         return false;
+      return true;
    }
 
 }
