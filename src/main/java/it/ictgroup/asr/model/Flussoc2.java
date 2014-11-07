@@ -1,5 +1,15 @@
 package it.ictgroup.asr.model;
 
+import it.ictgroup.asr.model.enums.flussoc.TipologiaERR01FlussoC;
+import it.ictgroup.asr.model.enums.flussoc.TipologiaERR02FlussoC;
+import it.ictgroup.asr.model.enums.flussoc.TipologiaERR03FlussoC;
+import it.ictgroup.asr.model.enums.flussoc.TipologiaERR04FlussoC;
+import it.ictgroup.asr.model.enums.flussoc.TipologiaERR05FlussoC;
+import it.ictgroup.asr.model.enums.flussoc.TipologiaERR06FlussoC;
+import it.ictgroup.asr.model.enums.flussoc.TipologiaERR07FlussoC;
+import it.ictgroup.asr.model.enums.flussoc.TipologiaERR08FlussoC;
+import it.ictgroup.asr.model.enums.flussoc.TipologiaERR10FlussoC;
+
 import java.io.Serializable;
 
 import javax.persistence.Entity;
@@ -870,25 +880,35 @@ public class Flussoc2 implements Serializable
 
    public boolean containsErrors()
    {
-      if (this.getErr01() != null && !this.getErr01().trim().isEmpty() && this.getErr01().trim().equals("0"))
+      if (this.getErr01() != null && !this.getErr01().trim().isEmpty()
+               && this.getErr01().trim().equals(TipologiaERR01FlussoC.NESSUN_ERRORE.getValue()))
          return false;
-      if (this.getErr02() != null && !this.getErr02().trim().isEmpty() && this.getErr02().trim().equals("0"))
+      if (this.getErr02() != null && !this.getErr02().trim().isEmpty()
+               && this.getErr02().trim().equals(TipologiaERR02FlussoC.NESSUN_ERRORE.getValue()))
          return false;
-      if (this.getErr03() != null && !this.getErr03().trim().isEmpty() && this.getErr03().trim().equals("0"))
+      if (this.getErr03() != null && !this.getErr03().trim().isEmpty()
+               && this.getErr03().trim().equals(TipologiaERR03FlussoC.NESSUN_ERRORE.getValue()))
          return false;
-      if (this.getErr04() != null && !this.getErr04().trim().isEmpty() && this.getErr04().trim().equals("0"))
+      if (this.getErr04() != null && !this.getErr04().trim().isEmpty()
+               && this.getErr04().trim().equals(TipologiaERR04FlussoC.NESSUN_ERRORE.getValue()))
          return false;
-      if (this.getErr05() != null && !this.getErr05().trim().isEmpty() && this.getErr05().trim().equals("0"))
+      if (this.getErr05() != null && !this.getErr05().trim().isEmpty()
+               && this.getErr05().trim().equals(TipologiaERR05FlussoC.NESSUN_ERRORE.getValue()))
          return false;
-      if (this.getErr06() != null && !this.getErr06().trim().isEmpty() && this.getErr06().trim().equals("0"))
+      if (this.getErr06() != null && !this.getErr06().trim().isEmpty()
+               && this.getErr06().trim().equals(TipologiaERR06FlussoC.NESSUN_ERRORE.getValue()))
          return false;
-      if (this.getErr07() != null && !this.getErr07().trim().isEmpty() && this.getErr07().trim().equals("0"))
+      if (this.getErr07() != null && !this.getErr07().trim().isEmpty()
+               && this.getErr07().trim().equals(TipologiaERR07FlussoC.NESSUN_ERRORE.getValue()))
          return false;
-      if (this.getErr08() != null && !this.getErr08().trim().isEmpty() && this.getErr08().trim().equals("0"))
+      if (this.getErr08() != null && !this.getErr08().trim().isEmpty()
+               && this.getErr08().trim().equals(TipologiaERR08FlussoC.NESSUN_ERRORE.getValue()))
          return false;
-      if (this.getErr09() != null && !this.getErr09().trim().isEmpty() && this.getErr09().trim().equals("0"))
+      if (this.getErr09() != null && !this.getErr09().trim().isEmpty()
+               && this.getErr09().trim().equals(TipologiaERR01FlussoC.NESSUN_ERRORE.getValue()))
          return false;
-      if (this.getErr10() != null && !this.getErr10().trim().isEmpty() && this.getErr10().trim().equals("0"))
+      if (this.getErr10() != null && !this.getErr10().trim().isEmpty()
+               && this.getErr10().trim().equals(TipologiaERR10FlussoC.NESSUN_ERRORE.getValue()))
          return false;
       return true;
    }

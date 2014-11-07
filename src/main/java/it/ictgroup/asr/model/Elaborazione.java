@@ -19,7 +19,9 @@ public class Elaborazione implements Serializable
    private static final long serialVersionUID = 1L;
    private Long id;
    private Configurazione configurazione;
-   private Date data;
+   private Date dataCreazione;
+   private Date dataStart;
+   private Date dataEnd;
    private String fileName;
    private StatoElaborazione statoElaborazione;
 
@@ -29,11 +31,11 @@ public class Elaborazione implements Serializable
 
    public Elaborazione(
             Configurazione configurazione,
-            Date data,
+            Date dataCreazione,
             String fileName)
    {
       this.configurazione = configurazione;
-      this.data = data;
+      this.dataCreazione = dataCreazione;
       this.fileName = fileName;
       this.statoElaborazione = StatoElaborazione.PIANIFICATO;
    }
@@ -63,16 +65,6 @@ public class Elaborazione implements Serializable
       this.configurazione = configurazione;
    }
 
-   public Date getData()
-   {
-      return data;
-   }
-
-   public void setData(Date data)
-   {
-      this.data = data;
-   }
-
    public String getFileName()
    {
       return fileName;
@@ -92,5 +84,35 @@ public class Elaborazione implements Serializable
    public void setStatoElaborazione(StatoElaborazione statoElaborazione)
    {
       this.statoElaborazione = statoElaborazione;
+   }
+
+   public Date getDataStart()
+   {
+      return dataStart;
+   }
+
+   public void setDataStart(Date dataStart)
+   {
+      this.dataStart = dataStart;
+   }
+
+   public Date getDataEnd()
+   {
+      return dataEnd;
+   }
+
+   public void setDataEnd(Date dataEnd)
+   {
+      this.dataEnd = dataEnd;
+   }
+
+   public Date getDataCreazione()
+   {
+      return dataCreazione;
+   }
+
+   public void setDataCreazione(Date dataCreazione)
+   {
+      this.dataCreazione = dataCreazione;
    }
 }

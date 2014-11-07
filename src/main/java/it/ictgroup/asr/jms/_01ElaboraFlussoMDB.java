@@ -3,6 +3,7 @@ package it.ictgroup.asr.jms;
 import it.ictgroup.asr.management.AppConstants;
 import it.ictgroup.asr.management.AppKeys;
 import it.ictgroup.asr.model.enums.TipologiaFlusso;
+import it.ictgroup.asr.repository.ElaborazioniRepository;
 import it.ictgroup.asr.service.FlussoaService;
 import it.ictgroup.asr.service.FlussocService;
 
@@ -33,6 +34,9 @@ public class _01ElaboraFlussoMDB implements MessageListener
    @Inject
    FlussocService flussocService;
 
+   @Inject
+   ElaborazioniRepository elaborazioniRepository;
+
    public void onMessage(Message message)
    {
       MapMessage msg = (MapMessage) message;
@@ -52,11 +56,13 @@ public class _01ElaboraFlussoMDB implements MessageListener
          {
          case A1:
          case A2:
+            // elaborazioniRepository.avviato(idElaborazione);
             flussoaService.parse(tipologiaFlusso, nomeFile, folder, idElaborazione);
             break;
 
          case C1:
          case C2:
+            // elaborazioniRepository.avviato(idElaborazione);
             flussocService.parse(tipologiaFlusso, nomeFile, folder, idElaborazione);
             break;
          case B:
