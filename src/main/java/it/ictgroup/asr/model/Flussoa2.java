@@ -238,7 +238,7 @@ public class Flussoa2 implements Serializable
    // peso alla nascita
    // AN
    // 4
-   @FieldFixedLength(8)
+   @FieldFixedLength(4)
    public String pesoAllaNascita;
    // 137
    // Sistema codifica diagnosi

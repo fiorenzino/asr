@@ -788,7 +788,7 @@ public class Flussoc2 implements Serializable
    @Override
    public String toString()
    {
-      return "FlussoC2{" +
+      return "FlussoC2 [" +
                "regioneAddebitante='" + regioneAddebitante + '\'' +
                ", zonaTerritoriale='" + zonaTerritoriale + '\'' +
                ", codiceStrutturaAccettante='" + codiceStrutturaAccettante + '\'' +
@@ -842,7 +842,7 @@ public class Flussoc2 implements Serializable
                ", prestazioneErogataInConcomitanzaRicovero='" + prestazioneErogataInConcomitanzaRicovero + '\'' +
                ", id='" + id + '\'' +
                ", regioneInizialeAddebito='" + regioneInizialeAddebito + '\'' +
-               '}';
+               ']';
    }
 
    public String getNomeFile()
