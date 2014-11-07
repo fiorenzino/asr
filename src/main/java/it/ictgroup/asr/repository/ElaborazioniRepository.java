@@ -51,20 +51,16 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
 
    public List<String> getFilePerConfigurazione(Long id)
    {
-      List<String> result = new ArrayList<String>();
-      Search<Elaborazione> search = new Search<Elaborazione>(Elaborazione.class);
-      search.getObj().getConfigurazione().setId(id);
-      List<Elaborazione> list = getList(search, 0, 0);
-      for (Elaborazione elaborazione : list)
-      {
-         result.add(elaborazione.getFileName());
-      }
+
+      List<String> result = getEm()
+               .createNativeQuery("SELECT DISTINCT(fileName) FROM Elaborazione where configurazione_id=  :ID")
+               .setParameter("ID", id).getResultList();
       return result;
    }
 
    public void eseguito(Long id) throws Exception
    {
-      getEm().createNativeQuery("UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO WHERE ID :ID")
+      getEm().createNativeQuery("UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO WHERE E.ID = :ID")
                .setParameter("ID", id)
                .setParameter("STATO", StatoElaborazione.ESEGUITO.name()).executeUpdate();
    }

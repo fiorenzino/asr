@@ -457,7 +457,7 @@ public class Flussoa2 implements Serializable
    @FieldIgnored
    private String nomeFile;
    @FieldIgnored
-   private Elaborazione Elaborazione;
+   private Elaborazione elaborazione;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -1316,12 +1316,39 @@ public class Flussoa2 implements Serializable
    @ManyToOne
    public Elaborazione getElaborazione()
    {
-      return Elaborazione;
+      if (this.elaborazione == null)
+         this.elaborazione = new Elaborazione();
+      return elaborazione;
    }
 
    public void setElaborazione(Elaborazione elaborazione)
    {
-      Elaborazione = elaborazione;
+      this.elaborazione = elaborazione;
+   }
+
+   public boolean containsErrors()
+   {
+      if (this.getErr01() != null && !this.getErr01().trim().isEmpty())
+         return true;
+      if (this.getErr02() != null && !this.getErr02().trim().isEmpty())
+         return true;
+      if (this.getErr03() != null && !this.getErr03().trim().isEmpty())
+         return true;
+      if (this.getErr04() != null && !this.getErr04().trim().isEmpty())
+         return true;
+      if (this.getErr05() != null && !this.getErr05().trim().isEmpty())
+         return true;
+      if (this.getErr06() != null && !this.getErr06().trim().isEmpty())
+         return true;
+      if (this.getErr07() != null && !this.getErr07().trim().isEmpty())
+         return true;
+      if (this.getErr08() != null && !this.getErr08().trim().isEmpty())
+         return true;
+      if (this.getErr09() != null && !this.getErr09().trim().isEmpty())
+         return true;
+      if (this.getErr10() != null && !this.getErr10().trim().isEmpty())
+         return true;
+      return false;
    }
 
 }

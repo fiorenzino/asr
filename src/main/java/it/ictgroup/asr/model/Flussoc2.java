@@ -241,7 +241,7 @@ public class Flussoc2 implements Serializable
    @FieldIgnored
    private String nomeFile;
    @FieldIgnored
-   private Elaborazione Elaborazione;
+   private Elaborazione elaborazione;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -858,11 +858,38 @@ public class Flussoc2 implements Serializable
    @ManyToOne
    public Elaborazione getElaborazione()
    {
-      return Elaborazione;
+      if (this.elaborazione == null)
+         this.elaborazione = new Elaborazione();
+      return elaborazione;
    }
 
    public void setElaborazione(Elaborazione elaborazione)
    {
-      Elaborazione = elaborazione;
+      this.elaborazione = elaborazione;
+   }
+
+   public boolean containsErrors()
+   {
+      if (this.getErroreRegioneZonaAddebito() != null && !this.getErroreRegioneZonaAddebito().trim().isEmpty())
+         return true;
+      if (this.getErroriAnagrafici() != null && !this.getErroriAnagrafici().trim().isEmpty())
+         return true;
+      if (this.getErroriDataPrestazione() != null && !this.getErroriDataPrestazione().trim().isEmpty())
+         return true;
+      if (this.getErroriEsenzioni() != null && !this.getErroriEsenzioni().trim().isEmpty())
+         return true;
+      if (this.getErroriIdentificativoStruttura() != null && !this.getErroriIdentificativoStruttura().trim().isEmpty())
+         return true;
+      if (this.getErroriImporto() != null && !this.getErroriImporto().trim().isEmpty())
+         return true;
+      if (this.getErroriNumeroPrestazioni() != null && !this.getErroriNumeroPrestazioni().trim().isEmpty())
+         return true;
+      if (this.getErroriPrestazione() != null && !this.getErroriPrestazione().trim().isEmpty())
+         return true;
+      if (this.getErroriRecord() != null && !this.getErroriRecord().trim().isEmpty())
+         return true;
+      if (this.getErroriResidenza() != null && !this.getErroriResidenza().trim().isEmpty())
+         return true;
+      return false;
    }
 }
