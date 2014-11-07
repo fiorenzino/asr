@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import it.ictgroup.asr.model.enums.flussoa.*;
 import org.coury.jfilehelpers.annotations.FieldFixedLength;
 import org.coury.jfilehelpers.annotations.FieldIgnored;
 import org.coury.jfilehelpers.annotations.FixedLengthRecord;
@@ -1328,27 +1329,37 @@ public class Flussoa2 implements Serializable
 
    public boolean containsErrors()
    {
-      if (this.getErr01() != null && !this.getErr01().trim().isEmpty() && this.getErr01().trim().equals("0"))
-         return false;
-      if (this.getErr02() != null && !this.getErr02().trim().isEmpty() && this.getErr02().trim().equals("0"))
-         return false;
-      if (this.getErr03() != null && !this.getErr03().trim().isEmpty() && this.getErr03().trim().equals("0"))
-         return false;
-      if (this.getErr04() != null && !this.getErr04().trim().isEmpty() && this.getErr04().trim().equals("0"))
-         return false;
-      if (this.getErr05() != null && !this.getErr05().trim().isEmpty() && this.getErr05().trim().equals("0"))
-         return false;
-      if (this.getErr06() != null && !this.getErr06().trim().isEmpty() && this.getErr06().trim().equals("0"))
-         return false;
-      if (this.getErr07() != null && !this.getErr07().trim().isEmpty() && this.getErr07().trim().equals("0"))
-         return false;
-      if (this.getErr08() != null && !this.getErr08().trim().isEmpty() && this.getErr08().trim().equals("0"))
-         return false;
-      if (this.getErr09() != null && !this.getErr09().trim().isEmpty() && this.getErr09().trim().equals("0"))
-         return false;
-      if (this.getErr10() != null && !this.getErr10().trim().isEmpty() && this.getErr10().trim().equals("0"))
-         return false;
-      return true;
+      if (this.getErr01() != null && !this.getErr01().trim().isEmpty()
+               && this.getErr01().trim().equals(TipologiaERR01FlussoA.NESSUN_ERRORE.getValue()))
+         return true;
+      if (this.getErr02() != null && !this.getErr02().trim().isEmpty()
+               && this.getErr01().trim().equals(TipologiaERR02FlussoA.NESSUN_ERRORE.getValue()))
+         return true;
+      if (this.getErr03() != null && !this.getErr03().trim().isEmpty()
+               && this.getErr01().trim().equals(TipologiaERR03FlussoA.NESSUN_ERRORE.getValue()))
+         return true;
+      if (this.getErr04() != null && !this.getErr04().trim().isEmpty()
+               && this.getErr01().trim().equals(TipologiaERR04FlussoA.NESSUN_ERRORE.getValue()))
+         return true;
+      if (this.getErr05() != null && !this.getErr05().trim().isEmpty()
+               && this.getErr01().trim().equals(TipologiaERR05FlussoA.NESSUN_ERRORE.getValue()))
+         return true;
+      if (this.getErr06() != null && !this.getErr06().trim().isEmpty()
+               && this.getErr01().trim().equals(TipologiaERR06FlussoA.NESSUN_ERRORE.getValue()))
+         return true;
+      if (this.getErr07() != null && !this.getErr07().trim().isEmpty()
+               && this.getErr01().trim().equals(TipologiaERR07FlussoA.NESSUN_ERRORE.getValue()))
+         return true;
+      if (this.getErr08() != null && !this.getErr08().trim().isEmpty()
+               && this.getErr01().trim().equals(TipologiaERR08FlussoA.NESSUN_ERRORE.getValue()))
+         return true;
+      if (this.getErr09() != null && !this.getErr09().trim().isEmpty()
+               && this.getErr01().trim().equals(TipologiaERR09FlussoA.NESSUN_ERRORE.getValue()))
+         return true;
+      if (this.getErr10() != null && !this.getErr10().trim().isEmpty()
+               && this.getErr01().trim().equals(TipologiaERR10FlussoA.NESSUN_ERRORE.getValue()))
+         return true;
+      return false;
    }
 
 }

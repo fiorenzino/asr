@@ -4,7 +4,7 @@ import it.coopservice.commons2.domain.Search;
 import it.ictgroup.asr.model.Elaborazione;
 import it.ictgroup.asr.model.enums.StatoElaborazione;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -58,10 +58,33 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       return result;
    }
 
+   // @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   public void avviato(Long id) throws Exception
+   {
+      getEm().createNativeQuery(
+               "UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO, E.dataStart = :DATA WHERE E.ID = :ID")
+               .setParameter("ID", id)
+               .setParameter("DATA", new Date())
+               .setParameter("STATO", StatoElaborazione.AVVIATO.name()).executeUpdate();
+   }
+
+   // @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   public void errore(Long id) throws Exception
+   {
+      getEm().createNativeQuery(
+               "UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO, E.dataEnd = :DATA WHERE E.ID = :ID")
+               .setParameter("ID", id)
+               .setParameter("DATA", new Date())
+               .setParameter("STATO", StatoElaborazione.ERRORE.name()).executeUpdate();
+   }
+
+   // @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
    public void eseguito(Long id) throws Exception
    {
-      getEm().createNativeQuery("UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO WHERE E.ID = :ID")
+      getEm().createNativeQuery(
+               "UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO, E.dataEnd = :DATA WHERE E.ID = :ID")
                .setParameter("ID", id)
+               .setParameter("DATA", new Date())
                .setParameter("STATO", StatoElaborazione.ESEGUITO.name()).executeUpdate();
    }
 }
