@@ -22,6 +22,7 @@ public class Configurazione implements Serializable
    private Long id;
    private TipologiaFlusso tipologiaFlusso;
    private String folder;
+   private int orderBy;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +55,16 @@ public class Configurazione implements Serializable
    public void setFolder(String folder)
    {
       this.folder = folder;
+   }
+
+   public int getOrderBy()
+   {
+      return orderBy;
+   }
+
+   public void setOrderBy(int orderBy)
+   {
+      this.orderBy = orderBy;
    }
 
 }

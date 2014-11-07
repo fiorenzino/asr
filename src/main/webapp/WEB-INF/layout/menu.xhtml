@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="menu">
+
+		<p:menubar id="menuBar" style="width: 100%;">
+			<p:menuitem value="Home" url="/" />
+
+			<p:submenu label="Configurazioni">
+				<p:menuitem value="lista"
+					action="#{configurazioniController.listPage}" />
+				<p:menuitem value="aggiungi"
+					action="#{configurazioniController.addElement}" />
+			</p:submenu>
+
+			<p:submenu label="Elaborazioni">
+				<p:menuitem value="lista"
+					action="#{elaborazioniController.listPage}" />
+				<p:menuitem value="aggiungi"
+					action="#{elaborazioniController.addElement}" />
+			</p:submenu>
+		</p:menubar>
+
+	</h:form>
+</ui:composition>

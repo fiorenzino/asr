@@ -1,13 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:perm="http://www.coopservice.it/commons2/permissions"
-	xmlns:coop="http://www.coopservice.it/commons2/taglib"
-	xmlns:fnc="http://www.coopservice.it/commons2/taglib"
-	template="/WEB-INF/layout/t.xhtml">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/layout/t.xhtml">
 	<ui:define name="title">
 		<h:outputText value="Benvenuto" />
 	</ui:define>
@@ -20,9 +14,9 @@
 			<h:panelGrid columns="2">
 
 				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
-					rendered="#{categorieController.clear and perm:permit('VIEW_CATEGORIE')}">
+					rendered="#{configurazioniController.clear">
 					<f:facet name="header">
-						<h:outputText value="Categorie" />
+						<h:outputText value="Configurazioni" />
 					</f:facet>
 					<h:panelGrid columns="2">
 						<h:panelGroup
@@ -31,146 +25,39 @@
 							<i class="icon-sitemap"> </i>
 						</h:panelGroup>
 						<h:panelGroup style="vertical-align:middle;">
-							<h:commandLink action="#{categorieController.listPage}">
+							<h:commandLink action="#{configurazioniController.listPage}">
 								<h:outputText value="Lista" />
 							</h:commandLink>
-							<ui:fragment rendered="#{perm:permit('EDIT_CATEGORIE')}">
-								<br />
-								<h:commandLink action="#{categorieController.addElement}">
-									<h:outputText value="Aggiungi" />
-								</h:commandLink>
-							</ui:fragment>
+							<br />
+							<h:commandLink action="#{configurazioniController.addElement}">
+								<h:outputText value="Aggiungi" />
+							</h:commandLink>
 						</h:panelGroup>
 					</h:panelGrid>
 				</p:panel>
 
 				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
-					rendered="#{modelliController.clear and perm:permit('VIEW_MODELLI')}">
+					rendered="#{elaborazioniController.clear">
 					<f:facet name="header">
-						<h:outputText value="Modelli di Questionario" />
+						<h:outputText value="Elaborazioni" />
 					</f:facet>
 					<h:panelGrid columns="2">
 						<h:panelGroup
 							style="vertical-align:middle; font-size: 48px; padding: 10px;"
 							layout="block">
-							<h:outputText styleClass="icon-briefcase" />
+							<i class="icon-sitemap"> </i>
 						</h:panelGroup>
 						<h:panelGroup style="vertical-align:middle;">
-							<h:commandLink action="#{modelliController.listPage}">
+							<h:commandLink action="#{elaborazioniController.listPage}">
 								<h:outputText value="Lista" />
 							</h:commandLink>
-							<ui:fragment rendered="#{perm:permit('EDIT_MODELLI')}">
-								<br />
-								<h:commandLink action="#{modelliController.addElement}">
-									<h:outputText value="Aggiungi" />
-								</h:commandLink>
-							</ui:fragment>
+							<br />
+							<h:commandLink action="#{elaborazioniController.addElement}">
+								<h:outputText value="Aggiungi" />
+							</h:commandLink>
 						</h:panelGroup>
 					</h:panelGrid>
 				</p:panel>
-
-				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
-					rendered="#{tipologieController.clear and perm:permit('VIEW_TIPOLOGIE')}">
-					<f:facet name="header">
-						<h:outputText value="Tipologie" />
-					</f:facet>
-					<h:panelGrid columns="2">
-						<h:panelGroup
-							style="vertical-align:middle; font-size: 48px; padding: 10px;"
-							layout="block">
-							<h:outputText styleClass="icon-tags" />
-						</h:panelGroup>
-						<h:panelGroup style="vertical-align:middle;">
-							<h:commandLink action="#{tipologieController.listPage}">
-								<h:outputText value="Lista" />
-							</h:commandLink>
-							<ui:fragment rendered="#{perm:permit('EDIT_TIPOLOGIE')}">
-								<br />
-								<h:commandLink action="#{tipologieController.addElement}">
-									<h:outputText value="Aggiungi" />
-								</h:commandLink>
-							</ui:fragment>
-						</h:panelGroup>
-					</h:panelGrid>
-				</p:panel>
-
-
-
-				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
-					rendered="#{domandeController.clear and perm:permit('VIEW_DOMANDE')}">
-					<f:facet name="header">
-						<h:outputText value="Domande" />
-					</f:facet>
-					<h:panelGrid columns="2">
-						<h:panelGroup
-							style="vertical-align:middle; font-size: 48px; padding: 10px;"
-							layout="block">
-							<h:outputText styleClass="icon-question-sign" />
-						</h:panelGroup>
-						<h:panelGroup style="vertical-align:middle;">
-							<h:commandLink action="#{domandeController.listPage}">
-								<h:outputText value="Lista" />
-							</h:commandLink>
-							<ui:fragment rendered="#{perm:permit('EDIT_DOMANDE')}">
-								<br />
-								<h:commandLink action="#{domandeController.addElement}">
-									<h:outputText value="Aggiungi" />
-								</h:commandLink>
-							</ui:fragment>
-						</h:panelGroup>
-					</h:panelGrid>
-				</p:panel>
-
-				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
-					rendered="#{clientiController.clear and perm:permit('VIEW_CLIENTI')}">
-					<f:facet name="header">
-						<h:outputText value="Clienti" />
-					</f:facet>
-					<h:panelGrid columns="2">
-						<h:panelGroup
-							style="vertical-align:middle; font-size: 48px; padding: 10px;"
-							layout="block">
-							<h:outputText styleClass="icon-building" />
-						</h:panelGroup>
-						<h:panelGroup style="vertical-align:middle;">
-							<h:commandLink action="#{clientiController.listPage}">
-								<h:outputText value="Lista" />
-							</h:commandLink>
-							<ui:fragment rendered="#{perm:permit('EDIT_CLIENTI')}">
-								<br />
-								<h:commandLink action="#{clientiController.addElement}">
-									<h:outputText value="Aggiungi" />
-								</h:commandLink>
-							</ui:fragment>
-						</h:panelGroup>
-					</h:panelGrid>
-				</p:panel>
-
-				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
-					rendered="#{questionariController.clear and perm:permit('VIEW_QUESTIONARI')}">
-					<f:facet name="header">
-						<h:outputText value="Questionari" />
-					</f:facet>
-					<h:panelGrid columns="2">
-						<h:panelGroup
-							style="vertical-align:middle; font-size: 48px; padding: 10px;"
-							layout="block">
-							<h:outputText styleClass="icon-copy" />
-						</h:panelGroup>
-						<h:panelGroup style="vertical-align:middle;">
-							<h:commandLink action="#{questionariController.listPage}">
-								<h:outputText value="Lista" />
-							</h:commandLink>
-							<ui:fragment rendered="#{perm:permit('CREATE_QUESTIONARI')}">
-								<br />
-								<h:commandLink action="#{questionariController.addElement}">
-									<h:outputText value="Aggiungi" />
-								</h:commandLink>
-							</ui:fragment>
-						</h:panelGroup>
-					</h:panelGrid>
-				</p:panel>
-
 
 
 
