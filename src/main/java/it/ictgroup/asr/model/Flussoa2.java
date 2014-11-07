@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import it.ictgroup.asr.model.enums.flussoa.TipologiaERR01FlussoA;
 import org.coury.jfilehelpers.annotations.FieldFixedLength;
 import org.coury.jfilehelpers.annotations.FieldIgnored;
 import org.coury.jfilehelpers.annotations.FixedLengthRecord;
@@ -1328,7 +1329,8 @@ public class Flussoa2 implements Serializable
 
    public boolean containsErrors()
    {
-      if (this.getErr01() != null && !this.getErr01().trim().isEmpty() && this.getErr01().trim().equals("0"))
+      if (this.getErr01() != null && !this.getErr01().trim().isEmpty() && this.getErr01().trim().equals(
+               TipologiaERR01FlussoA.NESSUN_ERRORE.getValue()))
          return true;
       if (this.getErr02() != null && !this.getErr02().trim().isEmpty() && this.getErr01().trim().equals("0"))
          return true;
