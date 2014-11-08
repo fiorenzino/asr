@@ -36,6 +36,33 @@ public class Flussoa2Repository extends BaseRepository<Flussoa2>
          separator = " and ";
       }
 
+      // regioneAddebitante;
+      if (search.getObj().getRegioneAddebitante() != null)
+      {
+         sb.append(separator).append(alias)
+                  .append(".regioneAddebitante = :regioneAddebitante ");
+         params.put("regioneAddebitante", search.getObj().getRegioneAddebitante());
+         separator = " and ";
+      }
+
+      // codiceIstituto;
+      if (search.getObj().getCodiceIstituto() != null)
+      {
+         sb.append(separator).append(alias)
+                  .append(".codiceIstituto = :codiceIstituto ");
+         params.put("codiceIstituto", search.getObj().getCodiceIstituto());
+         separator = " and ";
+      }
+
+      // numeroDellaScheda;
+      if (search.getObj().getNumeroDellaScheda() != null)
+      {
+         sb.append(separator).append(alias)
+                  .append(".numeroDellaScheda = :numeroDellaScheda ");
+         params.put("numeroDellaScheda", search.getObj().getNumeroDellaScheda());
+         separator = " and ";
+      }
+
    }
 
    public Flussoa2 getRiferimento(Flussoa2 flussoa2)

@@ -1,0 +1,109 @@
+File A1 e A2:
+- le righe NON sono univoche a livello globale, ma solo all'interno del file cui appartengono.
+Chiave per collegare riga file A1 con la corrispondente del file A2:
+    codice regione addebitante + codice ASL/Azienda + codice istituto + numero scheda.
+
+
+
+File C1 e C2:
+- le righe NON sono univoche a livello globale, ma solo all'interno del file cui appartengono.
+Chiave per collegare riga file A1 con la corrispondente del file A2:
+    codice regione addebitante + codice ASL/Azienda + ID + progressivo riga.
+
+
+
+-------------------------------------------------------------
+
+
+
+Macchine virtuali:
+
+- 10.249.28.165 (WildFly)
+user: adminitrator
+psw: passn0one
+
+user: wildfly
+psw: wildfly
+
+
+
+- 10.249.28.166 (DB PostgreSQL 9.3)
+user: adminitrator
+psw: passn0one
+
+user: postgres
+psw: postgres
+
+
+
+
+- 0.249.28.167 (Jasperreport Server 5.6.1)
+user: adminitrator
+psw: passn0one
+
+user: jasper
+psw: jasper
+
+
+
+
+
+
+configurazione postgreSQL
+1. creazione utente asr
+sudo su
+su postgres
+psql
+CREATE ROLE asr WITH SUPERUSER CREATEDB CREATEROLE LOGIN PASSWORD 'asr';
+\q
+exit
+exit
+psql -h localhost -d template1 -U asr   [password asr]
+create database asr;
+
+2. configurazione accesso remoto
+cd /etc/postgresql/9.3/main
+sudo vim pg_hba.conf
+aggiungere le seguenti righe:
+    host    all     all     10.249.28.167/31        trust
+    host    all     all     10.249.28.165/31        trust
+sudo vim postgresql.conf
+scommentare listen_addresses='localhost' e sostituire con listen_addresses='*'
+
+
+
+
+instalazione jasper:
+1. scegliere "custom insallation"
+2. tomcat bundle
+3. postgresql esistente
+4. pws utente postgres: postgres
+
+
+
+Configurazione jasper
+cd jasperreports-server-5.6.1/scripts/linux
+vim jasperserver
+modificare
+    JASPER_HOME="/home/jasper/jasperreports-server-5.6.1"
+    JASPER_USER=jasper
+
+
+Lanciare jasperserver:
+cd jasperreports-server-5.6.1/scripts/linux
+./jasperserver start   [password: jasper]
+
+
+
+
+standalone-full.xml wildfly:
+<datasource jndi-name="java:jboss/datasources/AsrDS" pool-name="AsrDS" enable="true" use-java-context="true">
+    <connection-url>jdbc:postgresql://10.249.28.166:5432/asr?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&autoReconnectForPools=true</connection-url>
+    <driver>org.postgresql.Driver</driver>
+    <security>
+        <user-name>asr</user-name>
+        <password>asr</password>
+    </security>
+</datasource>
+
+
