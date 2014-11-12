@@ -2,11 +2,12 @@ package it.ictgroup.asr.service;
 
 import it.ictgroup.asr.model.Flussoc1;
 import it.ictgroup.asr.model.Flussoc2;
+import it.ictgroup.asr.model.Flussoc2r;
 import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import it.ictgroup.asr.repository.ElaborazioniRepository;
 import it.ictgroup.asr.repository.Flussoc1Repository;
 import it.ictgroup.asr.repository.Flussoc2Repository;
-import it.ictgroup.asr.service.controller.FlussoC2Controller;
+import it.ictgroup.asr.repository.Flussoc2rRepository;
 
 import java.io.Serializable;
 import java.util.List;
@@ -31,6 +32,9 @@ public class FlussocService implements Serializable
    Flussoc2Repository flussoc2Repository;
 
    @Inject
+   Flussoc2rRepository flussoc2rRepository;
+
+   @Inject
    ElaborazioniRepository elaborazioniRepository;
 
    Logger logger = Logger.getLogger(this.getClass());
@@ -47,6 +51,10 @@ public class FlussocService implements Serializable
          break;
       case C2:
          elaboraC2(nomeFile, folder,
+                  idElaborazione);
+         break;
+      case C2R:
+         elaboraC2r(nomeFile, folder,
                   idElaborazione);
          break;
 
@@ -68,12 +76,12 @@ public class FlussocService implements Serializable
          for (Flussoc1 flussoc1 : righe)
          {
             i++;
-            logger.info(i + "/" + righe.size());
+            logger.info(TipologiaFlusso.C1.name() + ")" + i + "/" + righe.size());
             flussoc1.getElaborazione().setId(idElaborazione);
             flussoc1Repository.persist(flussoc1);
          }
          elaborazioniRepository.eseguito(idElaborazione);
-         logger.info("ESEGUITO");
+         logger.info("C1 ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
       }
 
    }
@@ -82,52 +90,98 @@ public class FlussocService implements Serializable
             Long idElaborazione) throws
             Exception
    {
-
-      FlussoC2Controller flussoc2Controller = new FlussoC2Controller(folder + nomeFile);
-      List<Flussoc2> righe = flussoc2Controller.execute();
-      if (righe != null)
+      FileHelperEngine<Flussoc2> fileHelperEngine = new FileHelperEngine<>(Flussoc2.class);
+      List<Flussoc2> righe = fileHelperEngine.readFile(folder + nomeFile);
+      if (righe != null && righe.size() > 0)
       {
          logger.info(righe.size());
          int i = 0;
          for (Flussoc2 flussoc2 : righe)
          {
             i++;
-            logger.info(i + "/" + righe.size());
-            if (flussoc2Controller.isWithErrori())
-            {
-               Flussoc2 riferimento = flussoc2Repository.getRiferimento(flussoc2);
-               if (riferimento != null)
-               {
-                  valorizzaErrori(riferimento, flussoc2);
-                  flussoc2Repository.update(riferimento);
-               }
-               else
-               {
-                  logger.info("non trovo per il flusso C2: " + flussoc2);
-               }
-            }
-            else
-            {
-               flussoc2.getElaborazione().setId(idElaborazione);
-               flussoc2Repository.persist(flussoc2);
-            }
+            logger.info(TipologiaFlusso.C2.name() + ")" + i + "/" + righe.size());
+            flussoc2.getElaborazione().setId(idElaborazione);
+            flussoc2Repository.persist(flussoc2);
          }
          elaborazioniRepository.eseguito(idElaborazione);
-         logger.info(righe.size());
+         logger.info("C2 ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
       }
+
    }
 
-   private void valorizzaErrori(Flussoc2 riferimento, Flussoc2 conErrori)
+   private void elaboraC2r(String nomeFile, String folder,
+            Long idElaborazione) throws
+            Exception
    {
-      riferimento.setErr10(conErrori.getErr10());
-      riferimento.setErr01(conErrori.getErr01());
-      riferimento.setErr08(conErrori.getErr08());
-      riferimento.setErr09(conErrori.getErr09());
-      riferimento.setErr04(conErrori.getErr04());
-      riferimento.setErr06(conErrori.getErr06());
-      riferimento.setErr07(conErrori.getErr07());
-      riferimento.setErr03(conErrori.getErr03());
-      riferimento.setErr05(conErrori.getErr05());
-      riferimento.setErr02(conErrori.getErr02());
+      FileHelperEngine<Flussoc2r> fileHelperEngine = new FileHelperEngine<>(Flussoc2r.class);
+      List<Flussoc2r> righe = fileHelperEngine.readFile(folder + nomeFile);
+      if (righe != null && righe.size() > 0)
+      {
+         logger.info(righe.size());
+         int i = 0;
+         for (Flussoc2r flussoc2r : righe)
+         {
+            i++;
+            logger.info(TipologiaFlusso.C1.name() + ")" + i + "/" + righe.size());
+            flussoc2r.getElaborazione().setId(idElaborazione);
+            flussoc2rRepository.persist(flussoc2r);
+         }
+         elaborazioniRepository.eseguito(idElaborazione);
+         logger.info("C2R ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
+      }
+
    }
+
+   // private void elaboraC2(String nomeFile, String folder,
+   // Long idElaborazione) throws
+   // Exception
+   // {
+   //
+   // FlussoC2Controller flussoc2Controller = new FlussoC2Controller(folder + nomeFile);
+   // List<Flussoc2> righe = flussoc2Controller.execute();
+   // if (righe != null)
+   // {
+   // logger.info(righe.size());
+   // int i = 0;
+   // for (Flussoc2 flussoc2 : righe)
+   // {
+   // i++;
+   // logger.info(i + "/" + righe.size());
+   // if (flussoc2Controller.isWithErrori())
+   // {
+   // Flussoc2 riferimento = flussoc2Repository.getRiferimento(flussoc2);
+   // if (riferimento != null)
+   // {
+   // valorizzaErrori(riferimento, flussoc2);
+   // flussoc2Repository.update(riferimento);
+   // }
+   // else
+   // {
+   // logger.info("non trovo per il flusso C2: " + flussoc2);
+   // }
+   // }
+   // else
+   // {
+   // flussoc2.getElaborazione().setId(idElaborazione);
+   // flussoc2Repository.persist(flussoc2);
+   // }
+   // }
+   // elaborazioniRepository.eseguito(idElaborazione, flussoc2Controller.isWithErrori());
+   // logger.info(righe.size());
+   // }
+   // }
+
+   // private void valorizzaErrori(Flussoc2 riferimento, Flussoc2 conErrori)
+   // {
+   // riferimento.setErr10(conErrori.getErr10());
+   // riferimento.setErr01(conErrori.getErr01());
+   // riferimento.setErr08(conErrori.getErr08());
+   // riferimento.setErr09(conErrori.getErr09());
+   // riferimento.setErr04(conErrori.getErr04());
+   // riferimento.setErr06(conErrori.getErr06());
+   // riferimento.setErr07(conErrori.getErr07());
+   // riferimento.setErr03(conErrori.getErr03());
+   // riferimento.setErr05(conErrori.getErr05());
+   // riferimento.setErr02(conErrori.getErr02());
+   // }
 }

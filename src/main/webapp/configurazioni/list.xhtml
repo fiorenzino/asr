@@ -1,99 +1,83 @@
 <ui:composition template="/WEB-INF/layout/t.xhtml"
- 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:coop="http://www.coopservice.it/commons2/taglib"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="title">Questionari</ui:define>
-
-	<ui:define name="roles">
-		<f:attribute name="roles" value="VIEW_QUESTIONARI" />
-	</ui:define>
+	<ui:define name="title">Configurazioni</ui:define>
 
 	<ui:define name="content">
 
 		<h:form id="mainForm">
 			<h:panelGrid columns="5" id="buttonGrid">
 
-				<h:outputLabel for="categoria" value="Categoria:" />
+				<h:outputLabel for="tipologia" value="Tipologia: " />
 				<p:selectOneMenu style="width: 200px;"
-					value="#{questionariController.search.obj.categoria.id}">
-					<f:selectItems value="#{categorieItems}" />
+					value="#{configurazioniController.search.obj.tipologiaFlusso}">
+					<f:selectItems value="#{tipologieFlussoItems}" />
 				</p:selectOneMenu>
 
 				<p:spacer width="10px" />
 
-				<h:outputLabel for="titolo" value="Titolo:" />
-				<p:inputText id="titolo" style="width: 200px;"
-					value="#{questionariController.search.obj.titolo}" />
+				<h:outputLabel for="folder" value="Folder" />
+				<p:inputText id="folder" style="width: 200px;"
+					value="#{configurazioniController.search.obj.folder}" />
 
 			</h:panelGrid>
 			<h:panelGrid columns="2">
-				<p:commandButton action="#{questionariController.reloadAjax}"
+				<p:commandButton action="#{configurazioniController.reloadAjax}"
 					update=":mainForm :global:messages list" value="Cerca" />
 
-				<p:commandButton action="#{questionariController.resetAjax}"
+				<p:commandButton action="#{configurazioniController.resetAjax}"
 					update=":mainForm :global:messages list" value="Pulisci" />
 			</h:panelGrid>
 
 			<p:spacer width="100%" height="10px" />
 
 			<p:dataTable id="list" var="m" rowIndexVar="rowIndex"
-				value="#{questionariController.model}" paginator="true"
+				value="#{configurazioniController.model}" paginator="true"
 				paginatorPosition="bottom"
-				rows="#{questionariController.rowsPerPage}" lazy="true"
+				rows="#{configurazioniController.rowsPerPage}" lazy="true"
 				style="width: 100%; font-size: smaller;"
 				emptyMessage="Non ci sono modelli di questionario per la ricerca effettuata.">
-				<f:facet name="header">Lista modelli</f:facet>
+				<f:facet name="header">Lista configurazioni</f:facet>
+				
+   private String folder;
+   private int orderBy;
+   
+   
 				<p:column>
 					<center>
 						<h:outputText value="#{rowIndex+1}" />
 					</center>
 				</p:column>
-				<p:column headerText="identificativo"
-					rendered="#{perm:permit('ADMIN')}">
+				<p:column headerText="identificativo">
 					<center>
 						<h:outputText value="#{m.id}" />
 					</center>
 				</p:column>
-				<p:column headerText="categoria">
-					<h:outputText value="#{m.categoria.nome}" />
+				<p:column headerText="Tipologia flusso">
+					<h:outputText value="#{m.tipologiaFlusso.name()}" />
 				</p:column>
-				<p:column headerText="titolo">
-					<h:outputText value="#{m.titolo}" />
+				<p:column headerText="folder">
+					<h:outputText value="#{m.folder}" />
 				</p:column>
-				<p:column headerText="ultima modifica">
-					<center>
-						<h:outputText value="#{m.dataPreparazione}">
-							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
-								timeZone="Europe/Rome" />
-						</h:outputText>
-					</center>
+				<p:column headerText="orderBy">
+					<h:outputText value="#{m.orderBy}" />
 				</p:column>
-				<p:column headerText="stato">
-					<center>
-						<h:outputText value="#{m.statoQuestionario}" />
-					</center>
-				</p:column>
+
 				<p:column headerText="operazioni">
 					<center>
 						<p:commandLink immediate="true" style="font-size: 24px;"
-							title="dettagli" action="#{questionariController.viewElement}"
+							title="dettagli" action="#{configurazioniController.viewElement}"
 							styleClass="icon-info-sign" ajax="false">
 						</p:commandLink>
 						<p:spacer width="5px" />
 						<p:commandLink immediate="true" style="font-size: 24px;"
-							title="modifica" action="#{questionariController.modElement}"
-							rendered="#{perm:permit('CREATE_QUESTIONARI')}"
+							title="modifica" action="#{configurazioniController.modElement}"
 							styleClass="icon-edit" ajax="false">
-						</p:commandLink>
-						<p:spacer width="5px" />
-						<p:commandLink immediate="true" style="font-size: 24px;"
-							title="inizia" action="#{questionariController.begin}"
-							rendered="#{perm:permit('EDIT_QUESTIONARI')}"
-							styleClass="icon-microphone" ajax="false">
 						</p:commandLink>
 					</center>
 				</p:column>
@@ -102,9 +86,8 @@
 
 			<br />
 
-			<p:commandButton action="#{questionariController.addElement}"
-				rendered="#{perm:permit('CREATE_QUESTIONARI')}" value="Aggiungi"
-				immediate="true" ajax="false" />
+			<p:commandButton action="#{configurazioniController.addElement}"
+				value="Aggiungi" immediate="true" ajax="false" />
 
 		</h:form>
 		<br />

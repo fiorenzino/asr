@@ -56,12 +56,14 @@ public class _01ElaboraFlussoMDB implements MessageListener
          {
          case A1:
          case A2:
+         case A2R:
             // elaborazioniRepository.avviato(idElaborazione);
             flussoaService.parse(tipologiaFlusso, nomeFile, folder, idElaborazione);
             break;
 
          case C1:
          case C2:
+         case C2R:
             // elaborazioniRepository.avviato(idElaborazione);
             flussocService.parse(tipologiaFlusso, nomeFile, folder, idElaborazione);
             break;
