@@ -1,3 +1,8 @@
+-------------------------------------------------------------
+NOTE FLUSSI
+-------------------------------------------------------------
+
+
 File A1 e A2:
 - le righe NON sono univoche a livello globale, ma solo all'interno del file cui appartengono.
 Chiave per collegare riga file A1 con la corrispondente del file A2:
@@ -11,12 +16,10 @@ Chiave per collegare riga file A1 con la corrispondente del file A2:
     codice regione addebitante + codice ASL/Azienda + ID + progressivo riga.
 
 
-
+-------------------------------------------------------------
+MACCHINE VIRTUALI
 -------------------------------------------------------------
 
-
-
-Macchine virtuali:
 
 - 10.249.28.165 (WildFly)
 user: adminitrator
@@ -24,7 +27,6 @@ psw: passn0one
 
 user: wildfly
 psw: wildfly
-
 
 
 - 10.249.28.166 (DB PostgreSQL 9.3)
@@ -36,7 +38,6 @@ psw: postgres
 
 
 
-
 - 0.249.28.167 (Jasperreport Server 5.6.1)
 user: adminitrator
 psw: passn0one
@@ -45,11 +46,13 @@ user: jasper
 psw: jasper
 
 
+-------------------------------------------------------------
+POSTGRES
+-------------------------------------------------------------
 
 
+Configurazione postgreSQL
 
-
-configurazione postgreSQL
 1. creazione utente asr
 sudo su
 su postgres
@@ -71,17 +74,21 @@ sudo vim postgresql.conf
 scommentare listen_addresses='localhost' e sostituire con listen_addresses='*'
 
 
+-------------------------------------------------------------
+JASPER
+-------------------------------------------------------------
 
 
-instalazione jasper:
-1. scegliere "custom insallation"
-2. tomcat bundle
-3. postgresql esistente
-4. pws utente postgres: postgres
+Instalazione jasper:
+1. scegliere "custom installation"
+2. scegliere "tomcat bundle"
+3. scegliere postgresql esistente
+3a. psw utente postgres: postgres
+3b. ip macchina postgres: 10.249.28.166
+3c. porta postgres di default
 
 
-
-Configurazione jasper
+Configurazione jasper:
 cd jasperreports-server-5.6.1/scripts/linux
 vim jasperserver
 modificare
@@ -92,8 +99,6 @@ modificare
 Lanciare jasperserver:
 cd jasperreports-server-5.6.1/scripts/linux
 ./jasperserver start   [password: jasper]
-
-
 
 
 standalone-full.xml wildfly:
