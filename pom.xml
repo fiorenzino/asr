@@ -58,12 +58,11 @@
 		<version.commons-lang>2.6</version.commons-lang>
 		<version.jfilehelpers>0.3.0-SNAPSHOT</version.jfilehelpers>
 
-		<coopservice.commons-code.version>3.3.0</coopservice.commons-code.version>
-		<coopservice.commons-faces.version>3.3.1</coopservice.commons-faces.version>
-		<coopservice.commons-fonts.version>3.3.2</coopservice.commons-fonts.version>
+		<giavacms.commons-core.version>7.0.0-SNAPSHOT</giavacms.commons-core.version>
+		<giavacms.commons-gui.version>7.0.0-SNAPSHOT</giavacms.commons-gui.version>
 
 
-		<primefaces.version>3.5</primefaces.version>
+		<primefaces.version>5.1</primefaces.version>
 
 		<version.jdk>1.8</version.jdk>
 	</properties>
@@ -145,23 +144,25 @@
 
 		<!-- coopservice -->
 		<dependency>
-			<groupId>it.coopservice.commons</groupId>
-			<artifactId>commons-code</artifactId>
+			<groupId>org.giavacms.commons</groupId>
+			<artifactId>commons-core</artifactId>
 			<scope>compile</scope>
-			<version>${coopservice.commons-code.version}</version>
+			<version>${giavacms.commons-core.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>it.coopservice.commons</groupId>
-			<artifactId>commons-faces</artifactId>
+			<groupId>org.giavacms.commons</groupId>
+			<artifactId>commons-gui</artifactId>
 			<scope>compile</scope>
-			<version>${coopservice.commons-faces.version}</version>
+			<version>${giavacms.commons-gui.version}</version>
 		</dependency>
+
 		<dependency>
-			<groupId>it.coopservice.commons</groupId>
-			<artifactId>commons-fonts</artifactId>
-			<scope>compile</scope>
-			<version>${coopservice.commons-fonts.version}</version>
+			<groupId>org.webjars</groupId>
+			<artifactId>font-awesome</artifactId>
+			<version>4.2.0</version>
 		</dependency>
+
+
 	</dependencies>
 
 	<build>

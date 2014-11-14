@@ -1,12 +1,13 @@
 package it.ictgroup.asr.repository;
 
-import it.coopservice.commons2.domain.Search;
 import it.ictgroup.asr.model.Configurazione;
 
 import java.util.Map;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+
+import org.giavacms.commons.model.Search;
 
 @Stateless
 @LocalBean
@@ -41,6 +42,15 @@ public class ConfigurazioniRepository extends BaseRepository<Configurazione>
          sb.append(separator).append(alias)
                   .append(".tipologiaFlusso = :tipologiaFlusso ");
          params.put("tipologiaFlusso", search.getObj().getTipologiaFlusso());
+         separator = " and ";
+      }
+
+      // nome
+      if (search.getObj().getNome() != null && !search.getObj().getNome().trim().isEmpty())
+      {
+         sb.append(separator).append(alias)
+                  .append(".nome LIKE :nome ");
+         params.put("nome", likeParam(search.getObj().getNome()));
          separator = " and ";
       }
 

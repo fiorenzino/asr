@@ -1,11 +1,10 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:perm="http://www.coopservice.it/commons2/permissions"
-	xmlns:coop="http://www.coopservice.it/commons2/taglib"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
 	template="/WEB-INF/layout/t.xhtml">
 
 	<ui:define name="title">Creazione Configurazione</ui:define>
@@ -19,21 +18,29 @@
 				style="width:75%">
 				<f:facet name="header">Dati</f:facet>
 
+				<h:outputLabel value="Nome (*):" for="nome" />
+				<p:inputText id="nome" placeholder="nome"
+					value="#{configurazioniController.element.nome}"
+					requiredMessage="E' obbligatorio specificare il nome"
+					required="true">
+				</p:inputText>
+
 				<h:outputLabel value="Tipologia Flusso (*):" for="tipologiaFlusso" />
-				<p:selectOneMenu style="width: 200px;"
+				<p:selectOneMenu style="width: 200px;" required="true"
+					requiredMessage="E' obbligatorio specificare la tipologia"
 					value="#{configurazioniController.element.tipologiaFlusso}">
 					<f:selectItems value="#{tipologieFlussoItems}" />
 				</p:selectOneMenu>
 
 				<h:outputLabel value="Cartella (*):" for="folder" />
-				<p:inputText id="folder"
+				<p:inputText id="folder" placeholder="cartella"
 					value="#{configurazioniController.element.folder}"
-					requiredMessage="E' obbligatorio specificare l'applicazione"
+					requiredMessage="E' obbligatorio specificare la cartella"
 					required="true">
 				</p:inputText>
 
 				<h:outputLabel value="Ordine:" for="orderBy" />
-				<p:inputText id="orderBy"
+				<p:inputText id="orderBy" placeholder="ordine di lavorazione"
 					value="#{configurazioniController.element.orderBy}">
 				</p:inputText>
 
@@ -41,18 +48,23 @@
 
 			<br />
 
-			<h:panelGrid columns="3" id="buttonGrid">
+			<h:panelGrid columns="4" id="buttonGrid">
+
+				<p:commandButton action="#{configurazioniController.update}"
+					value="Aggiorna"
+					rendered="#{not empty configurazioniController.element.id}"
+					ajax="false" />
 
 				<p:commandButton action="#{configurazioniController.save}"
 					value="Salva"
-					rendered="#{empty configurazioniController.element.id and not empty configurazioniController.element.categoria.id and not empty configurazioniController.element.cliente.id}"
+					rendered="#{empty configurazioniController.element.id}"
 					ajax="false" />
 
 				<p:commandButton action="#{configurazioniController.delete}"
 					value="Elimina"
 					onclick="if ( ! confirm('Confermi l\'eliminazione?') ) return false;"
 					rendered="#{not empty configurazioniController.element.id}"
-					ajax="false" />
+					ajax="false" immediate="true" />
 
 				<p:commandButton action="#{configurazioniController.reset}"
 					value="Annulla" ajax="false" immediate="true" />

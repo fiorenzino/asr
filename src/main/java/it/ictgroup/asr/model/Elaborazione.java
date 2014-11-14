@@ -8,6 +8,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,7 +53,7 @@ public class Elaborazione implements Serializable
       this.id = id;
    }
 
-   @ManyToOne
+   @ManyToOne(fetch = FetchType.EAGER)
    public Configurazione getConfigurazione()
    {
       if (this.configurazione == null)

@@ -1,7 +1,5 @@
 package it.ictgroup.asr.repository;
 
-import it.coopservice.commons2.domain.Search;
-import it.coopservice.commons2.utils.DateUtils;
 import it.ictgroup.asr.model.Elaborazione;
 import it.ictgroup.asr.model.enums.StatoElaborazione;
 
@@ -11,6 +9,9 @@ import java.util.Map;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+
+import org.giavacms.commons.model.Search;
+import org.giavacms.commons.util.DateUtils;
 
 @Stateless
 @LocalBean
@@ -45,6 +46,25 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
          sb.append(separator).append(alias)
                   .append(".configurazione.id = :configurazioneId ");
          params.put("configurazioneId", search.getObj().getConfigurazione().getId());
+         separator = " and ";
+      }
+
+      // getStatoElaborazione
+      if (search.getObj().getStatoElaborazione() != null)
+      {
+         sb.append(separator).append(alias)
+                  .append(".statoElaborazione = :statoElaborazione ");
+         params.put("statoElaborazione", search.getObj().getStatoElaborazione());
+         separator = " and ";
+      }
+
+      // configurazione.nome
+      if (search.getObj().getConfigurazione().getNome() != null
+               && !search.getObj().getConfigurazione().getNome().trim().isEmpty())
+      {
+         sb.append(separator).append(alias)
+                  .append(".configurazione.nome LIKE :nomeConf ");
+         params.put("nomeConf", likeParam(search.getObj().getConfigurazione().getNome().trim()));
          separator = " and ";
       }
 
