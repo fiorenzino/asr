@@ -1,6 +1,5 @@
 package it.ictgroup.asr.repository;
 
-import it.coopservice.commons2.domain.Search;
 import it.ictgroup.asr.model.Flussoa2;
 
 import java.util.List;
@@ -8,6 +7,8 @@ import java.util.Map;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+
+import org.giavacms.commons.model.Search;
 
 @Stateless
 @LocalBean

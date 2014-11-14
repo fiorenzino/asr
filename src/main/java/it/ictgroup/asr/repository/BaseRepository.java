@@ -1,9 +1,9 @@
 package it.ictgroup.asr.repository;
 
-import it.coopservice.commons2.repository.AbstractRepository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import org.giavacms.commons.repository.AbstractRepository;
 
 /**
  * BaseRepository

@@ -1,99 +1,118 @@
-<ui:composition template="/WEB-INF/layout/t.xhtml"
- 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:coop="http://www.coopservice.it/commons2/taglib"
-	xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	template="/WEB-INF/layout/t.xhtml">
 
-	<ui:define name="title">Questionari</ui:define>
-
-	<ui:define name="roles">
-		<f:attribute name="roles" value="VIEW_QUESTIONARI" />
-	</ui:define>
+	<ui:define name="title">Elaborazioni</ui:define>
 
 	<ui:define name="content">
 
 		<h:form id="mainForm">
 			<h:panelGrid columns="5" id="buttonGrid">
 
-				<h:outputLabel for="categoria" value="Categoria:" />
-				<p:selectOneMenu style="width: 200px;"
-					value="#{questionariController.search.obj.categoria.id}">
-					<f:selectItems value="#{categorieItems}" />
+				<h:outputLabel for="statoElaborazione" value="Stato Elaborazione: " />
+				<p:selectOneMenu id="statoElaborazione" style="width: 200px;"
+					value="#{elaborazioniController.search.obj.statoElaborazione}">
+					<f:selectItems value="#{statiElaborazioneItems}" />
 				</p:selectOneMenu>
 
 				<p:spacer width="10px" />
 
-				<h:outputLabel for="titolo" value="Titolo:" />
-				<p:inputText id="titolo" style="width: 200px;"
-					value="#{questionariController.search.obj.titolo}" />
+				<h:outputLabel for="configurazione" value="Nome Configurazione:" />
+				<p:inputText id="configurazione" style="width: 200px;"
+					value="#{elaborazioniController.search.obj.configurazione.nome}" />
+
+				<h:outputLabel for="nomeFile" value="Nome File: " />
+				<p:inputText id="nomeFile" style="width: 200px;"
+					value="#{elaborazioniController.search.obj.fileName}" />
 
 			</h:panelGrid>
 			<h:panelGrid columns="2">
-				<p:commandButton action="#{questionariController.reloadAjax}"
+				<p:commandButton action="#{elaborazioniController.reloadAjax}"
 					update=":mainForm :global:messages list" value="Cerca" />
 
-				<p:commandButton action="#{questionariController.resetAjax}"
+				<p:commandButton action="#{elaborazioniController.resetAjax}"
 					update=":mainForm :global:messages list" value="Pulisci" />
 			</h:panelGrid>
 
 			<p:spacer width="100%" height="10px" />
 
 			<p:dataTable id="list" var="m" rowIndexVar="rowIndex"
-				value="#{questionariController.model}" paginator="true"
+				value="#{elaborazioniController.model}" paginator="true"
 				paginatorPosition="bottom"
-				rows="#{questionariController.rowsPerPage}" lazy="true"
+				rows="#{elaborazioniController.rowsPerPage}" lazy="true"
 				style="width: 100%; font-size: smaller;"
-				emptyMessage="Non ci sono modelli di questionario per la ricerca effettuata.">
-				<f:facet name="header">Lista modelli</f:facet>
+				emptyMessage="Non ci sono elaborazioni per la ricerca effettuata.">
+				<f:facet name="header">Lista elaborazioni</f:facet>
 				<p:column>
 					<center>
 						<h:outputText value="#{rowIndex+1}" />
 					</center>
 				</p:column>
-				<p:column headerText="identificativo"
-					rendered="#{perm:permit('ADMIN')}">
+
+				<p:column headerText="identificativo">
 					<center>
 						<h:outputText value="#{m.id}" />
 					</center>
 				</p:column>
-				<p:column headerText="categoria">
-					<h:outputText value="#{m.categoria.nome}" />
+				<p:column headerText="configurazione">
+					<h:outputText value="#{m.configurazione.nome}" />
 				</p:column>
-				<p:column headerText="titolo">
-					<h:outputText value="#{m.titolo}" />
-				</p:column>
-				<p:column headerText="ultima modifica">
+
+				<p:column headerText="data creazione">
 					<center>
-						<h:outputText value="#{m.dataPreparazione}">
+						<h:outputText value="#{m.dataCreazione}">
 							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
 								timeZone="Europe/Rome" />
 						</h:outputText>
 					</center>
 				</p:column>
-				<p:column headerText="stato">
+				<p:column headerText="data inizio">
 					<center>
-						<h:outputText value="#{m.statoQuestionario}" />
+						<h:outputText value="#{m.dataStart}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
+								timeZone="Europe/Rome" />
+						</h:outputText>
+					</center>
+				</p:column>
+				<p:column headerText="data fine">
+					<center>
+						<h:outputText value="#{m.dataEnd}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
+								timeZone="Europe/Rome" />
+						</h:outputText>
+					</center>
+				</p:column>
+				<p:column headerText="nome file">
+					<center>
+						<h:outputText value="#{m.fileName}" />
+					</center>
+				</p:column>
+				<p:column headerText="stato elaborazione">
+					<center>
+						<h:outputText value="#{m.statoElaborazione.name()}" />
 					</center>
 				</p:column>
 				<p:column headerText="operazioni">
 					<center>
 						<p:commandLink immediate="true" style="font-size: 24px;"
-							title="dettagli" action="#{questionariController.viewElement}"
-							styleClass="icon-info-sign" ajax="false">
+							title="dettagli" action="#{elaborazioniController.viewElement}"
+							styleClass="fa fa-info-circle navLink" ajax="false">
 						</p:commandLink>
 						<p:spacer width="5px" />
 						<p:commandLink immediate="true" style="font-size: 24px;"
-							title="modifica" action="#{questionariController.modElement}"
-							rendered="#{perm:permit('CREATE_QUESTIONARI')}"
-							styleClass="icon-edit" ajax="false">
+							title="elimina" action="#{elaborazioniController.delete}"
+							onclick="if ( ! confirm('Confermi l\'eliminazione?') ) return false;"
+							styleClass="fa fa-eraser navLink" ajax="false">
 						</p:commandLink>
 						<p:spacer width="5px" />
 						<p:commandLink immediate="true" style="font-size: 24px;"
-							title="inizia" action="#{questionariController.begin}"
-							rendered="#{perm:permit('EDIT_QUESTIONARI')}"
-							styleClass="icon-microphone" ajax="false">
+							title="rilancia" action="#{elaborazioniController.restart}"
+							styleClass="fa fa-edit navLink" ajax="false">
 						</p:commandLink>
 					</center>
 				</p:column>
@@ -102,9 +121,8 @@
 
 			<br />
 
-			<p:commandButton action="#{questionariController.addElement}"
-				rendered="#{perm:permit('CREATE_QUESTIONARI')}" value="Aggiungi"
-				immediate="true" ajax="false" />
+			<p:commandButton action="#{elaborazioniController.elabora}"
+				value="Rilancia Elaborazione" immediate="true" ajax="false" />
 
 		</h:form>
 		<br />

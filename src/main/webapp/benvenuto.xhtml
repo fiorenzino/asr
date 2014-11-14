@@ -1,7 +1,11 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/layout/t.xhtml">
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	template="/WEB-INF/layout/t.xhtml">
 	<ui:define name="title">
 		<h:outputText value="Benvenuto" />
 	</ui:define>
@@ -14,7 +18,7 @@
 			<h:panelGrid columns="2">
 
 				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
-					rendered="#{configurazioniController.clear">
+					rendered="#{configurazioniController.clear}">
 					<f:facet name="header">
 						<h:outputText value="Configurazioni" />
 					</f:facet>
@@ -22,7 +26,7 @@
 						<h:panelGroup
 							style="vertical-align:middle; font-size: 48px; padding: 10px;"
 							layout="block">
-							<i class="icon-sitemap"> </i>
+							<i class="fa fa-sun-o"> </i>
 						</h:panelGroup>
 						<h:panelGroup style="vertical-align:middle;">
 							<h:commandLink action="#{configurazioniController.listPage}">
@@ -37,7 +41,7 @@
 				</p:panel>
 
 				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
-					rendered="#{elaborazioniController.clear">
+					rendered="#{elaborazioniController.clear}">
 					<f:facet name="header">
 						<h:outputText value="Elaborazioni" />
 					</f:facet>
@@ -45,15 +49,15 @@
 						<h:panelGroup
 							style="vertical-align:middle; font-size: 48px; padding: 10px;"
 							layout="block">
-							<i class="icon-sitemap"> </i>
+							<i class="fa fa-list-alt"> </i>
 						</h:panelGroup>
 						<h:panelGroup style="vertical-align:middle;">
 							<h:commandLink action="#{elaborazioniController.listPage}">
 								<h:outputText value="Lista" />
 							</h:commandLink>
 							<br />
-							<h:commandLink action="#{elaborazioniController.addElement}">
-								<h:outputText value="Aggiungi" />
+							<h:commandLink action="#{elaborazioniController.elabora}">
+								<h:outputText value="Lancia Elaborazione" />
 							</h:commandLink>
 						</h:panelGroup>
 					</h:panelGrid>

@@ -20,6 +20,7 @@ public class Configurazione implements Serializable
     */
    private static final long serialVersionUID = 1L;
    private Long id;
+   private String nome;
    private TipologiaFlusso tipologiaFlusso;
    private String folder;
    private int orderBy;
@@ -65,6 +66,16 @@ public class Configurazione implements Serializable
    public void setOrderBy(int orderBy)
    {
       this.orderBy = orderBy;
+   }
+
+   public String getNome()
+   {
+      return nome;
+   }
+
+   public void setNome(String nome)
+   {
+      this.nome = nome;
    }
 
 }

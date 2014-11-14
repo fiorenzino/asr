@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <f:view contentType="text/html" encoding="UTF-8"
-	xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 
 	<h:outputText escape="false"
 		value="&lt;!--[if lt IE 7 ]&gt; &lt;html class='ie ie6' lang='it'&gt; &lt;![endif]--&gt;" />
@@ -22,9 +22,6 @@
 <ui:insert name="params">
 </ui:insert>
 
-<f:event type="preRenderView"
-	listener="#{permissionController.checkRoles}" />
-
 <ui:insert name="roles">
 	<f:attribute name="roles" value="ANY" />
 </ui:insert>
@@ -37,28 +34,20 @@
 	</title>
 	<h:outputStylesheet library="css" name="basic.css" />
 
-	<ui:insert name="fonts">
-		<ui:include src="/font-awesome.xhtml" />
-		<ui:include src="/ie7-fix.xhtml" />
-	</ui:insert>
-
 	<ui:insert name="styles">
 	</ui:insert>
 
 	<ui:insert name="metadata">
 	</ui:insert>
 
-	<h:outputScript library="js" name="calendar-it.js" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/4.2.0/css/font-awesome-jsf.css" />
 
 </h:head>
 
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<h:outputText escape="false"
-	value="&lt;!--[if lt IE 9]&gt; &lt;script src='http://html5shim.googlecode.com/svn/trunk/html5.js'&gt;&lt;/script&gt; &lt;![endif]--&gt;" />
-
 <h:body>
-	<p:idleMonitor timeout="3600000" onidle="idleDialog.show();"
-		onactive="idleDialog.hide();" />
+	<p:idleMonitor timeout="3600000" onidle="PF('idleDialog').show()"
+		onactive="PF('idleDialog').hide();" />
 
 	<p:dialog header="Cosa Succede?" resizable="false"
 		widgetVar="idleDialog" modal="true" width="400">
@@ -77,7 +66,7 @@
 
 
 			<p:panel style="width: 100%; text-align: left;">
-				
+
 
 				<div style="float: right;">
 					<ui:insert name="label">
@@ -89,8 +78,8 @@
 					<p:growl id="messages" showDetail="false" />
 				</h:form>
 
-				<p:ajaxStatus onstart="statusDialog.show();"
-					onsuccess="statusDialog.hide();" id="ajaxStatusPanel2">
+				<p:ajaxStatus onstart="PF('statusDialog').show();"
+					onsuccess="PF('statusDialog').hide();" id="ajaxStatusPanel2">
 					<f:facet name="start">
 
 
@@ -105,8 +94,7 @@
 					<center>
 						<h:outputText value="Attendere prego..." />
 						<br />
-						<h:graphicImage library="images/coop" name="ajaxloading.gif"
-							alt="loading" title="loading" />
+
 					</center>
 				</p:dialog>
 
@@ -130,6 +118,7 @@
 				</ui:insert>
 			</p:panel>
 		</p:panel>
+	</center>
 </h:body>
 	</html>
 </f:view>

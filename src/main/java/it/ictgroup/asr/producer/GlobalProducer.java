@@ -1,6 +1,5 @@
 package it.ictgroup.asr.producer;
 
-import it.coopservice.commons2.producer.AbstractProducer;
 import it.ictgroup.asr.model.enums.StatoElaborazione;
 import it.ictgroup.asr.model.enums.TipologiaFlusso;
 
@@ -11,6 +10,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
+
+import org.giavacms.commons.producer.AbstractProducer;
 
 @Named
 @SessionScoped

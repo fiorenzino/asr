@@ -4,6 +4,7 @@ import it.ictgroup.asr.management.AppConstants;
 import it.ictgroup.asr.management.AppKeys;
 import it.ictgroup.asr.model.Configurazione;
 import it.ictgroup.asr.model.Elaborazione;
+import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import it.ictgroup.asr.repository.ConfigurazioniRepository;
 import it.ictgroup.asr.repository.ElaborazioniRepository;
 import it.ictgroup.asr.util.FileUtils;
@@ -56,16 +57,22 @@ public class FolderService
          // se trovo un file che non ho elaborato, lo mando in coda
          for (String fileName : filesInCartellaFiltrati)
          {
-            Elaborazione elaborazione = new Elaborazione(configurazione, new Date(), fileName);
-            elaborazioniRepository.persist(elaborazione);
-            Map<String, Object> map = new HashMap<>();
-            // TIPOLOGIA_FLUSSO, NOME_FILE, ELABORAZIONE_ID, NOME_FOLDER
-            map.put(AppKeys.NOME_FILE.name(), fileName);
-            map.put(AppKeys.TIPOLOGIA_FLUSSO.name(), configurazione.getTipologiaFlusso().name());
-            map.put(AppKeys.ELABORAZIONE_ID.name(), elaborazione.getId());
-            map.put(AppKeys.NOME_FOLDER.name(), configurazione.getFolder());
-            send(map);
+            lancia(fileName, configurazione);
          }
       }
+   }
+
+   public boolean lancia(String fileName, Configurazione configurazione)
+   {
+      Elaborazione elaborazione = new Elaborazione(configurazione, new Date(), fileName);
+      elaborazioniRepository.persist(elaborazione);
+      Map<String, Object> map = new HashMap<>();
+      // TIPOLOGIA_FLUSSO, NOME_FILE, ELABORAZIONE_ID, NOME_FOLDER
+      map.put(AppKeys.NOME_FILE.name(), fileName);
+      map.put(AppKeys.TIPOLOGIA_FLUSSO.name(), configurazione.getTipologiaFlusso().name());
+      map.put(AppKeys.ELABORAZIONE_ID.name(), elaborazione.getId());
+      map.put(AppKeys.NOME_FOLDER.name(), configurazione.getFolder());
+      send(map);
+      return true;
    }
 }
