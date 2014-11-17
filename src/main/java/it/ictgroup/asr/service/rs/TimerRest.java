@@ -1,6 +1,7 @@
 package it.ictgroup.asr.service.rs;
 
 import it.ictgroup.asr.service.FolderService;
+import it.ictgroup.asr.service.InviiService;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +23,9 @@ public class TimerRest
    @Inject
    FolderService folderService;
 
+   @Inject
+   InviiService inviiService;
+
    @GET
    @Produces("text/plain")
    @Path("/folderPoller")
@@ -30,6 +34,17 @@ public class TimerRest
    {
       // _01_P7mFolderPollerTimer.executeNow();
       folderService.verifica();
+      return "OK";
+   }
+
+   @GET
+   @Produces("text/plain")
+   @Path("/invii")
+   @TransactionTimeout(value = 10L, unit = TimeUnit.MINUTES)
+   public String invii() throws Exception
+   {
+      // _01_P7mFolderPollerTimer.executeNow();
+      inviiService.verifica();
       return "OK";
    }
 

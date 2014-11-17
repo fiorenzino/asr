@@ -11,6 +11,13 @@
 		<p:menubar id="menuBar" style="width: 100%;">
 			<p:menuitem value="Home" url="/" />
 
+			<p:submenu label="Applicazioni">
+				<p:menuitem value="lista"
+					action="#{applicazioniController.listPage}" />
+				<p:menuitem value="aggiungi"
+					action="#{applicazioniController.addElement}" />
+			</p:submenu>
+
 			<p:submenu label="Configurazioni">
 				<p:menuitem value="lista"
 					action="#{configurazioniController.listPage}" />
@@ -21,8 +28,14 @@
 			<p:submenu label="Elaborazioni">
 				<p:menuitem value="lista"
 					action="#{elaborazioniController.listPage}" />
-				<p:menuitem value="aggiungi"
-					action="#{elaborazioniController.addElement}" />
+				<p:menuitem value="lancia elaborazione"
+					action="#{elaborazioniController.elabora}" />
+			</p:submenu>
+
+			<p:submenu label="Invii">
+				<p:menuitem value="lista" action="#{inviiController.listPage}" />
+				<p:menuitem value="verifica invii"
+					action="#{inviiController.elabora}" />
 			</p:submenu>
 		</p:menubar>
 

@@ -115,7 +115,7 @@ public class Flussoc1 implements Serializable
 
    // 233-234 Progressivo riga per ricetta 2
    @FieldFixedLength(2)
-   private String progressivoPeRigaPerRicetta;
+   private String progressivoRigaPerRicetta;
 
    // 235 Posizione contabile 1
    @FieldFixedLength(1)
@@ -352,14 +352,14 @@ public class Flussoc1 implements Serializable
       this.numeroRicetta = numeroRicetta;
    }
 
-   public String getProgressivoPeRigaPerRicetta()
+   public String getProgressivoRigaPerRicetta()
    {
-      return progressivoPeRigaPerRicetta;
+      return progressivoRigaPerRicetta;
    }
 
-   public void setProgressivoPeRigaPerRicetta(String progressivoPeRigaPerRicetta)
+   public void setProgressivoRigaPerRicetta(String progressivoPeRigaPerRicetta)
    {
-      this.progressivoPeRigaPerRicetta = progressivoPeRigaPerRicetta;
+      this.progressivoRigaPerRicetta = progressivoPeRigaPerRicetta;
    }
 
    public String getPosizioneContabile()
@@ -456,7 +456,7 @@ public class Flussoc1 implements Serializable
                         + ", " : "")
                + (scadenzaDellaTessera != null ? "scadenzaDellaTessera=" + scadenzaDellaTessera + ", " : "")
                + (numeroRicetta != null ? "numeroRicetta=" + numeroRicetta + ", " : "")
-               + (progressivoPeRigaPerRicetta != null ? "progressivoPeRigaPerRicetta=" + progressivoPeRigaPerRicetta
+               + (progressivoRigaPerRicetta != null ? "progressivoPeRigaPerRicetta=" + progressivoRigaPerRicetta
                         + ", " : "")
                + (posizioneContabile != null ? "posizioneContabile=" + posizioneContabile + ", " : "")
                + (modalitaCompilazioneRicetta != null ? "modalitaCompilazioneRicetta=" + modalitaCompilazioneRicetta

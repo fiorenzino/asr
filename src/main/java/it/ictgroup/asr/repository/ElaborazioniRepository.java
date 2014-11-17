@@ -2,8 +2,11 @@ package it.ictgroup.asr.repository;
 
 import it.ictgroup.asr.model.Elaborazione;
 import it.ictgroup.asr.model.enums.StatoElaborazione;
+import it.ictgroup.asr.model.enums.TipologiaInvio;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -131,6 +134,61 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
                .setParameter("ID", id)
                .setParameter("DATA", new Date())
                .setParameter("STATO", StatoElaborazione.ESEGUITO.name()).executeUpdate();
+   }
+
+   public Map<TipologiaInvio, List<Elaborazione>> getElaborazioniNonCongiunte()
+   {
+      Map<TipologiaInvio, List<Elaborazione>> mappa = new HashMap<TipologiaInvio, List<Elaborazione>>();
+      List<Elaborazione> list = getEm()
+               .createQuery("SELECT e FROM Elaborazione e WHERE e.congiunta = :congiunta", Elaborazione.class)
+               .setParameter("congiunta", false).getResultList();
+      for (Elaborazione elaborazione : list)
+      {
+         List<Elaborazione> lista = null;
+         switch (elaborazione.getConfigurazione().getTipologiaFlusso())
+         {
+         case A1:
+         case A2:
+         case A2R:
+            if (mappa.containsKey(TipologiaInvio.A))
+            {
+               lista = mappa.get(TipologiaInvio.A);
+
+            }
+            else
+            {
+               lista = new ArrayList<Elaborazione>();
+               mappa.put(TipologiaInvio.A, lista);
+            }
+            break;
+         case B:
+            break;
+         case C1:
+         case C2:
+         case C2R:
+            if (mappa.containsKey(TipologiaInvio.C))
+            {
+               lista = mappa.get(TipologiaInvio.C);
+
+            }
+            else
+            {
+               lista = new ArrayList<Elaborazione>();
+               mappa.put(TipologiaInvio.C, lista);
+            }
+            break;
+         case D:
+            break;
+         case E:
+            break;
+         case F:
+            break;
+         case G:
+            break;
+         }
+         lista.add(elaborazione);
+      }
+      return mappa;
    }
 
    public void eliminaConRigheFlusso(Long id) throws Exception
