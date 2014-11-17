@@ -7,6 +7,114 @@
 	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 
 
-FLUSSO A1
+	<h:form id="mainForm">
+		<h:panelGrid columns="5" id="buttonGrid">
 
+			<h:outputLabel for="nomeFile" value="Nome File: " />
+			<p:inputText id="nomeFile" style="width: 200px;"
+				value="#{flussoa1Controller.search.obj.nomeFile}" />
+
+		</h:panelGrid>
+		<h:panelGrid columns="2">
+			<p:commandButton action="#{flussoa1Controller.reloadAjax}"
+				update=":mainForm :global:messages list" value="Cerca" />
+
+			<p:commandButton action="#{flussoa1Controller.resetAjax}"
+				update=":mainForm :global:messages list" value="Pulisci" />
+		</h:panelGrid>
+
+		<p:spacer width="100%" height="10px" />
+
+		<p:dataTable id="list" var="m" rowIndexVar="rowIndex"
+			value="#{flussoa1Controller.model}" paginator="true"
+			paginatorPosition="bottom"
+			rows="#{elaborazioniController.rowsPerPage}" lazy="true"
+			style="width: 100%; font-size: smaller;"
+			emptyMessage="Non ci sono elaborazioni per la ricerca effettuata.">
+			<f:facet name="header">Lista elaborazioni</f:facet>
+			<p:column headerText="n.ro">
+				<center>
+					<h:outputText value="#{rowIndex+1}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="azienda Usl">
+				<center>
+					<h:outputText value="#{m.aziendaUsl}" />
+				</center>
+			</p:column>
+
+
+
+			<p:column headerText="Utente">
+				<center>
+					<h:outputText value="#{m.cognomeDellUtente} #{m.nomeDellUtente}" />
+				</center>
+			</p:column>
+
+
+			<p:column
+				headerText="azienda Usl Di &lt;br/&gt;Residenza dell'Utente">
+				<center>
+					<h:outputText value="#{m.aziendaUslDiResidenzaDellUtente}" />
+				</center>
+			</p:column>
+			<p:column headerText="cittadinanza &lt;br/&gt;dell' Utente">
+				<center>
+					<h:outputText value="#{m.cittadinanzaDellUtente}" />
+				</center>
+			</p:column>
+			<p:column headerText="codice Fiscale &lt;br/&gt;dell' Utente">
+				<center>
+					<h:outputText value="#{m.codiceFiscaleDellUtente}" />
+				</center>
+			</p:column>
+			<p:column headerText="codice Fiscale &lt;br/&gt;medico prescrittore">
+				<center>
+					<h:outputText value="#{m.codiceFiscaleMedicoPrescrittore}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="codice Istituto Di ricovero">
+				<center>
+					<h:outputText value="#{m.codiceIstitutoDiRicovero}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="codiceRegionaleMedicoPrescrittore">
+				<center>
+					<h:outputText value="#{m.codiceRegionaleMedicoPrescrittore}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="codiceSanitarioIndividualeDellUtente">
+				<center>
+					<h:outputText value="#{m.codiceSanitarioIndividualeDellUtente}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="nomeFile">
+				<center>
+					<h:outputText value="#{m.nomeFile}" />
+				</center>
+			</p:column>
+
+
+
+		</p:dataTable>
+		<!-- 
+comuneDiNascitaDellUtente : String
+comuneDiResidenzaDellUtente : String
+dataDiNascitaDellUtente : String
+elaborazione : Elaborazione
+numeroDellaScheda : String
+posizioneContabile : String
+regioneAddebitante : String
+regioneDiResidenzaDellUtente : String
+sessoDellUtente : String
+statoCivileDellUtente : String
+titoloDiStudioDellUtente : String
+uid : Long
+ -->
+	</h:form>
 </ui:composition>
