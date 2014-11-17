@@ -8,104 +8,18 @@
 	template="/WEB-INF/layout/t.xhtml">
 
 	<ui:define name="title">
-		<h:outputText value="Scheda questionario" />
+		<h:outputText value="Scheda elaborazione" />
 	</ui:define>
 
-	<ui:define name="roles">
-		<f:attribute name="roles" value="VIEW_QUESTIONARI" />
-	</ui:define>
+
 
 	<ui:define name="content">
 
-		<h:form id="mainForm">
+		<ui:include
+			src="flusso/#{elaborazioniController.element.configurazione.tipologiaFlusso.name()}.xhtml">
 
-			<p:panel header="Questionario" style="width: 95%;">
+		</ui:include>
 
-				<h:panelGrid columns="2" style="text-align: left;"
-					rendered="#{questionariController.element.statoQuestionario.name() eq 'CREATO'}">
 
-					<h:outputLabel for="categoriaNE" value="Categoria : " />
-					<h:outputText
-						value="#{questionariController.element.categoria.nome}"
-						id="categoriaNE" />
-
-					<h:outputLabel for="titoloNE" value="Titolo : " />
-					<h:outputText value="#{questionariController.element.titolo}"
-						id="titoloNE" />
-
-					<h:outputLabel for="punteggioMassimoNE"
-						value="Punteggio massimo : " />
-					<h:outputText value="#{modelliController.element.punteggioMassimo}"
-						id="punteggioMassimoNE">
-						<f:convertNumber maxFractionDigits="0" />
-					</h:outputText>
-
-				</h:panelGrid>
-				<h:panelGrid columns="2" style="text-align: left;"
-					rendered="#{questionariController.element.statoQuestionario.name() ne 'CREATO'}">
-
-					<h:outputLabel for="categoria" value="Categoria : " />
-					<h:outputText
-						value="#{questionariController.element.categoria.nome}"
-						id="categoria" />
-
-					<h:outputLabel for="titolo" value="Titolo : " />
-					<h:outputText value="#{questionariController.element.titolo}"
-						id="titolo" />
-
-					<h:outputLabel for="dataPreparazione" value="Preparato il : " />
-					<h:outputText
-						value="#{questionariController.element.dataPreparazione}"
-						id="dataPreparazione">
-						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-					</h:outputText>
-
-					<h:outputLabel for="dataEsecuzione" value="Somministrato il : " />
-					<h:outputText
-						value="#{questionariController.element.dataEsecuzione}"
-						id="dataEsecuzione">
-						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-					</h:outputText>
-
-					<h:outputLabel for="candidato" value="Candidato : " />
-					<h:outputText value="#{questionariController.element.candidato}"
-						id="candidato" />
-
-					<h:outputLabel for="esaminatore" value="Esaminatore : " />
-					<h:outputText value="#{questionariController.element.esaminatore}"
-						id="esaminatore" />
-
-					<h:outputLabel for="statoQuestionario" value="Stato : " />
-					<h:outputText
-						value="#{questionariController.element.statoQuestionario}"
-						id="statoQuestionario" />
-
-					<h:outputLabel for="punteggio" value="Punteggio : " />
-					<h:panelGroup id="punteggio">
-						<h:outputText
-							value="#{questionariController.element.punteggioTotale}">
-							<f:convertNumber minFractionDigits="2" maxFractionDigits="2" />
-						</h:outputText>
-						su
-						<h:outputText
-							value="#{questionariController.element.punteggioMassimo}">
-							<f:convertNumber maxFractionDigits="0" />
-						</h:outputText>
-					</h:panelGroup>
-
-				</h:panelGrid>
-
-				<br />
-				<ui:include src="../domande-pesate/list-fragment.xhtml">
-					<ui:param name="model"
-						value="#{questionariController.element.domandePesate}" />
-					<ui:param name="suffix" value="DP" />
-				</ui:include>
-
-				<br />
-
-			</p:panel>
-
-		</h:form>
 	</ui:define>
 </ui:composition>
