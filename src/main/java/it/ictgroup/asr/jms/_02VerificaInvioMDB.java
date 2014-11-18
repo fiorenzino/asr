@@ -18,7 +18,7 @@ import org.jboss.logging.Logger;
 
 @MessageDriven(name = "_02VerificaInvioMDB", activationConfig = {
          @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-         @ActivationConfigProperty(propertyName = "destination", propertyValue = AppConstants.FLUSSI_ASR_QUEUE),
+         @ActivationConfigProperty(propertyName = "destination", propertyValue = AppConstants.VERIFICA_INVIO_ASR_QUEUE),
          @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
          @ActivationConfigProperty(propertyName = "maxSession", propertyValue = "1"),
          @ActivationConfigProperty(propertyName = "transactionTimeout", propertyValue = "3600"),

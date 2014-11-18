@@ -82,6 +82,6 @@ public class InviiRepository extends BaseRepository<Invio>
       getEm().createNativeQuery(
                "UPDATE Invio as I SET I.StatoInvio = :STATO WHERE I.ID = :ID")
                .setParameter("ID", id)
-               .setParameter("STATO", statoInvio).executeUpdate();
+               .setParameter("STATO", statoInvio.name()).executeUpdate();
    }
 }

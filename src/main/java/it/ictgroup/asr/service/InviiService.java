@@ -122,7 +122,7 @@ public class InviiService
       map.put(AppKeys.ELABORAZIONE_ID_2.name(), invio.getFile2().getId());
       map.put(AppKeys.INVIO_ID.name(), invio.getId());
       map.put(AppKeys.TIPOLOGIA_FLUSSO_1.name(), invio.getFile1().getConfigurazione().getTipologiaFlusso().name());
-      map.put(AppKeys.TIPOLOGIA_FLUSSO_1.name(), invio.getFile2().getConfigurazione().getTipologiaFlusso().name());
+      map.put(AppKeys.TIPOLOGIA_FLUSSO_2.name(), invio.getFile2().getConfigurazione().getTipologiaFlusso().name());
       context.createProducer().send(verificaInvioAsrQueue, map);
    }
 }
