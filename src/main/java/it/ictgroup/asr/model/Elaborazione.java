@@ -25,6 +25,7 @@ public class Elaborazione implements Serializable
    private Date dataEnd;
    private String fileName;
    private StatoElaborazione statoElaborazione;
+   private boolean congiunta;
 
    public Elaborazione()
    {
@@ -115,5 +116,20 @@ public class Elaborazione implements Serializable
    public void setDataCreazione(Date dataCreazione)
    {
       this.dataCreazione = dataCreazione;
+   }
+
+   public boolean isCongiunta()
+   {
+      return congiunta;
+   }
+
+   public void setCongiunta(boolean congiunta)
+   {
+      this.congiunta = congiunta;
+   }
+
+   public static void main(String[] args)
+   {
+      Elaborazione elaborazione = new Elaborazione();
    }
 }

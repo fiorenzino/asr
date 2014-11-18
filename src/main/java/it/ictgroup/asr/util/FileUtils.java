@@ -26,11 +26,12 @@ public class FileUtils
       return result;
    }
 
-   public static List<String> listFilesWithFilter(String folderPath, List<String> filesList) throws IOException
+   public static List<String> listFilesWithFilter(String folderPath, String postfix, List<String> filesList)
+            throws IOException
    {
       List<String> result = new ArrayList<>();
 
-      DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(folderPath));
+      DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(folderPath), postfix);
       for (Path entry : stream)
       {
          String fileName = entry.getFileName().getName(0).toString();

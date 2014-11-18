@@ -24,6 +24,7 @@ public class Configurazione implements Serializable
    private TipologiaFlusso tipologiaFlusso;
    private String folder;
    private int orderBy;
+   private String postfisso;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,6 +77,16 @@ public class Configurazione implements Serializable
    public void setNome(String nome)
    {
       this.nome = nome;
+   }
+
+   public String getPostfisso()
+   {
+      return postfisso;
+   }
+
+   public void setPostfisso(String postfisso)
+   {
+      this.postfisso = postfisso;
    }
 
 }

@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	template="/WEB-INF/layout/t.xhtml">
+
+	<ui:define name="title">Creazione Applicazione</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="mainForm">
+
+			<p:panelGrid columns="4"
+				columnClasses="fixedWidth25,fixedWidth25,fixedWidth25, fixedWidth25"
+				style="width:75%">
+				<f:facet name="header">Dati</f:facet>
+
+				<h:outputLabel value="Nome (*):" for="nome" />
+				<p:inputText id="nome" placeholder="nome"
+					value="#{applicazioniController.element.nome}"
+					requiredMessage="E' obbligatorio specificare il nome"
+					required="true">
+				</p:inputText>
+
+				<h:outputLabel value="Sigla (*):" for="sigla" />
+				<p:inputText id="sigla" placeholder="sigla"
+					value="#{applicazioniController.element.sigla}"
+					requiredMessage="E' obbligatorio specificare la sigla"
+					required="true">
+				</p:inputText>
+			</p:panelGrid>
+
+			<br />
+
+			<h:panelGrid columns="4" id="buttonGrid">
+
+				<p:commandButton action="#{applicazioniController.update}"
+					value="Aggiorna"
+					rendered="#{not empty applicazioniController.element.id}"
+					ajax="false" />
+
+				<p:commandButton action="#{applicazioniController.save}"
+					value="Salva" rendered="#{empty applicazioniController.element.id}"
+					ajax="false" />
+
+				<p:commandButton action="#{applicazioniController.delete}"
+					value="Elimina"
+					onclick="if ( ! confirm('Confermi l\'eliminazione?') ) return false;"
+					rendered="#{not empty applicazioniController.element.id}"
+					ajax="false" immediate="true" />
+
+				<p:commandButton action="#{applicazioniController.reset}"
+					value="Annulla" ajax="false" immediate="true" />
+			</h:panelGrid>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

@@ -18,6 +18,29 @@
 			<h:panelGrid columns="2">
 
 				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
+					rendered="#{applicazioniController.clear}">
+					<f:facet name="header">
+						<h:outputText value="Applicazioni" />
+					</f:facet>
+					<h:panelGrid columns="2">
+						<h:panelGroup
+							style="vertical-align:middle; font-size: 48px; padding: 10px;"
+							layout="block">
+							<i class="fa fa-tasks"> </i>
+						</h:panelGroup>
+						<h:panelGroup style="vertical-align:middle;">
+							<h:commandLink action="#{applicazioniController.listPage}">
+								<h:outputText value="Lista" />
+							</h:commandLink>
+							<br />
+							<h:commandLink action="#{applicazioniController.addElement}">
+								<h:outputText value="Aggiungi" />
+							</h:commandLink>
+						</h:panelGroup>
+					</h:panelGrid>
+				</p:panel>
+
+				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
 					rendered="#{configurazioniController.clear}">
 					<f:facet name="header">
 						<h:outputText value="Configurazioni" />
@@ -43,7 +66,7 @@
 				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
 					rendered="#{elaborazioniController.clear}">
 					<f:facet name="header">
-						<h:outputText value="Elaborazioni" />
+						<h:outputText value="Elaborazioni Singole" />
 					</f:facet>
 					<h:panelGrid columns="2">
 						<h:panelGroup
@@ -58,6 +81,29 @@
 							<br />
 							<h:commandLink action="#{elaborazioniController.elabora}">
 								<h:outputText value="Lancia Elaborazione" />
+							</h:commandLink>
+						</h:panelGroup>
+					</h:panelGrid>
+				</p:panel>
+
+				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
+					rendered="#{inviiController.clear}">
+					<f:facet name="header">
+						<h:outputText value="Invii" />
+					</f:facet>
+					<h:panelGrid columns="2">
+						<h:panelGroup
+							style="vertical-align:middle; font-size: 48px; padding: 10px;"
+							layout="block">
+							<i class="fa fa-external-link"> </i>
+						</h:panelGroup>
+						<h:panelGroup style="vertical-align:middle;">
+							<h:commandLink action="#{inviiController.listPage}">
+								<h:outputText value="Lista" />
+							</h:commandLink>
+							<br />
+							<h:commandLink action="#{inviiController.elabora}">
+								<h:outputText value="Verifica Invii" />
 							</h:commandLink>
 						</h:panelGroup>
 					</h:panelGrid>

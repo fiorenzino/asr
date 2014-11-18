@@ -1,0 +1,128 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:coop="http://www.coopservice.it/commons2/taglib"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/layout/t.xhtml">
+
+	<ui:define name="title">Invii effettuati</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="mainForm">
+			<h:panelGrid columns="5" id="buttonGrid">
+
+				<h:outputLabel for="tipologiaInvio" value="Tipologia invio:" />
+				<p:selectOneMenu style="width: 200px;" id="tipologiaInvio"
+					value="#{inviiController.search.obj.tipologiaInvio}">
+					<f:selectItems value="#{tipologieInvioItems}" />
+				</p:selectOneMenu>
+
+				<p:spacer width="10px" />
+
+				<h:outputLabel for="statoInvio" value="Stato invio:" />
+				<p:selectOneMenu style="width: 200px;" id="statoInvio"
+					value="#{inviiController.search.obj.statoInvio}">
+					<f:selectItems value="#{statiInvioItems}" />
+				</p:selectOneMenu>
+
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<p:commandButton action="#{inviiController.reloadAjax}"
+					update=":mainForm :global:messages list" value="Cerca" />
+
+				<p:commandButton action="#{inviiController.resetAjax}"
+					update=":mainForm :global:messages list" value="Pulisci" />
+			</h:panelGrid>
+
+			<p:spacer width="100%" height="10px" />
+
+			<p:dataTable id="list" var="m" rowIndexVar="rowIndex"
+				value="#{inviiController.model}" paginator="true"
+				paginatorPosition="bottom" rows="#{inviiController.rowsPerPage}"
+				lazy="true" style="width: 100%; font-size: smaller;"
+				emptyMessage="Non ci sono invii per la ricerca effettuata.">
+				<f:facet name="header">Lista invii effettiati</f:facet>
+				<p:column>
+
+					<h:outputText value="#{rowIndex+1}" />
+
+				</p:column>
+				<p:column headerText="identificativo">
+
+					<h:outputText value="#{m.id}" />
+
+				</p:column>
+				<p:column headerText="tipologia invio">
+					<h:outputText value="#{m.tipologiaInvio.name()}" />
+				</p:column>
+				<p:column headerText="applicazione">
+					<h:outputText value="#{m.applicazione.nome}" />
+				</p:column>
+				<p:column headerText="periodo Da">
+
+					<h:outputText value="#{m.periodoDa}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>
+
+				</p:column>
+				<p:column headerText="periodo A">
+					<h:outputText value="#{m.periodoA}">
+						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="file1">
+					<h:outputText value="#{m.file1.fileName}"
+						rendered="#{not empty m.file1}" />
+				</p:column>
+				<p:column headerText="file2">
+					<h:outputText value="#{m.file2.fileName}"
+						rendered="#{not empty m.file2}" />
+				</p:column>
+				<p:column headerText="fileRitorno">
+					<h:outputText value="#{m.fileRitorno.fileName}"
+						rendered="#{not empty m.fileRitorno}" />
+				</p:column>
+
+
+				<p:column headerText="stato">
+					<h:outputText value="#{m.statoInvio.name()}" />
+				</p:column>
+				<p:column headerText="errori">
+					<h:outputText value="#{m.errori}" />
+				</p:column>
+
+				<p:column headerText="operazioni">
+
+					<p:commandLink immediate="true" style="font-size: 24px;"
+						title="dettagli" action="#{inviiController.caricaFileRisposta}"
+						styleClass="fa fa-info-circle navLink" ajax="false">
+					</p:commandLink>
+					<p:spacer width="5px" />
+					<p:commandLink immediate="true" style="font-size: 24px;"
+						title="carica file risposta"
+						action="#{inviiController.caricaFileRisposta}"
+						styleClass="fa fa-edit navLink" ajax="false">
+					</p:commandLink>
+					<p:spacer width="5px" />
+					<p:commandLink immediate="true" style="font-size: 24px;"
+						title="segna senza errori"
+						action="#{inviiController.segnaSenzaErrori}"
+						styleClass="fa fa-microphone navLink" ajax="false">
+					</p:commandLink>
+
+				</p:column>
+
+			</p:dataTable>
+
+			<br />
+
+			<p:commandButton action="#{inviiController.elabora}"
+				value="Verifica Invii" immediate="true" ajax="false" />
+
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

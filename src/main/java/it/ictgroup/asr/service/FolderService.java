@@ -4,7 +4,6 @@ import it.ictgroup.asr.management.AppConstants;
 import it.ictgroup.asr.management.AppKeys;
 import it.ictgroup.asr.model.Configurazione;
 import it.ictgroup.asr.model.Elaborazione;
-import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import it.ictgroup.asr.repository.ConfigurazioniRepository;
 import it.ictgroup.asr.repository.ElaborazioniRepository;
 import it.ictgroup.asr.util.FileUtils;
@@ -53,6 +52,7 @@ public class FolderService
          List<String> filesElaborati = elaborazioniRepository.getFilePerConfigurazione(configurazione.getId());
          // leggo la cartella dei files
          List<String> filesInCartellaFiltrati = FileUtils.listFilesWithFilter(configurazione.getFolder(),
+                  configurazione.getPostfisso(),
                   filesElaborati);
          // se trovo un file che non ho elaborato, lo mando in coda
          for (String fileName : filesInCartellaFiltrati)
