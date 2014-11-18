@@ -2,14 +2,17 @@ package it.ictgroup.asr.repository;
 
 import it.ictgroup.asr.model.Elaborazione;
 import it.ictgroup.asr.model.enums.StatoElaborazione;
+import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import it.ictgroup.asr.model.enums.TipologiaInvio;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.Asynchronous;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -106,34 +109,59 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       return result;
    }
 
-   // @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-   public void avviato(Long id) throws Exception
+   @Asynchronous
+   public void avviato(Long id)
    {
-      getEm().createNativeQuery(
-               "UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO, E.dataStart = :DATA WHERE E.ID = :ID")
-               .setParameter("ID", id)
-               .setParameter("DATA", new Date())
-               .setParameter("STATO", StatoElaborazione.AVVIATO.name()).executeUpdate();
+      try
+      {
+         getEm().createNativeQuery(
+                  "UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO, E.dataStart = :DATA WHERE E.ID = :ID")
+                  .setParameter("ID", id)
+                  .setParameter("DATA", new Date())
+                  .setParameter("STATO", StatoElaborazione.AVVIATO.name()).executeUpdate();
+      }
+      catch (Exception e)
+      {
+         logger.info(e.getMessage());
+      }
+
    }
 
-   // @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-   public void errore(Long id) throws Exception
+   @Asynchronous
+   public void errore(Long id)
    {
-      getEm().createNativeQuery(
-               "UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO, E.dataEnd = :DATA WHERE E.ID = :ID")
-               .setParameter("ID", id)
-               .setParameter("DATA", new Date())
-               .setParameter("STATO", StatoElaborazione.ERRORE.name()).executeUpdate();
+      try
+      {
+         getEm().createNativeQuery(
+                  "UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO, E.dataEnd = :DATA WHERE E.ID = :ID")
+                  .setParameter("ID", id)
+                  .setParameter("DATA", new Date())
+                  .setParameter("STATO", StatoElaborazione.ERRORE.name()).executeUpdate();
+      }
+      catch (Exception e)
+      {
+         logger.info(e.getMessage());
+      }
+
    }
 
-   public void eseguito(Long id) throws Exception
+   @Asynchronous
+   public void eseguito(Long id)
    {
-      getEm().createNativeQuery(
-               "UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO, "
-                        + " E.dataEnd = :DATA WHERE E.ID = :ID")
-               .setParameter("ID", id)
-               .setParameter("DATA", new Date())
-               .setParameter("STATO", StatoElaborazione.ESEGUITO.name()).executeUpdate();
+      try
+      {
+         getEm().createNativeQuery(
+                  "UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO, "
+                           + " E.dataEnd = :DATA WHERE E.ID = :ID")
+                  .setParameter("ID", id)
+                  .setParameter("DATA", new Date())
+                  .setParameter("STATO", StatoElaborazione.ESEGUITO.name()).executeUpdate();
+      }
+      catch (Exception e)
+      {
+         logger.info(e.getMessage());
+      }
+
    }
 
    public Map<TipologiaInvio, List<Elaborazione>> getElaborazioniNonCongiunte()
@@ -237,5 +265,49 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       }
       getEm().createNativeQuery(query).setParameter("ID", id).executeUpdate();
       delete(id);
+   }
+
+   public int countRighe(Long id, TipologiaFlusso tipologiaFlusso) throws Exception
+   {
+      String query = "";
+      switch (tipologiaFlusso)
+      {
+      case A1:
+         query = "select count(*) FROM Flussoa1 WHERE elaborazione_id = :ID";
+         break;
+      case A2:
+         query = "select count(*) FROM Flussoa2 WHERE elaborazione_id = :ID";
+         break;
+      case A2R:
+         query = "select count(*) FROM Flussoa2 WHERE elaborazione_id = :ID";
+         break;
+      case B:
+         query = null;
+         break;
+      case C1:
+         query = "select count(*) FROM Flussoc1 WHERE elaborazione_id = :ID";
+         break;
+      case C2:
+         query = "select count(*) FROM Flussoc2 WHERE elaborazione_id = :ID";
+         break;
+      case C2R:
+         query = "select count(*) FROM Flussoc2r WHERE elaborazione_id = :ID";
+         break;
+      case D:
+         query = null;
+         break;
+      case E:
+         query = null;
+         break;
+      case F:
+         query = null;
+         break;
+      case G:
+         query = null;
+         break;
+      }
+
+      BigInteger result = (BigInteger) getEm().createNativeQuery(query).setParameter("ID", id).getSingleResult();
+      return result != null ? result.intValue() : 0;
    }
 }

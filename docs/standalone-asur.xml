@@ -400,6 +400,10 @@
                         <entry name="java:/jms/queue/flussiAsr"/>
                         <entry name="java:jboss/exported/jms/queue/flussiAsr"/>
                     </jms-queue>
+                    <jms-queue name="verificaInvioAsr">
+                        <entry name="java:/jms/queue/verificaInvioAsr"/>
+                        <entry name="java:jboss/exported/jms/queue/verificaInvioAsr"/>
+                    </jms-queue>
                 </jms-destinations>
             </hornetq-server>
         </subsystem>

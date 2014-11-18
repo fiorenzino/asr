@@ -9,5 +9,6 @@ public class AppConstants
    
    
    public static final String FLUSSI_ASR_QUEUE = "java:/jms/queue/flussiAsr";
+   public static final String VERIFICA_INVIO_ASR_QUEUE = "java:/jms/queue/verificaInvioAsr";
 
 }
