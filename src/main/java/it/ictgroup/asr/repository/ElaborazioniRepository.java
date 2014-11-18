@@ -2,8 +2,10 @@ package it.ictgroup.asr.repository;
 
 import it.ictgroup.asr.model.Elaborazione;
 import it.ictgroup.asr.model.enums.StatoElaborazione;
+import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import it.ictgroup.asr.model.enums.TipologiaInvio;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -237,5 +239,49 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       }
       getEm().createNativeQuery(query).setParameter("ID", id).executeUpdate();
       delete(id);
+   }
+
+   public int countRighe(Long id, TipologiaFlusso tipologiaFlusso) throws Exception
+   {
+      String query = "";
+      switch (tipologiaFlusso)
+      {
+      case A1:
+         query = "select count(*) FROM Flussoa1 WHERE elaborazione_id = :ID";
+         break;
+      case A2:
+         query = "select count(*) FROM Flussoa2 WHERE elaborazione_id = :ID";
+         break;
+      case A2R:
+         query = "select count(*) FROM Flussoa2 WHERE elaborazione_id = :ID";
+         break;
+      case B:
+         query = null;
+         break;
+      case C1:
+         query = "select count(*) FROM Flussoc1 WHERE elaborazione_id = :ID";
+         break;
+      case C2:
+         query = "select count(*) FROM Flussoc2 WHERE elaborazione_id = :ID";
+         break;
+      case C2R:
+         query = "select count(*) FROM Flussoc2r WHERE elaborazione_id = :ID";
+         break;
+      case D:
+         query = null;
+         break;
+      case E:
+         query = null;
+         break;
+      case F:
+         query = null;
+         break;
+      case G:
+         query = null;
+         break;
+      }
+
+      BigInteger result = (BigInteger) getEm().createNativeQuery(query).getSingleResult();
+      return result != null ? result.intValue() : 0;
    }
 }
