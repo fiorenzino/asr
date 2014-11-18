@@ -25,12 +25,13 @@ green="\033[32m"
 orange="\033[31;33m"
 
 DBDIALECTS=("mysql" "postgres")
+ACTIONS=("Generate SQL sripts form MDB file" "Import SQL scripts into the database")
 DBHOST_DEFAULT=localhost
 DBNAME_DEFAULT=asr
 DBUSER_DEFAULT=asr
 DBPSW_DEFAULT=asr
 MDB_FILE_DEFAULT=Spe_db.mdb
-DEST_DIR=../sqlscripts
+DEST_DIR_DEFAULT=../sqlscripts
 IFS=$'\n'
 FORCE_SKIP_INSERT=0
 FORCE_INSERT=0
@@ -39,6 +40,23 @@ FORCE_INSERT=0
 
 
 ########################################## Functions ##########################################
+
+chooseAction () {
+    read -t 1 -n 10000 discard
+
+    echo -e "Select option:"
+    echo -e "1) Generate SQL sripts from MDB file"
+    echo -e "2) Import SQL scripts into the database"
+    echo -e -n "#? "
+    while [ true ]; do
+        read action
+        case $action in
+            1 ) break ;;
+            2 ) break ;;
+            * ) echo "Invalid option. Try another one."; continue ;;
+        esac
+    done
+}
 
 printHelp () {
     echo -e "${bold}USAGE:${normal}"
@@ -50,6 +68,8 @@ printHelp () {
 }
 
 chooseDialect () {
+    read -t 1 -n 10000 discard
+
     echo "Choose a sql dialect:"
     select dialect in "${DBDIALECTS[@]}"; do
         case $dialect in
@@ -60,7 +80,11 @@ chooseDialect () {
     done
 }
 
-chooseParams () {
+chooseImportParams () {
+    read -t 1 -n 10000 discard
+
+    chooseDialect
+
     read -r -p "Database host [$DBHOST_DEFAULT]: " DBHOST
     DBHOST=${DBHOST:-$DBHOST_DEFAULT}
 
@@ -73,32 +97,137 @@ chooseParams () {
     read -r -p "Database name [$DBNAME_DEFAULT]: " DBNAME
     DBNAME=${DBNAME:-$DBNAME_DEFAULT}
 
-    read -r -p "MDB file [$MDB_FILE_DEFAULT]: " MDB_FILE
-    MDB_FILE=${MDB_FILE:-$MDB_FILE_DEFAULT}
+    read -r -p "SQL scripts directory [$DEST_DIR_DEFAULT]: " DEST_DIR
+    DEST_DIR=${DEST_DIR:-$DEST_DIR_DEFAULT}
 }
 
+chooseGenerateParams () {
+    read -t 1 -n 10000 discard
+
+    chooseDialect
+
+    read -r -p "MDB file [$MDB_FILE_DEFAULT]: " MDB_FILE
+    MDB_FILE=${MDB_FILE:-$MDB_FILE_DEFAULT}
+
+    read -r -p "SQL scripts directory [$DEST_DIR_DEFAULT]: " DEST_DIR
+    DEST_DIR=${DEST_DIR:-$DEST_DIR_DEFAULT}
+}
+
+# $1 : question text
+# $2 : default answer
 confirm () {
+    if [ $# -lt 2 ]; then
+        echo -e "${red}You have to pass question text and default answer${normal}"
+    fi
+
+    read -t 1 -n 10000 discard
+
     # call with a prompt string or use a default
-    read -r -p "Do you want execute the sql script? [y/N] " response
+    read -r -p "$1" response
     case $response in
         [yY][eE][sS]|[yY])
             true
             ;;
-        *)
+        [nN][oO])
             false
+            ;;
+        *)
+            if [[ "$2" == "y" ]] ; then
+                true
+            else
+                false
+            fi
             ;;
     esac
 }
 
+# $1 : sql_dialect
+# $2 : DEST_DIR
+generateSchemas () {
+    if [ $# -lt 2 ]; then
+        echo -e "${red}You have to pass MDB file and dir path args${normal}"
+    fi
+
+    for table in `mdb-tables -1 ${1}`;
+    do
+        tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]*//g' | sed 's/[-]*//g' )
+        echo -e "Generating schema for ${bold}$tableNoWhiteSpaces${normal}"
+        mdb-schema -T "$table" "$1" | sed -e "s/$table/$tableNoWhiteSpaces/g" > "$2/$tableNoWhiteSpaces.sql";
+    done
+}
+
+# $1 : sql_dialect
+# $2 : database
+# $3 : DEST_DIR
+generateInserts () {
+    if [ $# -lt 2 ]; then
+        echo -e "${red}You have to pass MDB file and dir path args${normal}"
+    fi
+
+    for table in `mdb-tables -1 ${2}`;
+    do
+        tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]*//g' | sed 's/[-]*//g' )
+        echo -e "Generating inserts for ${bold}$tableNoWhiteSpaces${normal}"
+        mdb-export -H -I "$1" "$2" "$table" | sed -e "s/$table/$tableNoWhiteSpaces/g" >> "$3/$tableNoWhiteSpaces.sql";
+    done
+}
+
+# $1 : sql_dialect
+# $2 : sql file
 execInsert () {
+    if [ $# -lt 2 ]; then
+        echo -e "${red}You have to pass sql dialect and file args${normal}"
+    fi
+
     case "$1" in
         mysql )
-            `mysql < ${DEST_DIR}/${tableNoWhiteSpaces}.sql -h ${DBHOST} --database ${DBNAME} -u${DBUSER} -p${DBPSW}` ;;
+            echo -e "Executing SQL script ${2}"
+            `mysql < ${2} -h ${DBHOST} --database ${DBNAME} -u${DBUSER} -p${DBPSW}` ;;
         postgres )
-            `psql -h ${DBHPST} -U${DBUSER} -W${DBPSW} -d${DBNAME} -f ${DEST_DIR}/${tableNoWhiteSpaces}.sql` ;;
+            echo -e "Executing SQL script ${2}"
+            #`psql -h ${DBHOST} -U ${DBUSER} -d ${DBNAME} -f ${2}` ;;
+#            `psql < ${2} -h ${DBHOST} -U ${DBUSER} -d ${DBNAME}` ;;
+            `psql -h ${DBHOST} -U ${DBUSER} ${DBNAME} < ${2}` ;;
         * )
-            echo -e "${red}Invalid sql dialect!!${normal}" ;;
+            echo -e "${red}Invalid SQL dialect!!${normal}" ;;
     esac
+}
+
+# $1 : sql_dialect
+# $2 : DEST_DIR
+# $3 : FORCE_SKIP_INSERT
+# $4 : FORCE_INSERT
+importScripts () {
+    if [ $# -lt 2 ]; then
+        echo -e "${red}You have to pass sql dialect and dir path args${normal}"
+    fi
+
+    FORCE_SKIP_INSERT=$3
+    FORCE_INSERT=$4
+
+    for file in "$2"/*; do
+        if [ $FORCE_SKIP_INSERT -ne 1 ] ; then
+            if [ $FORCE_INSERT -eq 1 ] || confirm "Do you want to import ${file}? [y/N] " "n"; then
+                execInsert "$1" "$file"
+            fi
+        fi
+    done
+}
+
+importScriptsWithQuestions () {
+        read -t 1 -n 10000 discard
+
+        if confirm "Do you want to import all generated SQL scripts? [y/N] " "n"; then
+            FORCE_SKIP_INSERT=0
+            FORCE_INSERT=1
+        elif confirm "Do you want to skip import of all generated SQL scripts? [y/N] " "n"; then
+            FORCE_SKIP_INSERT=1
+            FORCE_INSERT=0
+        else
+            FORCE_SKIP_INSERT=0
+            FORCE_INSERT=0
+        fi
+        importScripts "$dialect" "$DEST_DIR" $FORCE_SKIP_INSERT $FORCE_INSERT
 }
 
 ###############################################################################################
@@ -125,41 +254,35 @@ while [ "x$1" != "x" ]; do
 	fi
 done
 
-chooseDialect
-chooseParams
+chooseAction
 
-### Schema ###
-echo "###########################"
-echo "## Generating schemas... ##"
-echo "###########################"
+case $action in
+    1 )
+        chooseGenerateParams
 
-for table in `mdb-tables -1 ${MDB_FILE}`;
-do
-    tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]*//g' | sed 's/[-]*//g' )
-    echo -e "Generating schema for ${bold}$tableNoWhiteSpaces${normal}"
-    mdb-schema -T "$table" $MDB_FILE mysql | sed -e "s/$table/$tableNoWhiteSpaces/g" > "$DEST_DIR/$tableNoWhiteSpaces.sql";
-done
+        ### Schema ###
+        echo
+        echo -e "${orange}Generating SQL schema scripts...${normal}"
+        generateSchemas "$MDB_FILE" "$DEST_DIR"
+        echo -e "${orange}SQL schema scripts generation done!${normal}"
 
-### Insert ###
+        ### Insert ###
+        echo
+        echo -e "${orange}Generating SQL insert scripts...${normal}"
+        generateInserts "$dialect" "$MDB_FILE" "$DEST_DIR"
+        echo -e "${orange}SQL insert scripts generation done!${normal}"
+        ;;
+
+    2 )
+        chooseImportParams
+        echo
+        importScriptsWithQuestions
+        ;;
+
+    * )
+        echo -e "${red}Invalid action selected!!${normal}"
+        ;;
+esac
+
 echo
-echo "###########################"
-echo "## Generating inserts... ##"
-echo "###########################"
-
-for table in `mdb-tables -1 ${MDB_FILE}`;
-do
-    tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]*//g' | sed 's/[-]*//g' )
-    echo -e "Generating inserts for ${bold}$tableNoWhiteSpaces${normal}"
-    mdb-export -H -I mysql $MDB_FILE "$table" | sed -e "s/$table/$tableNoWhiteSpaces/g" >> "$DEST_DIR/$tableNoWhiteSpaces.sql";
-
-    if [ $FORCE_SKIP_INSERT -ne 1 ] ; then
-        if [ $FORCE_INSERT -eq 1 ] || confirm ; then
-            execInsert "$dialect"
-        fi
-    fi
-done
-
 echo -e "${green}Done!!${normal}"
-
-
-
