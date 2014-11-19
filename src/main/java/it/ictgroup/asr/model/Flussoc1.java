@@ -5,23 +5,17 @@ import it.ictgroup.asr.util.annotations.FieldIgnored;
 import it.ictgroup.asr.util.annotations.FixedLengthRecord;
 import it.ictgroup.asr.util.enums.FixedMode;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
 @Entity
-public class Flussoc1 implements Serializable
+public class Flussoc1 extends BaseFlusso
 {
    @FieldIgnored
    private static final long serialVersionUID = 1L;
-
-   @FieldIgnored
-   private Long uid;
 
    @FieldFixedLength(3)
    // 1-3 Regione addebitante 3
@@ -137,11 +131,6 @@ public class Flussoc1 implements Serializable
    // 239-258 ID 20-->PROVO DI +
    @FieldFixedLength(22)
    private String id;
-
-   @FieldIgnored
-   private String nomeFile;
-   @FieldIgnored
-   private Elaborazione elaborazione;
 
    public String getRegioneAddebitante()
    {
@@ -413,18 +402,6 @@ public class Flussoc1 implements Serializable
       this.id = id;
    }
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   public Long getUid()
-   {
-      return uid;
-   }
-
-   public void setUid(Long uid)
-   {
-      this.uid = uid;
-   }
-
    @Override
    public String toString()
    {
@@ -466,29 +443,6 @@ public class Flussoc1 implements Serializable
                         + modalitaRilevazioneCodiceFiscale + ", " : "")
                + (onereDellaPrestazione != null ? "onereDellaPrestazione=" + onereDellaPrestazione + ", " : "")
                + (id != null ? "id=" + id : "") + "]";
-   }
-
-   public String getNomeFile()
-   {
-      return nomeFile;
-   }
-
-   public void setNomeFile(String nomeFile)
-   {
-      this.nomeFile = nomeFile;
-   }
-
-   @ManyToOne
-   public Elaborazione getElaborazione()
-   {
-      if (this.elaborazione == null)
-         this.elaborazione = new Elaborazione();
-      return elaborazione;
-   }
-
-   public void setElaborazione(Elaborazione elaborazione)
-   {
-      this.elaborazione = elaborazione;
    }
 
 }

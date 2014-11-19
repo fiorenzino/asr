@@ -5,23 +5,14 @@ import it.ictgroup.asr.util.annotations.FieldIgnored;
 import it.ictgroup.asr.util.annotations.FixedLengthRecord;
 import it.ictgroup.asr.util.enums.FixedMode;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
 @Entity
-public class Flussoa1 implements Serializable
+public class Flussoa1 extends BaseFlusso
 {
    @FieldIgnored
    private static final long serialVersionUID = 1L;
-
-   @FieldIgnored
-   private Long uid;
 
    // 1-8
    // Codice istituto di ricovero
@@ -145,23 +136,6 @@ public class Flussoa1 implements Serializable
    // 1
    @FieldFixedLength(1)
    public String posizioneContabile;
-
-   @FieldIgnored
-   private String nomeFile;
-   @FieldIgnored
-   private Elaborazione elaborazione;
-
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   public Long getUid()
-   {
-      return uid;
-   }
-
-   public void setUid(Long uid)
-   {
-      this.uid = uid;
-   }
 
    public String getCodiceIstitutoDiRicovero()
    {
@@ -367,7 +341,7 @@ public class Flussoa1 implements Serializable
    public String toString()
    {
       return "Flussoa1 ["
-               + (uid != null ? "uid=" + uid + ", " : "")
+               + (super.getUid() != null ? "uid=" + super.getUid() + ", " : "")
                + (codiceIstitutoDiRicovero != null ? "codiceIstitutoDiRicovero=" + codiceIstitutoDiRicovero + ", " : "")
                + (numeroDellaScheda != null ? "numeroDellaScheda=" + numeroDellaScheda + ", " : "")
                + (regioneAddebitante != null ? "regioneAddebitante=" + regioneAddebitante + ", " : "")
@@ -395,29 +369,6 @@ public class Flussoa1 implements Serializable
                + (codiceRegionaleMedicoPrescrittore != null ? "codiceRegionaleMedicoPrescrittore="
                         + codiceRegionaleMedicoPrescrittore + ", " : "")
                + (posizioneContabile != null ? "posizioneContabile=" + posizioneContabile : "") + "]";
-   }
-
-   @ManyToOne
-   public Elaborazione getElaborazione()
-   {
-      if (this.elaborazione == null)
-         this.elaborazione = new Elaborazione();
-      return elaborazione;
-   }
-
-   public void setElaborazione(Elaborazione elaborazione)
-   {
-      this.elaborazione = elaborazione;
-   }
-
-   public String getNomeFile()
-   {
-      return nomeFile;
-   }
-
-   public void setNomeFile(String nomeFile)
-   {
-      this.nomeFile = nomeFile;
    }
 
 }

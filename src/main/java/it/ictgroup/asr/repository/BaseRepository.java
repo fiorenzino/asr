@@ -1,5 +1,6 @@
 package it.ictgroup.asr.repository;
 
+import javax.ejb.Asynchronous;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 

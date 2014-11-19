@@ -1,13 +1,14 @@
 package it.ictgroup.asr.service;
 
+import it.ictgroup.asr.model.BaseFlusso;
+import it.ictgroup.asr.model.Flussoa1;
+import it.ictgroup.asr.model.Flussoa2;
+import it.ictgroup.asr.model.Flussoa2r;
 import it.ictgroup.asr.model.Flussoc1;
 import it.ictgroup.asr.model.Flussoc2;
 import it.ictgroup.asr.model.Flussoc2r;
 import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import it.ictgroup.asr.repository.ElaborazioniRepository;
-import it.ictgroup.asr.repository.Flussoc1Repository;
-import it.ictgroup.asr.repository.Flussoc2Repository;
-import it.ictgroup.asr.repository.Flussoc2rRepository;
 import it.ictgroup.asr.util.FlowerFileHelper;
 
 import java.io.Serializable;
@@ -23,112 +24,60 @@ import org.jboss.ejb3.annotation.TransactionTimeout;
 import org.jboss.logging.Logger;
 
 @Stateless
-public class FlussocService implements Serializable
+public class FlussoService implements Serializable
 {
+   Logger logger = Logger.getLogger(this.getClass());
+
    private static final long serialVersionUID = 1L;
-
-   @Inject
-   Flussoc1Repository flussoc1Repository;
-
-   @Inject
-   Flussoc2Repository flussoc2Repository;
-
-   @Inject
-   Flussoc2rRepository flussoc2rRepository;
 
    @Inject
    ElaborazioniRepository elaborazioniRepository;
 
-   Logger logger = Logger.getLogger(this.getClass());
-
-   @TransactionTimeout(value = 18000, unit = TimeUnit.SECONDS)
-   public void parse(TipologiaFlusso tipologiaFlusso, String nomeFile, String folder,
-            Long idElaborazione) throws Exception
+   @SuppressWarnings("rawtypes")
+   private <T extends BaseFlusso> FlowerFileHelper getFlowerFileHelper(TipologiaFlusso tipologiaFlusso)
+            throws Exception
    {
       switch (tipologiaFlusso)
       {
+      case A1:
+         return new FlowerFileHelper<Flussoa1>(Flussoa1.class);
+      case A2:
+         return new FlowerFileHelper<Flussoa2>(Flussoa2.class);
+      case A2R:
+         return new FlowerFileHelper<Flussoa2r>(Flussoa2r.class);
       case C1:
-         elaboraC1(nomeFile, folder,
-                  idElaborazione);
-         break;
+         return new FlowerFileHelper<Flussoc1>(Flussoc1.class);
       case C2:
-         elaboraC2(nomeFile, folder,
-                  idElaborazione);
-         break;
+         return new FlowerFileHelper<Flussoc2>(Flussoc2.class);
       case C2R:
-         elaboraC2r(nomeFile, folder,
-                  idElaborazione);
-         break;
-
+         return new FlowerFileHelper<Flussoc2r>(Flussoc2r.class);
       default:
-         break;
+         throw new Exception();
       }
    }
 
-   private void elaboraC1(String nomeFile, String folder,
-            Long idElaborazione) throws
-            Exception
+   @TransactionTimeout(value = 18000, unit = TimeUnit.SECONDS)
+   public <T extends BaseFlusso> void parse(TipologiaFlusso tipologiaFlusso, String nomeFile,
+            String folder,
+            Long idElaborazione) throws Exception
    {
-      FlowerFileHelper<Flussoc1> filedReader = new FlowerFileHelper<Flussoc1>(Flussoc1.class);
+      @SuppressWarnings("unchecked")
+      FlowerFileHelper<T> filedReader = getFlowerFileHelper(tipologiaFlusso);
       int i = 0;
       try (Scanner scanner = new Scanner(Paths.get(folder + nomeFile), StandardCharsets.UTF_8.name()))
       {
-         Flussoc1 flussoc1 = null;
+         T flussoa1 = null;
          while (scanner.hasNextLine())
          {
             i++;
-            flussoc1 = filedReader.valorize(scanner.nextLine());
-            logger.info(TipologiaFlusso.C1.name() + ")" + i);
-            flussoc1.getElaborazione().setId(idElaborazione);
-            flussoc1Repository.persistAsync(flussoc1);
+            flussoa1 = filedReader.valorize(scanner.nextLine());
+            logger.info(tipologiaFlusso.name() + ")" + i);
+            flussoa1.getElaborazione().setId(idElaborazione);
+            elaborazioniRepository.persistAsync(flussoa1);
          }
       }
       elaborazioniRepository.eseguito(idElaborazione, i);
-      logger.info("C1 ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
-   }
-
-   private void elaboraC2(String nomeFile, String folder,
-            Long idElaborazione) throws
-            Exception
-   {
-      FlowerFileHelper<Flussoc2> filedReader = new FlowerFileHelper<Flussoc2>(Flussoc2.class);
-      int i = 0;
-      try (Scanner scanner = new Scanner(Paths.get(folder + nomeFile), StandardCharsets.UTF_8.name()))
-      {
-         Flussoc2 flussoc2 = null;
-         while (scanner.hasNextLine())
-         {
-            i++;
-            flussoc2 = filedReader.valorize(scanner.nextLine());
-            logger.info(TipologiaFlusso.C2.name() + ")" + i);
-            flussoc2.getElaborazione().setId(idElaborazione);
-            flussoc2Repository.persistAsync(flussoc2);
-         }
-      }
-      elaborazioniRepository.eseguito(idElaborazione, i);
-      logger.info("C2 ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
-   }
-
-   private void elaboraC2r(String nomeFile, String folder,
-            Long idElaborazione) throws
-            Exception
-   {
-      FlowerFileHelper<Flussoc2r> filedReader = new FlowerFileHelper<Flussoc2r>(Flussoc2r.class);
-      int i = 0;
-      try (Scanner scanner = new Scanner(Paths.get(folder + nomeFile), StandardCharsets.UTF_8.name()))
-      {
-         Flussoc2r flussoc2r = null;
-         while (scanner.hasNextLine())
-         {
-            i++;
-            flussoc2r = filedReader.valorize(scanner.nextLine());
-            logger.info(TipologiaFlusso.C2R.name() + ")" + i);
-            flussoc2r.getElaborazione().setId(idElaborazione);
-            flussoc2rRepository.persistAsync(flussoc2r);
-         }
-      }
-      elaborazioniRepository.eseguito(idElaborazione, i);
-      logger.info("C2R ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
+      logger.info(tipologiaFlusso.name() + " ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
    }
 
    // private void elaboraC1(String nomeFile, String folder,

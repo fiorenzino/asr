@@ -28,13 +28,10 @@ import javax.persistence.ManyToOne;
 
 @FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
 @Entity
-public class Flussoc2r implements Serializable
+public class Flussoc2r extends BaseFlusso
 {
    @FieldIgnored
    private static final long serialVersionUID = 1L;
-
-   @FieldIgnored
-   private Long uid;
 
    // 1-3 Regione addebitante
    @FieldFixedLength(3)
@@ -247,23 +244,6 @@ public class Flussoc2r implements Serializable
    // 238-240 Regione/Azienda iniziale di addebito
    @FieldFixedLength(3)
    public String regioneInizialeAddebito;
-
-   @FieldIgnored
-   private String nomeFile;
-   @FieldIgnored
-   private Elaborazione elaborazione;
-
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   public Long getUid()
-   {
-      return uid;
-   }
-
-   public void setUid(Long uid)
-   {
-      this.uid = uid;
-   }
 
    public String getRegioneAddebitante()
    {
@@ -853,29 +833,6 @@ public class Flussoc2r implements Serializable
                ", id='" + id + '\'' +
                ", regioneInizialeAddebito='" + regioneInizialeAddebito + '\'' +
                ']';
-   }
-
-   public String getNomeFile()
-   {
-      return nomeFile;
-   }
-
-   public void setNomeFile(String nomeFile)
-   {
-      this.nomeFile = nomeFile;
-   }
-
-   @ManyToOne
-   public Elaborazione getElaborazione()
-   {
-      if (this.elaborazione == null)
-         this.elaborazione = new Elaborazione();
-      return elaborazione;
-   }
-
-   public void setElaborazione(Elaborazione elaborazione)
-   {
-      this.elaborazione = elaborazione;
    }
 
    public boolean containsErrors()
