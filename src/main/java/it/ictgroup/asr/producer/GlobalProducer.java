@@ -14,6 +14,9 @@ import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
 import org.giavacms.commons.producer.AbstractProducer;
+import org.giavacms.commons.util.JSFUtils;
+import org.giavacms.commons.util.PrimeUtils;
+import org.primefaces.model.menu.MenuModel;
 
 @Named
 @SessionScoped
@@ -88,6 +91,13 @@ public class GlobalProducer extends AbstractProducer
          super.getItems().put(TipologiaInvio.class, tipologieInvioItemss.toArray(new SelectItem[] {}));
       }
       return super.getItems().get(TipologiaInvio.class);
+   }
+
+   @Produces
+   @Named
+   public MenuModel getBreadCrumbs()
+   {
+      return PrimeUtils.primeBreadcrumbs();
    }
 
 }
