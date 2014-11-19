@@ -5,6 +5,7 @@ import it.ictgroup.asr.model.Flussoc2;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.Asynchronous;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -20,7 +21,7 @@ public class Flussoc2Repository extends BaseRepository<Flussoc2>
    @Override
    protected String getDefaultOrderBy()
    {
-      return " id asc ";
+      return " uid asc ";
    }
 
    @Override
@@ -84,15 +85,28 @@ public class Flussoc2Repository extends BaseRepository<Flussoc2>
 
    }
 
-   public Flussoc2 getRiferimento(Flussoc2 flussoc2)
+   // public Flussoc2 getRiferimento(Flussoc2 flussoc2)
+   // {
+   // Search<Flussoc2> search = new Search<Flussoc2>(Flussoc2.class);
+   // search.getObj().setRegioneAddebitante(flussoc2.getRegioneAddebitante());
+   // search.getObj().setZonaTerritoriale(flussoc2.getZonaTerritoriale());
+   // search.getObj().setId(flussoc2.getId());
+   // search.getObj().setProgressivoRigaPerRicetta(flussoc2.getProgressivoRigaPerRicetta());
+   // List<Flussoc2> resList = getList(search, 0, 0);
+   // return (resList != null && resList.size() > 0) ? resList.get(0) : null;
+   // }
+
+   @Asynchronous
+   public void persistAsync(Flussoc2 flussoc2)
    {
-      Search<Flussoc2> search = new Search<Flussoc2>(Flussoc2.class);
-      search.getObj().setRegioneAddebitante(flussoc2.getRegioneAddebitante());
-      search.getObj().setZonaTerritoriale(flussoc2.getZonaTerritoriale());
-      search.getObj().setId(flussoc2.getId());
-      search.getObj().setProgressivoRigaPerRicetta(flussoc2.getProgressivoRigaPerRicetta());
-      List<Flussoc2> resList = getList(search, 0, 0);
-      return (resList != null && resList.size() > 0) ? resList.get(0) : null;
+      try
+      {
+         getEm().persist(flussoc2);
+      }
+      catch (Exception e)
+      {
+         logger.info(e.getMessage());
+      }
    }
 
 }

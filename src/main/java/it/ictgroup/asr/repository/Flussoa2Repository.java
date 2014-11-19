@@ -5,6 +5,7 @@ import it.ictgroup.asr.model.Flussoa2;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.Asynchronous;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -20,7 +21,7 @@ public class Flussoa2Repository extends BaseRepository<Flussoa2>
    @Override
    protected String getDefaultOrderBy()
    {
-      return " id asc ";
+      return " uid asc ";
    }
 
    @Override
@@ -66,15 +67,28 @@ public class Flussoa2Repository extends BaseRepository<Flussoa2>
 
    }
 
-   public Flussoa2 getRiferimento(Flussoa2 flussoa2)
+   // public Flussoa2 getRiferimento(Flussoa2 flussoa2)
+   // {
+   // Search<Flussoa2> search = new Search<Flussoa2>(Flussoa2.class);
+   // search.getObj().setRegioneAddebitante(flussoa2.getRegioneAddebitante());
+   // // search.getObj().setAziendaUsl(flussoa2.getAziendaUsl()); // TODO dov'è????
+   // search.getObj().setCodiceIstituto(flussoa2.getCodiceIstituto());
+   // search.getObj().setNumeroDellaScheda(flussoa2.getNumeroDellaScheda());
+   // List<Flussoa2> resList = getList(search, 0, 0);
+   // return (resList != null && resList.size() > 0) ? resList.get(0) : null;
+   // }
+
+   @Asynchronous
+   public void persistAsync(Flussoa2 flussoa2)
    {
-      Search<Flussoa2> search = new Search<Flussoa2>(Flussoa2.class);
-      search.getObj().setRegioneAddebitante(flussoa2.getRegioneAddebitante());
-      // search.getObj().setAziendaUsl(flussoa2.getAziendaUsl()); // TODO dov'è????
-      search.getObj().setCodiceIstituto(flussoa2.getCodiceIstituto());
-      search.getObj().setNumeroDellaScheda(flussoa2.getNumeroDellaScheda());
-      List<Flussoa2> resList = getList(search, 0, 0);
-      return (resList != null && resList.size() > 0) ? resList.get(0) : null;
+      try
+      {
+         getEm().persist(flussoa2);
+      }
+      catch (Exception e)
+      {
+         logger.info(e.getMessage());
+      }
    }
 
 }

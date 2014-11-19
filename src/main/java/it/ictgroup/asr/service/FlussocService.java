@@ -8,15 +8,17 @@ import it.ictgroup.asr.repository.ElaborazioniRepository;
 import it.ictgroup.asr.repository.Flussoc1Repository;
 import it.ictgroup.asr.repository.Flussoc2Repository;
 import it.ictgroup.asr.repository.Flussoc2rRepository;
+import it.ictgroup.asr.util.FlowerFileHelper;
 
 import java.io.Serializable;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import org.coury.jfilehelpers.engines.FileHelperEngine;
 import org.jboss.ejb3.annotation.TransactionTimeout;
 import org.jboss.logging.Logger;
 
@@ -67,70 +69,136 @@ public class FlussocService implements Serializable
             Long idElaborazione) throws
             Exception
    {
-      FileHelperEngine<Flussoc1> fileHelperEngine = new FileHelperEngine<>(Flussoc1.class);
-      List<Flussoc1> righe = fileHelperEngine.readFile(folder + nomeFile);
-      if (righe != null && righe.size() > 0)
+      FlowerFileHelper<Flussoc1> filedReader = new FlowerFileHelper<Flussoc1>(Flussoc1.class);
+      int i = 0;
+      try (Scanner scanner = new Scanner(Paths.get(folder + nomeFile), StandardCharsets.UTF_8.name()))
       {
-         logger.info(righe.size());
-         int i = 0;
-         for (Flussoc1 flussoc1 : righe)
+         Flussoc1 flussoc1 = null;
+         while (scanner.hasNextLine())
          {
             i++;
-            logger.info(TipologiaFlusso.C1.name() + ")" + i + "/" + righe.size());
+            flussoc1 = filedReader.valorize(scanner.nextLine());
+            logger.info(TipologiaFlusso.C1.name() + ")" + i);
             flussoc1.getElaborazione().setId(idElaborazione);
-            flussoc1Repository.persist(flussoc1);
+            flussoc1Repository.persistAsync(flussoc1);
          }
-         elaborazioniRepository.eseguito(idElaborazione);
-         logger.info("C1 ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
       }
-
+      elaborazioniRepository.eseguito(idElaborazione, i);
+      logger.info("C1 ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
    }
 
    private void elaboraC2(String nomeFile, String folder,
             Long idElaborazione) throws
             Exception
    {
-      FileHelperEngine<Flussoc2> fileHelperEngine = new FileHelperEngine<>(Flussoc2.class);
-      List<Flussoc2> righe = fileHelperEngine.readFile(folder + nomeFile);
-      if (righe != null && righe.size() > 0)
+      FlowerFileHelper<Flussoc2> filedReader = new FlowerFileHelper<Flussoc2>(Flussoc2.class);
+      int i = 0;
+      try (Scanner scanner = new Scanner(Paths.get(folder + nomeFile), StandardCharsets.UTF_8.name()))
       {
-         logger.info(righe.size());
-         int i = 0;
-         for (Flussoc2 flussoc2 : righe)
+         Flussoc2 flussoc2 = null;
+         while (scanner.hasNextLine())
          {
             i++;
-            logger.info(TipologiaFlusso.C2.name() + ")" + i + "/" + righe.size());
+            flussoc2 = filedReader.valorize(scanner.nextLine());
+            logger.info(TipologiaFlusso.C2.name() + ")" + i);
             flussoc2.getElaborazione().setId(idElaborazione);
-            flussoc2Repository.persist(flussoc2);
+            flussoc2Repository.persistAsync(flussoc2);
          }
-         elaborazioniRepository.eseguito(idElaborazione);
-         logger.info("C2 ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
       }
-
+      elaborazioniRepository.eseguito(idElaborazione, i);
+      logger.info("C2 ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
    }
 
    private void elaboraC2r(String nomeFile, String folder,
             Long idElaborazione) throws
             Exception
    {
-      FileHelperEngine<Flussoc2r> fileHelperEngine = new FileHelperEngine<>(Flussoc2r.class);
-      List<Flussoc2r> righe = fileHelperEngine.readFile(folder + nomeFile);
-      if (righe != null && righe.size() > 0)
+      FlowerFileHelper<Flussoc2r> filedReader = new FlowerFileHelper<Flussoc2r>(Flussoc2r.class);
+      int i = 0;
+      try (Scanner scanner = new Scanner(Paths.get(folder + nomeFile), StandardCharsets.UTF_8.name()))
       {
-         logger.info(righe.size());
-         int i = 0;
-         for (Flussoc2r flussoc2r : righe)
+         Flussoc2r flussoc2r = null;
+         while (scanner.hasNextLine())
          {
             i++;
-            logger.info(TipologiaFlusso.C1.name() + ")" + i + "/" + righe.size());
+            flussoc2r = filedReader.valorize(scanner.nextLine());
+            logger.info(TipologiaFlusso.C2R.name() + ")" + i);
             flussoc2r.getElaborazione().setId(idElaborazione);
-            flussoc2rRepository.persist(flussoc2r);
+            flussoc2rRepository.persistAsync(flussoc2r);
          }
-         elaborazioniRepository.eseguito(idElaborazione);
-         logger.info("C2R ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
       }
-
+      elaborazioniRepository.eseguito(idElaborazione, i);
+      logger.info("C2R ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
    }
+
+   // private void elaboraC1(String nomeFile, String folder,
+   // Long idElaborazione) throws
+   // Exception
+   // {
+   // FileHelperEngine<Flussoc1> fileHelperEngine = new FileHelperEngine<>(Flussoc1.class);
+   // List<Flussoc1> righe = fileHelperEngine.readFile(folder + nomeFile);
+   // if (righe != null && righe.size() > 0)
+   // {
+   // logger.info(righe.size());
+   // int i = 0;
+   // for (Flussoc1 flussoc1 : righe)
+   // {
+   // i++;
+   // logger.info(TipologiaFlusso.C1.name() + ")" + i + "/" + righe.size());
+   // flussoc1.getElaborazione().setId(idElaborazione);
+   // flussoc1Repository.persist(flussoc1);
+   // }
+   // elaborazioniRepository.eseguito(idElaborazione, i);
+   // logger.info("C1 ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
+   // }
+   //
+   // }
+   //
+   // private void elaboraC2(String nomeFile, String folder,
+   // Long idElaborazione) throws
+   // Exception
+   // {
+   // FileHelperEngine<Flussoc2> fileHelperEngine = new FileHelperEngine<>(Flussoc2.class);
+   // List<Flussoc2> righe = fileHelperEngine.readFile(folder + nomeFile);
+   // if (righe != null && righe.size() > 0)
+   // {
+   // logger.info(righe.size());
+   // int i = 0;
+   // for (Flussoc2 flussoc2 : righe)
+   // {
+   // i++;
+   // logger.info(TipologiaFlusso.C2.name() + ")" + i + "/" + righe.size());
+   // flussoc2.getElaborazione().setId(idElaborazione);
+   // flussoc2Repository.persist(flussoc2);
+   // }
+   // elaborazioniRepository.eseguito(idElaborazione, i);
+   // logger.info("C2 ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
+   // }
+   //
+   // }
+   //
+   // private void elaboraC2r(String nomeFile, String folder,
+   // Long idElaborazione) throws
+   // Exception
+   // {
+   // FileHelperEngine<Flussoc2r> fileHelperEngine = new FileHelperEngine<>(Flussoc2r.class);
+   // List<Flussoc2r> righe = fileHelperEngine.readFile(folder + nomeFile);
+   // if (righe != null && righe.size() > 0)
+   // {
+   // logger.info(righe.size());
+   // int i = 0;
+   // for (Flussoc2r flussoc2r : righe)
+   // {
+   // i++;
+   // logger.info(TipologiaFlusso.C1.name() + ")" + i + "/" + righe.size());
+   // flussoc2r.getElaborazione().setId(idElaborazione);
+   // flussoc2rRepository.persist(flussoc2r);
+   // }
+   // elaborazioniRepository.eseguito(idElaborazione, i);
+   // logger.info("C2R ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile);
+   // }
+   //
+   // }
 
    // private void elaboraC2(String nomeFile, String folder,
    // Long idElaborazione) throws

@@ -5,7 +5,6 @@ import it.ictgroup.asr.model.Flussoa1;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.coury.jfilehelpers.engines.FileHelperEngine;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,11 +15,11 @@ public class FlussoA1Test
    {
       try
       {
-         FileHelperEngine<Flussoa1> fileHelperEngine =
-                  new FileHelperEngine<Flussoa1>(Flussoa1.class);
+         // FileHelperEngine<Flussoa1> fileHelperEngine =
+         // new FileHelperEngine<Flussoa1>(Flussoa1.class);
          List<Flussoa1> righe = new ArrayList<Flussoa1>();
-         righe = fileHelperEngine.readFile(
-                  "docs/data/A1.txt");
+         // righe = fileHelperEngine.readFile(
+         // "docs/data/A1.txt");
          if (righe != null)
          {
 

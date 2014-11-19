@@ -7,6 +7,142 @@
 	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 
 
-FLUSSO C2
+	<h:form id="mainForm">
+		<h:panelGrid columns="5" id="buttonGrid">
 
+			<h:outputLabel for="nomeFile" value="Nome File: " />
+			<p:inputText id="nomeFile" style="width: 200px;"
+				value="#{flussoc2Controller.search.obj.nomeFile}" />
+
+		</h:panelGrid>
+		<h:panelGrid columns="2">
+			<p:commandButton action="#{flussoc2Controller.reloadAjax}"
+				update=":mainForm :global:messages list" value="Cerca" />
+
+			<p:commandButton action="#{flussoc2Controller.resetAjax}"
+				update=":mainForm :global:messages list" value="Pulisci" />
+		</h:panelGrid>
+
+		<p:spacer width="100%" height="10px" />
+
+		<h:outputText value="FLUSSO C2" />
+
+		<p:spacer width="100%" height="10px" />
+
+		<p:dataTable id="list" var="m" rowIndexVar="rowIndex"
+			value="#{flussoc2Controller.model}" paginator="true"
+			paginatorPosition="bottom"
+			rows="#{elaborazioniController.rowsPerPage}" lazy="true"
+			style="width: 100%; font-size: smaller;"
+			emptyMessage="Non ci sono elaborazioni per la ricerca effettuata.">
+			<f:facet name="header">Lista elaborazioni</f:facet>
+			<p:column headerText="n.ro">
+				<center>
+					<h:outputText value="#{rowIndex+1}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="dataErogazionePrestazioni">
+				<center>
+					<h:outputText value="#{m.dataErogazionePrestazioni}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="dataPAC">
+				<center>
+					<h:outputText value="#{m.dataPAC}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="dataPrenotazione">
+				<center>
+					<h:outputText value="#{m.dataPrenotazione}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="dataPrimaDisponibilitaErogazione">
+				<center>
+					<h:outputText value="#{m.dataPrimaDisponibilitaErogazione}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="dataRefertazione">
+				<center>
+					<h:outputText value="#{m.dataRefertazione}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="effettivaPrioritaRiscontrata">
+				<center>
+					<h:outputText value="#{m.effettivaPrioritaRiscontrata}" />
+				</center>
+			</p:column>
+
+
+			<p:column headerText="err01">
+				<center>
+					<h:outputText value="#{m.err01}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="err02">
+				<center>
+					<h:outputText value="#{m.err02}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="err03">
+				<center>
+					<h:outputText value="#{m.err03}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="err04">
+				<center>
+					<h:outputText value="#{m.err04}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="err05">
+				<center>
+					<h:outputText value="#{m.err05}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="err06">
+				<center>
+					<h:outputText value="#{m.err06}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="err07">
+				<center>
+					<h:outputText value="#{m.err07}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="err08">
+				<center>
+					<h:outputText value="#{m.err08}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="err09">
+				<center>
+					<h:outputText value="#{m.err09}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="err10">
+				<center>
+					<h:outputText value="#{m.err10}" />
+				</center>
+			</p:column>
+
+
+
+
+		</p:dataTable>
+
+	</h:form>
 </ui:composition>

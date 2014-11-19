@@ -56,7 +56,6 @@
 		<version.hibernate-core>4.2.0.Final</version.hibernate-core>
 		<version.resteasy>3.0.6.Final</version.resteasy>
 		<version.commons-lang>2.6</version.commons-lang>
-		<version.jfilehelpers>0.3.0-SNAPSHOT</version.jfilehelpers>
 
 		<giavacms.commons-core.version>7.0.0-SNAPSHOT</giavacms.commons-core.version>
 		<giavacms.commons-gui.version>7.0.0-SNAPSHOT</giavacms.commons-gui.version>
@@ -86,6 +85,12 @@
 			<artifactId>wildfly-ejb3</artifactId>
 			<version>8.1.0.Final</version>
 			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>jconsole</artifactId>
+					<groupId>sun.jdk</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 
@@ -123,12 +128,7 @@
 			<artifactId>hibernate-core</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.coury.jfilehelpers</groupId>
-			<artifactId>jfilehelpers</artifactId>
-			<version>${version.jfilehelpers}</version>
-			<scope>compile</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>

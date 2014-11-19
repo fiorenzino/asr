@@ -26,6 +26,7 @@ public class Elaborazione implements Serializable
    private String fileName;
    private StatoElaborazione statoElaborazione;
    private boolean congiunta;
+   private int righe;
 
    public Elaborazione()
    {
@@ -128,8 +129,13 @@ public class Elaborazione implements Serializable
       this.congiunta = congiunta;
    }
 
-   public static void main(String[] args)
+   public int getRighe()
    {
-      Elaborazione elaborazione = new Elaborazione();
+      return righe;
+   }
+
+   public void setRighe(int righe)
+   {
+      this.righe = righe;
    }
 }

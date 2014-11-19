@@ -1,5 +1,10 @@
 package it.ictgroup.asr.model;
 
+import it.ictgroup.asr.util.annotations.FieldFixedLength;
+import it.ictgroup.asr.util.annotations.FieldIgnored;
+import it.ictgroup.asr.util.annotations.FixedLengthRecord;
+import it.ictgroup.asr.util.enums.FixedMode;
+
 import java.io.Serializable;
 
 import javax.persistence.Entity;
@@ -8,11 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.coury.jfilehelpers.annotations.FieldFixedLength;
-import org.coury.jfilehelpers.annotations.FieldIgnored;
-import org.coury.jfilehelpers.annotations.FixedLengthRecord;
-
-@FixedLengthRecord
+@FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
 @Entity
 public class Flussoc1 implements Serializable
 {
@@ -133,8 +134,8 @@ public class Flussoc1 implements Serializable
    @FieldFixedLength(1)
    private String onereDellaPrestazione;
 
-   // 239-258 ID 20
-   @FieldFixedLength(20)
+   // 239-258 ID 20-->PROVO DI +
+   @FieldFixedLength(22)
    private String id;
 
    @FieldIgnored

@@ -1,0 +1,27 @@
+1) aggiornare i corrispondenti record per i flussi:
+ 	- A2R => A2
+ 	- C2R => C2
+ 	da fare utilizzando query native asincrone
+ 
+2) permettere upload dei files a2R e C2R da maschera web e renaming corente a:
+ 	- nome applicazione
+ 	- periodo (dal al)
+ 	- tipologia di flusso
+ 	
+3) permettere upload dei flussi A1, A2, C1, C2
+ 	- rischio out of memory
+ 	
+4) chiudere il giro degli invii (upload del file A2R o C2r) o segnare come completo senza errori
+ 
+5) rendere gli invii eliminabili:
+	- con eliminazione a cascata dei file di elaborazione e flussi collegati
+
+6) configurare email
+
+7) configurare report
+
+8) aggiungere ulteriori controlli sui file dei flussi (oltre alla coerenza tra numero righe dei flussi A1 e A2/C1 e C2)
+
+9) completare le maschere dei vari flussi (aggiungere ricerca)
+
+10) aggiungere link ai vari report
