@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class AnnotationsTest
 {
 
-   public static void mainOK(String[] args) throws Exception
+   public static void main(String[] args) throws Exception
    {
       FlowerFileHelper<Flussoc1> filedReader = new FlowerFileHelper<Flussoc1>(Flussoc1.class);
 
@@ -24,7 +24,7 @@ public class AnnotationsTest
       System.out.println(flussoc1);
    }
 
-   public static void main(String[] args) throws Exception
+   public static void mainOK(String[] args) throws Exception
    {
       FlowerFileHelper<Flussoc1> filedReader = new FlowerFileHelper<Flussoc1>(Flussoc1.class);
 

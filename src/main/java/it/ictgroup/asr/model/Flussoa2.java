@@ -15,24 +15,15 @@ import it.ictgroup.asr.util.annotations.FieldIgnored;
 import it.ictgroup.asr.util.annotations.FixedLengthRecord;
 import it.ictgroup.asr.util.enums.FixedMode;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
 @Entity
-public class Flussoa2 implements Serializable
+public class Flussoa2 extends BaseFlusso
 {
 
    @FieldIgnored
    private static final long serialVersionUID = 1L;
-
-   @FieldIgnored
-   private Long uid;
 
    // 1-8
    // codice istituto
@@ -463,23 +454,6 @@ public class Flussoa2 implements Serializable
    // 6
    @FieldFixedLength(6)
    public String ripetizione;
-
-   @FieldIgnored
-   private String nomeFile;
-   @FieldIgnored
-   private Elaborazione elaborazione;
-
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   public Long getUid()
-   {
-      return uid;
-   }
-
-   public void setUid(Long uid)
-   {
-      this.uid = uid;
-   }
 
    public String getCodiceIstituto()
    {
@@ -1198,7 +1172,7 @@ public class Flussoa2 implements Serializable
    public String toString()
    {
       return "Flussoa2 ["
-               + (uid != null ? "uid=" + uid + ", " : "")
+               + (getUid() != null ? "uid=" + getUid() + ", " : "")
                + (codiceIstituto != null ? "codiceIstituto=" + codiceIstituto + ", " : "")
                + (numeroDellaScheda != null ? "numeroDellaScheda=" + numeroDellaScheda + ", " : "")
                + (regioneAddebitante != null ? "regioneAddebitante=" + regioneAddebitante + ", " : "")
@@ -1311,29 +1285,6 @@ public class Flussoa2 implements Serializable
                + (RegioneAziendaInizialeDiAddebito != null ? "RegioneAziendaInizialeDiAddebito="
                         + RegioneAziendaInizialeDiAddebito + ", " : "")
                + (ripetizione != null ? "ripetizione=" + ripetizione : "") + "]";
-   }
-
-   public String getNomeFile()
-   {
-      return nomeFile;
-   }
-
-   public void setNomeFile(String nomeFile)
-   {
-      this.nomeFile = nomeFile;
-   }
-
-   @ManyToOne
-   public Elaborazione getElaborazione()
-   {
-      if (this.elaborazione == null)
-         this.elaborazione = new Elaborazione();
-      return elaborazione;
-   }
-
-   public void setElaborazione(Elaborazione elaborazione)
-   {
-      this.elaborazione = elaborazione;
    }
 
    public boolean containsErrors()

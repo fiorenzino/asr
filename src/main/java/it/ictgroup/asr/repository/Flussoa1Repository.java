@@ -48,17 +48,6 @@ public class Flussoa1Repository extends BaseRepository<Flussoa1>
 
    }
 
-   @Asynchronous
-   public void persistAsync(Flussoa1 flussoa1)
-   {
-      try
-      {
-         getEm().persist(flussoa1);
-      }
-      catch (Exception e)
-      {
-         logger.info(e.getMessage());
-      }
-   }
+ 
 
 }

@@ -315,4 +315,17 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       BigInteger result = (BigInteger) getEm().createNativeQuery(query).setParameter("ID", id).getSingleResult();
       return result != null ? result.intValue() : 0;
    }
+
+   @Asynchronous
+   public void persistAsync(Object t)
+   {
+      try
+      {
+         getEm().persist(t);
+      }
+      catch (Exception e)
+      {
+         logger.info(e.getMessage());
+      }
+   }
 }

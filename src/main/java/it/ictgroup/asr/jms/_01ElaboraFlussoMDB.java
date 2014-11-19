@@ -4,8 +4,7 @@ import it.ictgroup.asr.management.AppConstants;
 import it.ictgroup.asr.management.AppKeys;
 import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import it.ictgroup.asr.repository.ElaborazioniRepository;
-import it.ictgroup.asr.service.FlussoaService;
-import it.ictgroup.asr.service.FlussocService;
+import it.ictgroup.asr.service.FlussoService;
 
 import java.util.concurrent.TimeUnit;
 
@@ -33,10 +32,7 @@ public class _01ElaboraFlussoMDB implements MessageListener
    Logger logger = Logger.getLogger(getClass());
 
    @Inject
-   FlussoaService flussoaService;
-
-   @Inject
-   FlussocService flussocService;
+   FlussoService flussoService;
 
    @Inject
    ElaborazioniRepository elaborazioniRepository;
@@ -56,31 +52,8 @@ public class _01ElaboraFlussoMDB implements MessageListener
          idElaborazione = msg.getLong(AppKeys.ELABORAZIONE_ID.name());
 
          logger.info("onMessage(), tipologiaFlusso:" + tipologiaFlusso + " nomeFile = " + nomeFile);
-         switch (tipologiaFlusso)
-         {
-         case A1:
-         case A2:
-         case A2R:
-            elaborazioniRepository.avviato(idElaborazione);
-            flussoaService.parse(tipologiaFlusso, nomeFile, folder, idElaborazione);
-            break;
-
-         case C1:
-         case C2:
-         case C2R:
-            elaborazioniRepository.avviato(idElaborazione);
-            flussocService.parse(tipologiaFlusso, nomeFile, folder, idElaborazione);
-            break;
-         case B:
-         case D:
-         case E:
-         case F:
-         case G:
-
-            break;
-         default:
-            break;
-         }
+         elaborazioniRepository.avviato(idElaborazione);
+         flussoService.parse(tipologiaFlusso, nomeFile, folder, idElaborazione);
       }
       catch (Throwable e)
       {

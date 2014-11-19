@@ -18,7 +18,7 @@ public class FlowerFileHelper<T>
    public Class<T> typeArgumentClass;
    public List<FileField> fields;
 
-   public FlowerFileHelper(Class<T> typeArgumentClass) throws InstantiationException, IllegalAccessException
+   public FlowerFileHelper(Class<T> typeArgumentClass)
    {
 
       this.typeArgumentClass = typeArgumentClass;
