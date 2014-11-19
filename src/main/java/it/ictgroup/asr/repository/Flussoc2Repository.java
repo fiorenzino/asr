@@ -49,16 +49,16 @@ public class Flussoc2Repository extends BaseRepository<Flussoc2>
 
    }
 
-   public Flussoc2 getRiferimento(Flussoc2 flussoc2)
-   {
-      Search<Flussoc2> search = new Search<Flussoc2>(Flussoc2.class);
-      search.getObj().setRegioneAddebitante(flussoc2.getRegioneAddebitante());
-      search.getObj().setZonaTerritoriale(flussoc2.getZonaTerritoriale());
-      search.getObj().setId(flussoc2.getId());
-      search.getObj().setProgressivoRigaPerRicetta(flussoc2.getProgressivoRigaPerRicetta());
-      List<Flussoc2> resList = getList(search, 0, 0);
-      return (resList != null && resList.size() > 0) ? resList.get(0) : null;
-   }
+   // public Flussoc2 getRiferimento(Flussoc2 flussoc2)
+   // {
+   // Search<Flussoc2> search = new Search<Flussoc2>(Flussoc2.class);
+   // search.getObj().setRegioneAddebitante(flussoc2.getRegioneAddebitante());
+   // search.getObj().setZonaTerritoriale(flussoc2.getZonaTerritoriale());
+   // search.getObj().setId(flussoc2.getId());
+   // search.getObj().setProgressivoRigaPerRicetta(flussoc2.getProgressivoRigaPerRicetta());
+   // List<Flussoc2> resList = getList(search, 0, 0);
+   // return (resList != null && resList.size() > 0) ? resList.get(0) : null;
+   // }
 
    @Asynchronous
    public void persistAsync(Flussoc2 flussoc2)
