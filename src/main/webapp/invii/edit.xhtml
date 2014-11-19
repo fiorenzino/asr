@@ -25,12 +25,8 @@
 					required="true">
 				</p:inputText>
 
-				<h:outputLabel value="Sigla (*):" for="sigla" />
-				<p:inputText id="sigla" placeholder="sigla"
-					value="#{applicazioniController.element.sigla}"
-					requiredMessage="E' obbligatorio specificare la sigla"
-					required="true">
-				</p:inputText>
+				<p:fileUpload fileUploadListener="#{fileBean.handleFileUpload}"
+					multiple="true" allowTypes="/(\.|\/)(txt|TXT)$/" />
 			</p:panelGrid>
 
 			<br />

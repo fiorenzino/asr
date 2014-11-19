@@ -59,9 +59,11 @@
 
 		<giavacms.commons-core.version>7.0.0-SNAPSHOT</giavacms.commons-core.version>
 		<giavacms.commons-gui.version>7.0.0-SNAPSHOT</giavacms.commons-gui.version>
-
+		<version.wildfly>8.1.0.Final</version.wildfly>
 
 		<primefaces.version>5.1</primefaces.version>
+		<version.commons-fileupload>1.3</version.commons-fileupload>
+		<version.webjars>4.2.0</version.webjars>
 
 		<version.jdk>1.8</version.jdk>
 	</properties>
@@ -71,7 +73,7 @@
 			<dependency>
 				<groupId>org.wildfly.bom</groupId>
 				<artifactId>jboss-javaee-7.0-with-all</artifactId>
-				<version>8.1.0.Final</version>
+				<version>${version.wildfly}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -83,7 +85,7 @@
 		<dependency>
 			<groupId>org.wildfly</groupId>
 			<artifactId>wildfly-ejb3</artifactId>
-			<version>8.1.0.Final</version>
+			<version>${version.wildfly}</version>
 			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
@@ -105,7 +107,7 @@
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
-			<version>1.2.2</version>
+			<version>${version.commons-fileupload}</version>
 			<scope>compile</scope>
 		</dependency>
 
@@ -156,10 +158,11 @@
 			<version>${giavacms.commons-gui.version}</version>
 		</dependency>
 
+		<!-- icons -->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>font-awesome</artifactId>
-			<version>4.2.0</version>
+			<version>${version.webjars}</version>
 		</dependency>
 
 

@@ -17,6 +17,7 @@ import org.giavacms.commons.annotation.OwnRepository;
 import org.giavacms.commons.annotation.ViewPage;
 import org.giavacms.commons.controller.AbstractLazyController;
 import org.giavacms.commons.util.FacesMessageUtils;
+import org.primefaces.event.FileUploadEvent;
 
 @Named
 @SessionScoped
@@ -67,6 +68,12 @@ public class InviiController extends AbstractLazyController<Invio>
       inviiRepository.update(invio);
       FacesMessageUtils.addFacesMessage("Aggiornato con successo");
       return null;
+   }
+
+   public void handleFileUpload(FileUploadEvent event)
+   {
+      // add facesmessage to display with growl
+      // application code
    }
 
 }
