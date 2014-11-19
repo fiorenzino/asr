@@ -1,5 +1,20 @@
 package it.ictgroup.asr.model;
 
+import it.ictgroup.asr.model.enums.flussoa.TipologiaERR01FlussoA;
+import it.ictgroup.asr.model.enums.flussoa.TipologiaERR02FlussoA;
+import it.ictgroup.asr.model.enums.flussoa.TipologiaERR03FlussoA;
+import it.ictgroup.asr.model.enums.flussoa.TipologiaERR04FlussoA;
+import it.ictgroup.asr.model.enums.flussoa.TipologiaERR05FlussoA;
+import it.ictgroup.asr.model.enums.flussoa.TipologiaERR06FlussoA;
+import it.ictgroup.asr.model.enums.flussoa.TipologiaERR07FlussoA;
+import it.ictgroup.asr.model.enums.flussoa.TipologiaERR08FlussoA;
+import it.ictgroup.asr.model.enums.flussoa.TipologiaERR09FlussoA;
+import it.ictgroup.asr.model.enums.flussoa.TipologiaERR10FlussoA;
+import it.ictgroup.asr.util.annotations.FieldFixedLength;
+import it.ictgroup.asr.util.annotations.FieldIgnored;
+import it.ictgroup.asr.util.annotations.FixedLengthRecord;
+import it.ictgroup.asr.util.enums.FixedMode;
+
 import java.io.Serializable;
 
 import javax.persistence.Entity;
@@ -7,12 +22,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import it.ictgroup.asr.model.enums.flussoa.*;
-import org.coury.jfilehelpers.annotations.FieldFixedLength;
-import org.coury.jfilehelpers.annotations.FieldIgnored;
-import org.coury.jfilehelpers.annotations.FixedLengthRecord;
-import org.coury.jfilehelpers.enums.FixedMode;
 
 @FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
 @Entity

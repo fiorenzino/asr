@@ -1,5 +1,10 @@
 package it.ictgroup.asr.model;
 
+import it.ictgroup.asr.util.annotations.FieldFixedLength;
+import it.ictgroup.asr.util.annotations.FieldIgnored;
+import it.ictgroup.asr.util.annotations.FixedLengthRecord;
+import it.ictgroup.asr.util.enums.FixedMode;
+
 import java.io.Serializable;
 
 import javax.persistence.Entity;
@@ -7,11 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import org.coury.jfilehelpers.annotations.FieldFixedLength;
-import org.coury.jfilehelpers.annotations.FieldIgnored;
-import org.coury.jfilehelpers.annotations.FixedLengthRecord;
-import org.coury.jfilehelpers.enums.FixedMode;
 
 @FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
 @Entity

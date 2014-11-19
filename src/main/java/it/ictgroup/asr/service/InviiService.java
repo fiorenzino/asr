@@ -48,7 +48,7 @@ public class InviiService
    {
       // carico tutti gli invii non
 
-      Map<TipologiaInvio, List<Elaborazione>> mappa = elaborazioniRepository.getElaborazioniNonCongiunte();
+      Map<TipologiaInvio, List<Elaborazione>> mappa = elaborazioniRepository.getElaborazioniNonCongiunteEseguite();
       for (TipologiaInvio tipologiaInvio : mappa.keySet())
       {
          List<Elaborazione> elaborazioni = mappa.get(tipologiaInvio);

@@ -45,11 +45,12 @@ public class InviiController extends AbstractLazyController<Invio>
       try
       {
          inviiService.verifica();
-         FacesMessageUtils.addFacesMessage("Verifica Invii effettuata con successo.");
+         FacesMessageUtils
+                  .addFacesMessage("Lancio Verifica Invii effettuata con successo. Attenzione: il processo puo' durare diversi minuti.");
       }
       catch (Exception e)
       {
-         FacesMessageUtils.addFacesMessage("Eccezione durante la verifica invii!");
+         FacesMessageUtils.addFacesMessage("Eccezione durante il lancio della verifica invii!");
       }
       return null;
    }

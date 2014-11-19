@@ -172,7 +172,8 @@ public class ElaborazioniController extends AbstractLazyController<Elaborazione>
       try
       {
          folderService.verifica();
-         FacesMessageUtils.addFacesMessage("ELaborazione effettuata con successo.");
+         FacesMessageUtils
+                  .addFacesMessage("Lancio elaborazione effettuata con successo. Attenzione: il processo puo' durare diversi minuti.");
       }
       catch (Exception e)
       {

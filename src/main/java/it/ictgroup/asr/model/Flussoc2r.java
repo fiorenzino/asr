@@ -9,6 +9,10 @@ import it.ictgroup.asr.model.enums.flussoc.TipologiaERR06FlussoC;
 import it.ictgroup.asr.model.enums.flussoc.TipologiaERR07FlussoC;
 import it.ictgroup.asr.model.enums.flussoc.TipologiaERR08FlussoC;
 import it.ictgroup.asr.model.enums.flussoc.TipologiaERR10FlussoC;
+import it.ictgroup.asr.util.annotations.FieldFixedLength;
+import it.ictgroup.asr.util.annotations.FieldIgnored;
+import it.ictgroup.asr.util.annotations.FixedLengthRecord;
+import it.ictgroup.asr.util.enums.FixedMode;
 
 import java.io.Serializable;
 
@@ -18,15 +22,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.coury.jfilehelpers.annotations.FieldFixedLength;
-import org.coury.jfilehelpers.annotations.FieldIgnored;
-import org.coury.jfilehelpers.annotations.FixedLengthRecord;
-
 /**
  * Created by stefano on 22/09/14.
  */
 
-@FixedLengthRecord
+@FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
 @Entity
 public class Flussoc2r implements Serializable
 {
@@ -241,7 +241,7 @@ public class Flussoc2r implements Serializable
    public String prestazioneErogataInConcomitanzaRicovero;
 
    // 218-237 ID
-   @FieldFixedLength(20)
+   @FieldFixedLength(22)
    public String id;
 
    // 238-240 Regione/Azienda iniziale di addebito

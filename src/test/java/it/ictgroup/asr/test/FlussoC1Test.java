@@ -5,7 +5,6 @@ import it.ictgroup.asr.model.Flussoc1;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.coury.jfilehelpers.engines.FileHelperEngine;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,11 +15,11 @@ public class FlussoC1Test
    {
       try
       {
-         FileHelperEngine<Flussoc1> fileHelperEngine =
-                  new FileHelperEngine<Flussoc1>(Flussoc1.class);
+         // FileHelperEngine<Flussoc1> fileHelperEngine =
+         //      new FileHelperEngine<Flussoc1>(Flussoc1.class);
          List<Flussoc1> righe = new ArrayList<Flussoc1>();
-         righe = fileHelperEngine.readFile(
-                  "docs/data/20140831-20140801C1.txt");
+         // righe = fileHelperEngine.readFile(
+         //       "docs/data/20140831-20140801C1.txt");
          if (righe != null)
          {
 

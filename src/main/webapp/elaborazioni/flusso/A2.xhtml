@@ -7,6 +7,216 @@
 	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 
 
-FLUSSO A2
+	<h:form id="mainForm">
+		<h:panelGrid columns="5" id="buttonGrid">
 
+			<h:outputLabel for="nomeFile" value="Nome File: " />
+			<p:inputText id="nomeFile" style="width: 200px;"
+				value="#{flussoa2Controller.search.obj.nomeFile}" />
+
+		</h:panelGrid>
+		<h:panelGrid columns="2">
+			<p:commandButton action="#{flussoa2Controller.reloadAjax}"
+				update=":mainForm :global:messages list" value="Cerca" />
+
+			<p:commandButton action="#{flussoa2Controller.resetAjax}"
+				update=":mainForm :global:messages list" value="Pulisci" />
+		</h:panelGrid>
+
+		<p:spacer width="100%" height="10px" />
+
+		<h:outputText value="FLUSSO A2" />
+
+		<p:spacer width="100%" height="10px" />
+
+		<p:dataTable id="list" var="m" rowIndexVar="rowIndex"
+			value="#{flussoa2Controller.model}" paginator="true"
+			paginatorPosition="bottom"
+			rows="#{elaborazioniController.rowsPerPage}" lazy="true"
+			style="width: 100%; font-size: smaller;"
+			emptyMessage="Non ci sono elaborazioni per la ricerca effettuata.">
+			<f:facet name="header">Lista elaborazioni</f:facet>
+			<p:column headerText="n.ro">
+				<center>
+					<h:outputText value="#{rowIndex+1}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="altraAttivitaEffettuataNellAmbitoDelRicovero">
+				<center>
+					<h:outputText
+						value="#{m.altraAttivitaEffettuataNellAmbitoDelRicovero}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="altroInterventoProcedura1">
+				<center>
+					<h:outputText value="#{m.altroInterventoProcedura1}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="altroInterventoProcedura2">
+				<center>
+					<h:outputText value="#{m.altroInterventoProcedura2}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="altroInterventoProcedura3">
+				<center>
+					<h:outputText value="#{m.altroInterventoProcedura3}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="altroInterventoProcedura4">
+				<center>
+					<h:outputText value="#{m.altroInterventoProcedura4}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="altroInterventoProcedura5">
+				<center>
+					<h:outputText value="#{m.altroInterventoProcedura5}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="autorizzazioneProroga">
+				<center>
+					<h:outputText value="#{m.autorizzazioneProroga}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="codiceIstituto">
+				<center>
+					<h:outputText value="#{m.codiceIstituto}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="data1TrasferimentoInterno">
+				<center>
+					<h:outputText value="#{m.data1TrasferimentoInterno}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="dataDiRicovero">
+				<center>
+					<h:outputText value="#{m.dataDiRicovero}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="dataInterventoChirurgicoPrincipaleParto">
+				<center>
+					<h:outputText value="#{m.dataInterventoChirurgicoPrincipaleParto}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="diagnosiConcomitanteComplicante1">
+				<center>
+					<h:outputText value="#{m.diagnosiConcomitanteComplicante1}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="diagnosiConcomitanteComplicante2">
+				<center>
+					<h:outputText value="#{m.diagnosiConcomitanteComplicante2}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="diagnosiConcomitanteComplicante3">
+				<center>
+					<h:outputText value="#{m.diagnosiConcomitanteComplicante3}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="diagnosiConcomitanteComplicante4">
+				<center>
+					<h:outputText value="#{m.diagnosiConcomitanteComplicante4}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="diagnosiConcomitanteComplicante5">
+				<center>
+					<h:outputText value="#{m.diagnosiConcomitanteComplicante5}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="diagnosiPrincipaleDiDimissione">
+				<center>
+					<h:outputText value="#{m.diagnosiPrincipaleDiDimissione}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="drgAssegnatoDallAziendaSanitariaErogatrice">
+				<center>
+					<h:outputText
+						value="#{m.drgAssegnatoDallAziendaSanitariaErogatrice}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="Err01">
+				<center>
+					<h:outputText value="#{m.err01}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="Err02">
+				<center>
+					<h:outputText value="#{m.err02}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="Err03">
+				<center>
+					<h:outputText value="#{m.err03}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="Err04">
+				<center>
+					<h:outputText value="#{m.err04}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="Err05">
+				<center>
+					<h:outputText value="#{m.err05}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="Err06">
+				<center>
+					<h:outputText value="#{m.err06}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="Err07">
+				<center>
+					<h:outputText value="#{m.err07}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="Err08">
+				<center>
+					<h:outputText value="#{m.err08}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="Err09">
+				<center>
+					<h:outputText value="#{m.err09}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="Err10">
+				<center>
+					<h:outputText value="#{m.err10}" />
+				</center>
+			</p:column>
+
+
+
+
+
+		</p:dataTable>
+
+	</h:form>
 </ui:composition>

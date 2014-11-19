@@ -146,14 +146,15 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
    }
 
    @Asynchronous
-   public void eseguito(Long id)
+   public void eseguito(Long id, int righe)
    {
       try
       {
          getEm().createNativeQuery(
                   "UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO, "
-                           + " E.dataEnd = :DATA WHERE E.ID = :ID")
+                           + " E.dataEnd = :DATA, E.righe = :RIGHE WHERE E.ID = :ID")
                   .setParameter("ID", id)
+                  .setParameter("RIGHE", righe)
                   .setParameter("DATA", new Date())
                   .setParameter("STATO", StatoElaborazione.ESEGUITO.name()).executeUpdate();
       }
@@ -164,12 +165,16 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
 
    }
 
-   public Map<TipologiaInvio, List<Elaborazione>> getElaborazioniNonCongiunte()
+   public Map<TipologiaInvio, List<Elaborazione>> getElaborazioniNonCongiunteEseguite()
    {
       Map<TipologiaInvio, List<Elaborazione>> mappa = new HashMap<TipologiaInvio, List<Elaborazione>>();
       List<Elaborazione> list = getEm()
-               .createQuery("SELECT e FROM Elaborazione e WHERE e.congiunta = :congiunta", Elaborazione.class)
-               .setParameter("congiunta", false).getResultList();
+               .createQuery(
+                        "SELECT e FROM Elaborazione e WHERE e.congiunta = :congiunta AND e.statoElaborazione = :statoElaborazione",
+                        Elaborazione.class)
+               .setParameter("congiunta", false)
+               .setParameter("statoElaborazione", StatoElaborazione.ESEGUITO)
+               .getResultList();
       for (Elaborazione elaborazione : list)
       {
          List<Elaborazione> lista = null;

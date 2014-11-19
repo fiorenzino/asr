@@ -7,6 +7,8 @@ import it.ictgroup.asr.repository.ElaborazioniRepository;
 import it.ictgroup.asr.service.FlussoaService;
 import it.ictgroup.asr.service.FlussocService;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.inject.Inject;
@@ -14,6 +16,7 @@ import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 
+import org.jboss.ejb3.annotation.TransactionTimeout;
 import org.jboss.logging.Logger;
 
 @MessageDriven(name = "_01ElaboraFlussoMDB", activationConfig = {
@@ -23,6 +26,7 @@ import org.jboss.logging.Logger;
          @ActivationConfigProperty(propertyName = "maxSession", propertyValue = "1"),
          @ActivationConfigProperty(propertyName = "transactionTimeout", propertyValue = "3600"),
          @ActivationConfigProperty(propertyName = "dLQMaxResent", propertyValue = "0") })
+@TransactionTimeout(value = 60 * 60, unit = TimeUnit.SECONDS)
 public class _01ElaboraFlussoMDB implements MessageListener
 {
 

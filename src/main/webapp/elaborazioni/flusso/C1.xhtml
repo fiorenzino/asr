@@ -7,6 +7,197 @@
 	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 
 
-FLUSSO C1
+	<h:form id="mainForm">
+		<h:panelGrid columns="5" id="buttonGrid">
 
+			<h:outputLabel for="nomeFile" value="Nome File: " />
+			<p:inputText id="nomeFile" style="width: 200px;"
+				value="#{flussoc1Controller.search.obj.nomeFile}" />
+
+		</h:panelGrid>
+		<h:panelGrid columns="2">
+			<p:commandButton action="#{flussoc1Controller.reloadAjax}"
+				update=":mainForm :global:messages list" value="Cerca" />
+
+			<p:commandButton action="#{flussoc1Controller.resetAjax}"
+				update=":mainForm :global:messages list" value="Pulisci" />
+		</h:panelGrid>
+
+		<p:spacer width="100%" height="10px" />
+
+		<h:outputText value="FLUSSO C1" />
+
+		<p:spacer width="100%" height="10px" />
+
+		<p:dataTable id="list" var="m" rowIndexVar="rowIndex"
+			value="#{flussoc1Controller.model}" paginator="true"
+			paginatorPosition="bottom"
+			rows="#{elaborazioniController.rowsPerPage}" lazy="true"
+			style="width: 100%; font-size: smaller;"
+			emptyMessage="Non ci sono elaborazioni per la ricerca effettuata.">
+			<f:facet name="header">Lista elaborazioni</f:facet>
+			<p:column headerText="n.ro">
+				<center>
+					<h:outputText value="#{rowIndex+1}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="codiceFiscalemedicoErogantePrescrittore">
+				<center>
+					<h:outputText value="#{m.codiceFiscalemedicoErogantePrescrittore}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="codiceFiscalemedicoErogantePrestazione">
+				<center>
+					<h:outputText value="#{m.codiceFiscalemedicoErogantePrestazione}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="codiceFiscaleUtente">
+				<center>
+					<h:outputText value="#{m.codiceFiscaleUtente}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="codiceStrutturaAccettante">
+				<center>
+					<h:outputText value="#{m.codiceStrutturaAccettante}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="codiceStrutturaErogante">
+				<center>
+					<h:outputText value="#{m.codiceStrutturaErogante}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="cognomeUtente">
+				<center>
+					<h:outputText value="#{m.cognomeUtente}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="comuneResidenzaUtente">
+				<center>
+					<h:outputText value="#{m.comuneResidenzaUtente}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="dataNascitaUtente">
+				<center>
+					<h:outputText value="#{m.dataNascitaUtente}" />
+				</center>
+			</p:column>
+
+
+			<p:column headerText="id">
+				<center>
+					<h:outputText value="#{m.id}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="istituzioneCompetente">
+				<center>
+					<h:outputText value="#{m.istituzioneCompetente}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="modalitaCompilazioneRicetta">
+				<center>
+					<h:outputText value="#{m.modalitaCompilazioneRicetta}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="modalitaRilevazioneCodiceFiscale">
+				<center>
+					<h:outputText value="#{m.modalitaRilevazioneCodiceFiscale}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="nomeFile">
+				<center>
+					<h:outputText value="#{m.nomeFile}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="nomeUtente">
+				<center>
+					<h:outputText value="#{m.nomeUtente}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="numeroIdentificativoTessera">
+				<center>
+					<h:outputText value="#{m.numeroIdentificativoTessera}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="numeroIdentificazionePersonale">
+				<center>
+					<h:outputText value="#{m.numeroIdentificazionePersonale}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="numeroRicetta">
+				<center>
+					<h:outputText value="#{m.numeroRicetta}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="onereDellaPrestazione">
+				<center>
+					<h:outputText value="#{m.onereDellaPrestazione}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="posizioneContabile">
+				<center>
+					<h:outputText value="#{m.posizioneContabile}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="progressivoRigaPerRicetta">
+				<center>
+					<h:outputText value="#{m.progressivoRigaPerRicetta}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="regioneAddebitante">
+				<center>
+					<h:outputText value="#{m.regioneAddebitante}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="regioneResidenzaUtente">
+				<center>
+					<h:outputText value="#{m.regioneResidenzaUtente}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="scadenzaDellaTessera">
+				<center>
+					<h:outputText value="#{m.scadenzaDellaTessera}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="sesso">
+				<center>
+					<h:outputText value="#{m.sesso}" />
+				</center>
+			</p:column>
+
+			<p:column headerText="statoEstero">
+				<center>
+					<h:outputText value="#{m.statoEstero}" />
+				</center>
+			</p:column>
+
+
+
+
+
+		</p:dataTable>
+
+	</h:form>
 </ui:composition>

@@ -4,6 +4,7 @@ import it.ictgroup.asr.model.Flussoa2r;
 
 import java.util.Map;
 
+import javax.ejb.Asynchronous;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -19,7 +20,7 @@ public class Flussoa2rRepository extends BaseRepository<Flussoa2r>
    @Override
    protected String getDefaultOrderBy()
    {
-      return " id asc ";
+      return " uid asc ";
    }
 
    @Override
@@ -45,6 +46,19 @@ public class Flussoa2rRepository extends BaseRepository<Flussoa2r>
          separator = " and ";
       }
 
+   }
+
+   @Asynchronous
+   public void persistAsync(Flussoa2r flussoa2r)
+   {
+      try
+      {
+         getEm().persist(flussoa2r);
+      }
+      catch (Exception e)
+      {
+         logger.info(e.getMessage());
+      }
    }
 
 }
