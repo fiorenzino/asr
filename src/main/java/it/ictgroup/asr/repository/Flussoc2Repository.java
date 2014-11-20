@@ -29,21 +29,57 @@ public class Flussoc2Repository extends BaseRepository<Flussoc2>
             String separator, StringBuffer sb, Map<String, Object> params)
    {
 
-      // elaborazione;
-      if (search.getObj().getElaborazione() != null && search.getObj().getElaborazione().getId() != null)
+      // uid lotto;
+      if (search.getObj().getUid() != null)
       {
          sb.append(separator).append(alias)
-                  .append(".elaborazione.id = :elaborazioneId ");
-         params.put("elaborazioneId", search.getObj().getElaborazione().getId());
+                  .append(".uid = :uid ");
+         params.put("uid", search.getObj().getUid());
          separator = " and ";
       }
 
-      // nomeFile;
-      if (search.getObj().getNomeFile() != null && !search.getObj().getNomeFile().trim().isEmpty())
+      // regioneAddebitante;
+      if (search.getObj().getId() != null)
       {
          sb.append(separator).append(alias)
-                  .append(".nomeFile = :nomeFile ");
-         params.put("nomeFile", search.getObj().getNomeFile().trim().isEmpty());
+                  .append(".regioneAddebitante = :regioneAddebitante ");
+         params.put("regioneAddebitante", search.getObj().getRegioneAddebitante());
+         separator = " and ";
+      }
+
+      // zonaTerritoriale;
+      if (search.getObj().getId() != null)
+      {
+         sb.append(separator).append(alias)
+                  .append(".zonaTerritoriale = :zonaTerritoriale ");
+         params.put("zonaTerritoriale", search.getObj().getZonaTerritoriale());
+         separator = " and ";
+      }
+
+      // zonaTerritoriale;
+      if (search.getObj().getId() != null)
+      {
+         sb.append(separator).append(alias)
+                  .append(".zonaTerritoriale = :zonaTerritoriale ");
+         params.put("zonaTerritoriale", search.getObj().getZonaTerritoriale());
+         separator = " and ";
+      }
+
+      // id lotto;
+      if (search.getObj().getId() != null)
+      {
+         sb.append(separator).append(alias)
+                  .append(".id = :id ");
+         params.put("id", search.getObj().getId());
+         separator = " and ";
+      }
+
+      // progressivoRigaPerRicetta;
+      if (search.getObj().getProgressivoRigaPerRicetta() != null)
+      {
+         sb.append(separator).append(alias)
+                  .append(".progressivoRigaPerRicetta = :progressivoRigaPerRicetta ");
+         params.put("progressivoRigaPerRicetta", search.getObj().getProgressivoRigaPerRicetta());
          separator = " and ";
       }
 

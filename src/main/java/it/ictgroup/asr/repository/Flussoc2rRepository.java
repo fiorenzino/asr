@@ -28,21 +28,12 @@ public class Flussoc2rRepository extends BaseRepository<Flussoc2r>
             String separator, StringBuffer sb, Map<String, Object> params)
    {
 
-      // elaborazione;
-      if (search.getObj().getElaborazione() != null && search.getObj().getElaborazione().getId() != null)
+      // id lotto;
+      if (search.getObj().getId() != null)
       {
          sb.append(separator).append(alias)
-                  .append(".elaborazione.id = :elaborazioneId ");
-         params.put("elaborazioneId", search.getObj().getElaborazione().getId());
-         separator = " and ";
-      }
-
-      // nomeFile;
-      if (search.getObj().getNomeFile() != null && !search.getObj().getNomeFile().trim().isEmpty())
-      {
-         sb.append(separator).append(alias)
-                  .append(".nomeFile = :nomeFile ");
-         params.put("nomeFile", search.getObj().getNomeFile().trim().isEmpty());
+                  .append(".id = :id ");
+         params.put("id", search.getObj().getId());
          separator = " and ";
       }
 
