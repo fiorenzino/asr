@@ -12,8 +12,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import org.jboss.logging.Logger;
+
 public class FlowerFileHelper<T>
 {
+   static Logger logger = Logger.getLogger(FlowerFileHelper.class);
    public String line;
    public Class<T> typeArgumentClass;
    public List<FileField> fields;
@@ -30,14 +33,14 @@ public class FlowerFileHelper<T>
       {
          if (field.isAnnotationPresent(FieldIgnored.class))
          {
-            System.out.println("SKIP:" + field.getName());
+            // System.out.println("SKIP:" + field.getName());
             continue;
          }
          FileField fileField = new FileField(field.getName());
          if (field.isAnnotationPresent(FieldFixedLength.class))
          {
             FieldFixedLength ta = field.getAnnotation(FieldFixedLength.class);
-            System.out.println(field.getName() + ": " + ta.value());
+            // System.out.println(field.getName() + ": " + ta.value());
             int to = from + Integer.valueOf(ta.value());
             fileField.from = from;
             fileField.to = to;
@@ -52,7 +55,11 @@ public class FlowerFileHelper<T>
    public T valorize(String line) throws Exception
    {
       if (line.length() < size)
-         throw new Exception("Linea di dimensione inferiore a quanto aspettato");
+      {
+         String msg = "Linea di dimensione inferiore (" + line.length() + ") a quanto aspettato (" + size + ")";
+         logger.info(msg);
+         throw new Exception(msg);
+      }
       T obj = this.typeArgumentClass.newInstance();
       int maxlength = line.length();
       for (FileField fileField : fields)

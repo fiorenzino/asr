@@ -89,28 +89,28 @@ public class FlussoService implements Serializable
          while (scanner.hasNextLine())
          {
             i++;
+            if (i % 100 == 0)
+               logger.info(tipologiaFlusso.name() + ")" + i);
             line = scanner.nextLine();
-            try
+            flusso = filedReader.valorize(line);
+            if (flusso != null)
             {
-               flusso = filedReader.valorize(line);
-               if (i % 100 == 0)
-                  logger.info(tipologiaFlusso.name() + ")" + i);
                flusso.getElaborazione().setId(idElaborazione);
-               if (flusso != null)
-               {
-                  elaborazioniRepository.persistAsync(flusso);
-               }
-               else
-               {
-                  logger.info("Eccezione: riga non valida:" + line);
-               }
+               elaborazioniRepository.persistAsync(flusso);
             }
-            catch (Exception e)
+            else
             {
-               elaborazioniRepository.errore(idElaborazione, e.getMessage(), i);
+               logger.info("Eccezione: riga non valida:" + line);
             }
-
          }
+      }
+      catch (Exception e)
+      {
+         elaborazioniRepository.errore(idElaborazione, e.getMessage(), i);
+         logger.info(tipologiaFlusso.name() + " ESEGUITO CON ERRORE: " + idElaborazione + " file: " + folder
+                  + nomeFile
+                  + "num righe: " + i);
+         return;
       }
       elaborazioniRepository.eseguito(idElaborazione, i);
       logger.info(tipologiaFlusso.name() + " ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile
