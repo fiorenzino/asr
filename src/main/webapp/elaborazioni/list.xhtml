@@ -48,7 +48,7 @@
 				style="width: 100%; font-size: smaller;"
 				emptyMessage="Non ci sono elaborazioni per la ricerca effettuata.">
 				<f:facet name="header">Lista elaborazioni</f:facet>
-				
+
 				<p:column headerText="identificativo">
 					<center>
 						<h:outputText value="#{m.id}" />
@@ -113,12 +113,12 @@
 						<p:commandLink immediate="true" style="font-size: 24px;"
 							title="elimina" action="#{elaborazioniController.delete}"
 							onclick="if ( ! confirm('Confermi l\'eliminazione?') ) return false;"
-							styleClass="fa fa-eraser navLink" ajax="false">
+							styleClass="fa fa-power-off navLink" ajax="false">
 						</p:commandLink>
 						<p:spacer width="5px" />
 						<p:commandLink immediate="true" style="font-size: 24px;"
 							title="rilancia" action="#{elaborazioniController.restart}"
-							styleClass="fa fa-edit navLink" ajax="false">
+							styleClass="fa fa-refresh navLink" ajax="false">
 						</p:commandLink>
 					</center>
 				</p:column>

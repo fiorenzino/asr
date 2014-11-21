@@ -87,13 +87,11 @@ public class Flussoc2Repository extends BaseRepository<Flussoc2>
    }
 
    public boolean updateWithErrori(String nomefile, String regioneAddebitante, String codiceStrutturaErogante,
-            String progressivoRigaPerRicetta, String err01, String err02, String err03,
+            String progressivoRigaPerRicetta, String id, String err01, String err02, String err03,
             String err04, String err05, String err06, String err07, String err08, String err09, String err10)
    {
-      /*
-       * FLUSSO C1 - C2 - regione addebitante -> regioneAddebitante - cod. asl/azienda -> codiceStrutturaErogante?? - ID
-       * -> id - progressivo riga -> progressivoRigaPerRicetta
-       */
+      // String key = flussoc2.getRegioneAddebitante() + flussoc2.getCodiceStrutturaErogante() + flussoc2.getId() +
+      // flussoc2.getProgressivoRigaPerRicetta();
       int numRow;
       try
       {
@@ -104,7 +102,8 @@ public class Flussoc2Repository extends BaseRepository<Flussoc2>
                                     + "SET err01= :err01, err02= :err02, err03= :err03, err04= :err04, err05= :err05, "
                                     + " err06= :err06, err07= :err07, err08= :err08, err09= :err09, err10= :err10"
                                     + " WHERE nomefile= :nomefile, progressivoRigaPerRicetta= :progressivoRigaPerRicetta, "
-                                    + "regioneAddebitante = :regioneAddebitante, codiceStrutturaErogante = :codiceStrutturaErogante")
+                                    + "regioneAddebitante = :regioneAddebitante, codiceStrutturaErogante = :codiceStrutturaErogante, "
+                                    + " id = :id")
                   .setParameter("err01", err01)
                   .setParameter("err02", err02)
                   .setParameter("err03", err03)
@@ -119,12 +118,13 @@ public class Flussoc2Repository extends BaseRepository<Flussoc2>
                   .setParameter("regioneAddebitante", regioneAddebitante)
                   .setParameter("progressivoRigaPerRicetta", progressivoRigaPerRicetta)
                   .setParameter("codiceStrutturaErogante", codiceStrutturaErogante)
+                  .setParameter("id", id)
                   .executeUpdate();
       }
       catch (Exception e)
       {
-         logger.info("flussoa2 non trovato - nomefile: " + nomefile + ", regioneAddebitante:" + regioneAddebitante
-                  + ", codiceASL: " + codiceStrutturaErogante + ", codiceStrutturaErogante" +
+         logger.info("flussoc2 non trovato - nomefile: " + nomefile + ", regioneAddebitante:" + regioneAddebitante
+                  + ", id: " + id + ", codiceStrutturaErogante" +
                   codiceStrutturaErogante + ",progressivoRigaPerRicetta: " + progressivoRigaPerRicetta);
          return false;
       }

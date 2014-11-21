@@ -89,20 +89,21 @@
 						title="carica file risposta"
 						action="#{inviiController.caricaFileRisposta}"
 						rendered="#{empty m.fileRitorno and m.statoInvio.name() eq 'IN_ATTESA_DI_ESITO'}"
-						styleClass="fa fa-info-circle navLink" ajax="false">
+						styleClass="fa fa-upload navLink" ajax="false">
 					</p:commandLink>
 					<p:spacer width="5px" />
 					<p:commandLink immediate="true" style="font-size: 24px;"
 						title="elimina tutto" action="#{inviiController.elimina}"
 						onclick="if ( ! confirm('Confermi l\'eliminazione di tutte le elaborazioni coinvolte?') ) return false;"
-						styleClass="fa fa-edit navLink" ajax="false">
+						styleClass="fa fa-power-off navLink" ajax="false">
 					</p:commandLink>
 					<p:spacer width="5px" />
 					<p:commandLink immediate="true" style="font-size: 24px;"
 						title="segna senza errori"
 						onclick="if ( ! confirm('Confermi esito positivo?') ) return false;"
 						action="#{inviiController.segnaSenzaErrori}"
-						styleClass="fa fa-microphone navLink" ajax="false">
+						rendered="#{m.statoInvio.name() eq 'IN_ATTESA_DI_ESITO'}"
+						styleClass="fa fa-check-square-o  navLink" ajax="false">
 					</p:commandLink>
 
 				</p:column>
