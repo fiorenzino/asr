@@ -21,6 +21,7 @@ public class FlowerFileHelper<T>
    public Class<T> typeArgumentClass;
    public List<FileField> fields;
    public int size;
+   public int lastFieldSize;
 
    public FlowerFileHelper(Class<T> typeArgumentClass)
    {
@@ -29,8 +30,11 @@ public class FlowerFileHelper<T>
 
       fields = new LinkedList<FileField>();
       int from = 0;
+      int numField = typeArgumentClass.getDeclaredFields().length;
+      int i = 0;
       for (Field field : typeArgumentClass.getDeclaredFields())
       {
+         i++;
          if (field.isAnnotationPresent(FieldIgnored.class))
          {
             // System.out.println("SKIP:" + field.getName());
@@ -47,16 +51,20 @@ public class FlowerFileHelper<T>
             from += Integer.valueOf(ta.value());
             fields.add(fileField);
          }
-
+         if (i == numField)
+         {
+            lastFieldSize = fileField.to - fileField.from;
+         }
       }
       this.size = from;
    }
 
    public T valorize(String line) throws Exception
    {
-      if (line.length() < size)
+      if (line.length() < (size - lastFieldSize))
       {
-         String msg = "Linea di dimensione inferiore (" + line.length() + ") a quanto aspettato (" + size + ")";
+         String msg = "Linea di dimensione inferiore (" + line.length() + ") a quanto aspettato (" + size
+                  + " compresa tolleranza " + lastFieldSize + ")";
          logger.info(msg);
          throw new Exception(msg);
       }

@@ -92,7 +92,14 @@ public class FlussoService implements Serializable
             if (i % 100 == 0)
                logger.info(tipologiaFlusso.name() + ")" + i);
             line = scanner.nextLine();
-            flusso = filedReader.valorize(line);
+            if (line != null && line.trim().length() > 0)
+            {
+               flusso = filedReader.valorize(line);
+            }
+            else
+            {
+               continue;
+            }
             if (flusso != null)
             {
                flusso.getElaborazione().setId(idElaborazione);

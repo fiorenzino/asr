@@ -183,7 +183,7 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       List<Elaborazione> list = getEm()
                .createQuery(
                         "SELECT e FROM " + Elaborazione.class.getSimpleName()
-                                 + "  WHERE congiunta = :congiunta AND statoElaborazione = :statoElaborazione",
+                                 + " e  WHERE e.congiunta = :congiunta AND e.statoElaborazione = :statoElaborazione",
                         Elaborazione.class)
                .setParameter("congiunta", false)
                .setParameter("statoElaborazione", StatoElaborazione.ESEGUITO)

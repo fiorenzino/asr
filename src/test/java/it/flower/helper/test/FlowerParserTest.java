@@ -12,6 +12,8 @@ import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.jboss.logging.Logger;
@@ -191,4 +193,50 @@ public class FlowerParserTest
       }
    }
 
+   @Test
+   public void trovaCorrispondenzaC2()
+   {
+      try
+      {
+         FlowerFileHelper<Flussoc2r> filedReader = new FlowerFileHelper<Flussoc2r>(Flussoc2r.class);
+
+         Path path = Paths.get(new File(
+                  "/Users/fiorenzo/workspace-all/workspace/asr/docs/data/flussi/FM_WD-20131231-20131201-c2r.txt")
+                  .getAbsolutePath());
+         List<Flussoc2r> flussic2r = new ArrayList<Flussoc2r>();
+         try (Scanner scanner = new Scanner(path, StandardCharsets.UTF_8.name()))
+         {
+            int i = 0;
+            Flussoc2r flussoc2r = null;
+            while (scanner.hasNextLine())
+            {
+               i++;
+               flussoc2r = filedReader.valorize(scanner.nextLine());
+               flussic2r.add(flussoc2r);
+            }
+         }
+         FlowerFileHelper<Flussoc2> filedReaderc2 = new FlowerFileHelper<Flussoc2>(Flussoc2.class);
+
+         Path path2 = Paths.get(new File(
+                  "/Users/fiorenzo/workspace-all/workspace/asr/docs/data/flussi/FM_WD-20131231-20131201-c2.txt")
+                  .getAbsolutePath());
+         List<Flussoc2> flussic2 = new ArrayList<Flussoc2>();
+         try (Scanner scanner = new Scanner(path2, StandardCharsets.UTF_8.name()))
+         {
+            int i = 0;
+            Flussoc2 flussoc2 = null;
+            while (scanner.hasNextLine())
+            {
+               i++;
+               flussoc2 = filedReaderc2.valorize(scanner.nextLine());
+               flussic2.add(flussoc2);
+            }
+         }
+      }
+      catch (Exception e)
+      {
+         logger.error(e.getMessage());
+
+      }
+   }
 }
