@@ -46,6 +46,10 @@ public class AppPropertiesInit
       init(AppProperties.masterUrl,
                "http://localhost:8080/asr/rest/v1/master/checkRunning");
 
+      // MASTER TIMER
+      init(AppProperties.masterUrl, AppConfiguration.SVILUPPO_POLI,
+               "http://localhost:8180/asr/rest/v1/master/checkRunning");
+
    }
 
    public static boolean verifyLocally(AppConfiguration appConfiguration,

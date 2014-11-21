@@ -151,7 +151,7 @@ generateSchemas () {
 
     for table in `mdb-tables -1 ${2}`;
     do
-        tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]*/_/g' | sed 's/[-]*/_/g' | tr '[:upper:]' '[:lower:]' )
+        tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]/_/g' | sed 's/[-]/_/g' | sed 's/_\+/_/g' | tr '[[:upper:]]' '[[:lower:]]' )
         echo -e "Generating schema for ${bold}$tableNoWhiteSpaces${normal}"
         mdb-schema -T "$table" "$2" "$1" | sed -e "s/$table/$tableNoWhiteSpaces/g" > "$3/$tableNoWhiteSpaces.sql";
     done
@@ -167,7 +167,7 @@ generateInserts () {
 
     for table in `mdb-tables -1 ${2}`;
     do
-        tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]*//g' | sed 's/[-]*//g' )
+        tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]/_/g' | sed 's/[-]/_/g' | sed 's/_\+/_/g' | tr '[[:upper:]]' '[[:lower:]]' )
         echo -e "Generating inserts for ${bold}$tableNoWhiteSpaces${normal}"
         mdb-export -H -I "$1" -q \' "$2" "$table" | sed -e "s/$table/$tableNoWhiteSpaces/g" >> "$3/$tableNoWhiteSpaces.sql";
     done
