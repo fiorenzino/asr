@@ -44,44 +44,33 @@
 				lazy="true" style="width: 100%; font-size: smaller;"
 				emptyMessage="Non ci sono invii per la ricerca effettuata.">
 				<f:facet name="header">Lista invii effettiati</f:facet>
-				<p:column>
-
-					<h:outputText value="#{rowIndex+1}" />
-
-				</p:column>
 				<p:column headerText="identificativo">
 					<h:outputText value="#{m.id}" />
 				</p:column>
-				<p:column headerText="sigla">
+				<p:column
+					headerText="sigla &lt;br/&gt; tipologia invio &lt;br/&gt; applicazione">
 					<h:outputText value="#{m.sigla}" />
-				</p:column>
-				<p:column headerText="tipologia invio">
+					<br />
 					<h:outputText value="#{m.tipologiaInvio.name()}" />
-				</p:column>
-				<p:column headerText="applicazione">
+					<br />
 					<h:outputText value="#{m.applicazione.nome}" />
 				</p:column>
-				<p:column headerText="periodo Da">
-
+				<p:column headerText="periodo ">
 					<h:outputText value="#{m.periodoDa}">
 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 					</h:outputText>
-
-				</p:column>
-				<p:column headerText="periodo A">
+					<br />
 					<h:outputText value="#{m.periodoA}">
 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 					</h:outputText>
 				</p:column>
-				<p:column headerText="file1">
+				<p:column headerText="files">
 					<h:outputText value="#{m.file1.fileName}"
 						rendered="#{not empty m.file1}" />
-				</p:column>
-				<p:column headerText="file2">
+					<br />
 					<h:outputText value="#{m.file2.fileName}"
 						rendered="#{not empty m.file2}" />
-				</p:column>
-				<p:column headerText="fileRitorno">
+					<br />
 					<h:outputText value="#{m.fileRitorno.fileName}"
 						rendered="#{not empty m.fileRitorno}" />
 				</p:column>
@@ -97,18 +86,21 @@
 				<p:column headerText="operazioni">
 
 					<p:commandLink immediate="true" style="font-size: 24px;"
-						title="dettagli" action="#{inviiController.caricaFileRisposta}"
+						title="carica file risposta"
+						action="#{inviiController.caricaFileRisposta}"
+						rendered="#{empty m.fileRitorno and m.statoInvio.name() eq 'IN_ATTESA_DI_ESITO'}"
 						styleClass="fa fa-info-circle navLink" ajax="false">
 					</p:commandLink>
 					<p:spacer width="5px" />
 					<p:commandLink immediate="true" style="font-size: 24px;"
-						title="carica file risposta"
-						action="#{inviiController.caricaFileRisposta}"
+						title="elimina tutto" action="#{inviiController.elimina}"
+						onclick="if ( ! confirm('Confermi l\'eliminazione di tutte le elaborazioni coinvolte?') ) return false;"
 						styleClass="fa fa-edit navLink" ajax="false">
 					</p:commandLink>
 					<p:spacer width="5px" />
 					<p:commandLink immediate="true" style="font-size: 24px;"
 						title="segna senza errori"
+						onclick="if ( ! confirm('Confermi esito positivo?') ) return false;"
 						action="#{inviiController.segnaSenzaErrori}"
 						styleClass="fa fa-microphone navLink" ajax="false">
 					</p:commandLink>

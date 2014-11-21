@@ -99,7 +99,16 @@ public class ElaborazioniController extends AbstractLazyController<Elaborazione>
          return null;
       }
 
-      folderService.lancia(elaborazione.getFileName(), elaborazione.getConfigurazione());
+      try
+      {
+         folderService.lancia(elaborazione.getFileName(), elaborazione.getConfigurazione());
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+         FacesMessageUtils.addFacesMessage("Errore durante lancio elaborazione!");
+         return null;
+      }
       return listPage();
    }
 

@@ -1,9 +1,11 @@
 package it.ictgroup.asr.producer;
 
+import it.ictgroup.asr.model.Configurazione;
 import it.ictgroup.asr.model.enums.StatoElaborazione;
 import it.ictgroup.asr.model.enums.StatoInvio;
 import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import it.ictgroup.asr.model.enums.TipologiaInvio;
+import it.ictgroup.asr.repository.ConfigurazioniRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +13,10 @@ import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.giavacms.commons.producer.AbstractProducer;
-import org.giavacms.commons.util.JSFUtils;
 import org.giavacms.commons.util.PrimeUtils;
 import org.primefaces.model.menu.MenuModel;
 
@@ -24,6 +26,9 @@ public class GlobalProducer extends AbstractProducer
 {
 
    private static final long serialVersionUID = 1L;
+
+   @Inject
+   ConfigurazioniRepository configurazioniRepository;
 
    @Produces
    @Named
@@ -100,4 +105,15 @@ public class GlobalProducer extends AbstractProducer
       return PrimeUtils.primeBreadcrumbs();
    }
 
+   public SelectItem[] getConfigurazioniItems(TipologiaInvio tipologiaInvio)
+   {
+      List<SelectItem> configurazioniItems = new ArrayList<SelectItem>();
+      configurazioniItems.add(new SelectItem(null, "configurazione..."));
+      for (Configurazione configurazione : configurazioniRepository.getAllList())
+      {
+         if (configurazione.getTipologiaFlusso().name().startsWith(tipologiaInvio.name()))
+            configurazioniItems.add(new SelectItem(configurazione.getId(), configurazione.getNome()));
+      }
+      return configurazioniItems.toArray(new SelectItem[] {});
+   }
 }

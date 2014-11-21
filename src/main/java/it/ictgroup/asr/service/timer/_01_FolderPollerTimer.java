@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
@@ -27,6 +29,7 @@ public class _01_FolderPollerTimer implements Serializable
 
    @Schedule(hour = "*", minute = "0/2", persistent = false, info = "ogni 2 minuto di ogni ora")
    // @TransactionTimeout(value = 10L, unit = TimeUnit.MINUTES)
+   @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
    public void execute()
    {
       // logger.info("************_01_P7mFolderPollerTimer");
@@ -48,6 +51,7 @@ public class _01_FolderPollerTimer implements Serializable
 
    }
 
+   @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
    public void executeNow()
    {
       isWorking = true;

@@ -11,45 +11,65 @@
 
 	<ui:define name="content">
 
-		<h:form id="mainForm">
+		<h:form id="mainForm" enctype="multipart/form-data">
 
-			<p:panelGrid columns="4"
+			<p:panelGrid columns="2"
 				columnClasses="fixedWidth25,fixedWidth25,fixedWidth25, fixedWidth25"
 				style="width:75%">
 				<f:facet name="header">Dati</f:facet>
 
-				<h:outputLabel value="Nome (*):" for="nome" />
-				<p:inputText id="nome" placeholder="nome"
-					value="#{applicazioniController.element.nome}"
-					requiredMessage="E' obbligatorio specificare il nome"
-					required="true">
-				</p:inputText>
 
-				<p:fileUpload fileUploadListener="#{fileBean.handleFileUpload}"
-					multiple="true" allowTypes="/(\.|\/)(txt|TXT)$/" />
+				<h:outputLabel value="sigla:" for="sigla" />
+				<h:outputText id="sigla" value="#{inviiController.element.sigla}" />
+
+				<h:outputLabel value="tipologia invio (*):" for="tipologiaInvio" />
+				<h:outputText id="tipologiaInvio"
+					value="#{inviiController.element.tipologiaInvio.name()}" />
+
+				<h:outputLabel value="applicazione:" for="applicazione" />
+				<h:outputText id="applicazione"
+					value="#{inviiController.element.applicazione.nome}" />
+
+
+				<h:outputLabel value="applicazione:" for="periodoDa" />
+				<h:outputText id="periodoDa"
+					value="#{inviiController.element.periodoDa}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>
+
+				<h:outputLabel value="applicazione:" for="periodoA" />
+				<h:outputText id="periodoA"
+					value="#{inviiController.element.periodoA}">
+					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
+				</h:outputText>
+
+				<h:outputLabel value="file1: " for="file1" />
+				<h:outputText id="file1"
+					value="#{inviiController.element.file1.fileName}" />
+
+				<h:outputLabel value="file2: " for="file2" />
+				<h:outputText value="#{inviiController.element.file2.fileName}" />
+
+				<h:outputLabel value="configurazione: " for="configurazione" />
+				<p:selectOneMenu style="width: 200px;"
+					value="#{inviiController.element.configurazione.id}">
+					<f:selectItems
+						value="#{globalProducer.getConfigurazioniItems(getElement.getTipologiaInvio())}" />
+				</p:selectOneMenu>
+
+
+				<h:outputLabel value="carica file risposta: " for="risposta" />
+				<p:fileUpload value="#{inviiController.element.file}" mode="simple"
+					skinSimple="true" />
 			</p:panelGrid>
 
 			<br />
 
-			<h:panelGrid columns="4" id="buttonGrid">
+			<h:panelGrid columns="1" id="buttonGrid">
 
-				<p:commandButton action="#{applicazioniController.update}"
-					value="Aggiorna"
-					rendered="#{not empty applicazioniController.element.id}"
-					ajax="false" />
+				<p:commandButton action="#{inviiController.caricaFile}"
+					value="Carica File" ajax="false" />
 
-				<p:commandButton action="#{applicazioniController.save}"
-					value="Salva" rendered="#{empty applicazioniController.element.id}"
-					ajax="false" />
-
-				<p:commandButton action="#{applicazioniController.delete}"
-					value="Elimina"
-					onclick="if ( ! confirm('Confermi l\'eliminazione?') ) return false;"
-					rendered="#{not empty applicazioniController.element.id}"
-					ajax="false" immediate="true" />
-
-				<p:commandButton action="#{applicazioniController.reset}"
-					value="Annulla" ajax="false" immediate="true" />
 			</h:panelGrid>
 
 		</h:form>

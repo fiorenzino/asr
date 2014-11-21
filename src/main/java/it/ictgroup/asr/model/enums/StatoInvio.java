@@ -12,7 +12,7 @@ public enum StatoInvio
    // i due files non sono coerenti (es numero righe)
    ERRORE_COERENZA,
    // trovo il file r
-   ESIATATO_CON_ERRORI,
+   ESITATO_CON_ERRORI,
    // non c'e' file r -> ma dalla maschera ho flagatto esito senza errori
-   ESISTATO_SENZA_ERRORI;
+   ESITATO_SENZA_ERRORI;
 }

@@ -1,23 +1,30 @@
 package it.ictgroup.asr.controller;
 
+import it.ictgroup.asr.model.Configurazione;
 import it.ictgroup.asr.model.Invio;
 import it.ictgroup.asr.model.enums.StatoInvio;
+import it.ictgroup.asr.repository.ConfigurazioniRepository;
 import it.ictgroup.asr.repository.InviiRepository;
 import it.ictgroup.asr.service.InviiService;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.io.FileUtils;
 import org.giavacms.commons.annotation.EditPage;
 import org.giavacms.commons.annotation.ListPage;
 import org.giavacms.commons.annotation.OwnRepository;
 import org.giavacms.commons.annotation.ViewPage;
 import org.giavacms.commons.controller.AbstractLazyController;
 import org.giavacms.commons.util.FacesMessageUtils;
-import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 @Named
 @SessionScoped
@@ -39,7 +46,36 @@ public class InviiController extends AbstractLazyController<Invio>
    InviiRepository inviiRepository;
 
    @Inject
+   ConfigurazioniRepository configurazioniRepository;
+
+   @Inject
    InviiService inviiService;
+
+   private UploadedFile file;
+
+   private Configurazione configurazione;
+
+   public Configurazione getConfigurazione()
+   {
+      if (configurazione == null)
+         this.configurazione = new Configurazione();
+      return configurazione;
+   }
+
+   public void setConfigurazione(Configurazione configurazione)
+   {
+      this.configurazione = configurazione;
+   }
+
+   public UploadedFile getFile()
+   {
+      return file;
+   }
+
+   public void setFile(UploadedFile file)
+   {
+      this.file = file;
+   }
 
    public String elabora()
    {
@@ -58,22 +94,71 @@ public class InviiController extends AbstractLazyController<Invio>
 
    public String caricaFileRisposta()
    {
+      setFile(null);
+      setConfigurazione(null);
       return modElement();
+   }
+
+   public String elimina()
+   {
+      Invio invio = (Invio) getModel().getRowData();
+
+      // ELIMINO TUTTE LE ELABORAZIONI COINVOLTE
+
+      // ELIMINO INVIO
+
+      return null;
    }
 
    public String segnaSenzaErrori()
    {
       Invio invio = getModel().getRowData();
-      invio.setStatoInvio(StatoInvio.ESISTATO_SENZA_ERRORI);
+      invio.setStatoInvio(StatoInvio.ESITATO_SENZA_ERRORI);
       inviiRepository.update(invio);
       FacesMessageUtils.addFacesMessage("Aggiornato con successo");
       return null;
    }
 
-   public void handleFileUpload(FileUploadEvent event)
+   public String caricaFile()
    {
-      // add facesmessage to display with growl
-      // application code
-   }
+      if (file == null)
+      {
+         FacesMessageUtils.addFacesMessage("file nullo");
+         return null;
 
+      }
+      if (getConfigurazione().getId() != null)
+      {
+         FacesMessageUtils.addFacesMessage("configurazione non selezionata");
+         return null;
+      }
+      this.configurazione = configurazioniRepository.find(getConfigurazione().getId());
+      String nomeFile = null;
+      switch (getElement().getTipologiaInvio())
+      {
+      case A:
+         nomeFile = getConfigurazione().getFolder() + getElement().getSigla()
+                  + getConfigurazione().getPostfisso().replace("*", "");
+         break;
+      case C:
+         nomeFile = getConfigurazione().getFolder() + getElement().getSigla()
+                  + getConfigurazione().getPostfisso().replace("*", "");
+         break;
+
+      default:
+         FacesMessageUtils.addFacesMessage("non so come gestire questa tipologia");
+         return null;
+      }
+      try
+      {
+
+         FileUtils.writeByteArrayToFile(new File(nomeFile), file.getContents());
+      }
+      catch (IOException e)
+      {
+         e.printStackTrace();
+      }
+
+      return listPage();
+   }
 }

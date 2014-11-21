@@ -15,6 +15,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
@@ -42,9 +44,10 @@ public class FolderService
       context.createProducer().send(flussiQueue, map);
    }
 
+   @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
    public void verifica() throws Exception
    {
-      List<Configurazione> configurazioni = configurazioniRepository.getAllList();
+      List<Configurazione> configurazioni = configurazioniRepository.getAll();
 
       for (Configurazione configurazione : configurazioni)
       {
@@ -62,10 +65,11 @@ public class FolderService
       }
    }
 
-   public boolean lancia(String fileName, Configurazione configurazione)
+   @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+   public boolean lancia(String fileName, Configurazione configurazione) throws Exception
    {
       Elaborazione elaborazione = new Elaborazione(configurazione, new Date(), fileName);
-      elaborazioniRepository.persist(elaborazione);
+      elaborazioniRepository.persist_newtx(elaborazione);
       Map<String, Object> map = new HashMap<>();
       // TIPOLOGIA_FLUSSO, NOME_FILE, ELABORAZIONE_ID, NOME_FOLDER
       map.put(AppKeys.NOME_FILE.name(), fileName);

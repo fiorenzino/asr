@@ -68,7 +68,7 @@ public class InviiService
                Date periodoA = SiglaUtils.getPeriodoA(elaborazione
                         .getFileName());
                invio.setPeriodoA(periodoA);
-               Date periodoDa = SiglaUtils.getPeriodoA(elaborazione
+               Date periodoDa = SiglaUtils.getPeriodoDa(elaborazione
                         .getFileName());
                invio.setPeriodoDa(periodoDa);
                invio.setStatoInvio(StatoInvio.INCOMPLETO);
@@ -95,7 +95,7 @@ public class InviiService
             case A2R:
             case C2R:
                invio.setFileRitorno(elaborazione);
-               invio.setStatoInvio(StatoInvio.ESIATATO_CON_ERRORI);
+               invio.setStatoInvio(StatoInvio.ESITATO_CON_ERRORI);
                break;
             default:
                break;

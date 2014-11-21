@@ -21,6 +21,8 @@ import java.util.Map;
 import javax.ejb.Asynchronous;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import org.giavacms.commons.model.Search;
 import org.giavacms.commons.util.DateUtils;
@@ -35,7 +37,7 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
    @Override
    protected String getDefaultOrderBy()
    {
-      return " id asc ";
+      return " id desc, fileName desc ";
    }
 
    @Override
@@ -106,6 +108,7 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
 
    }
 
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
    public List<String> getFilePerConfigurazione(Long id)
    {
 
@@ -116,23 +119,53 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       return result;
    }
 
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   public void persist_newtx(Elaborazione elaborazione) throws Exception
+   {
+      getEm().persist(elaborazione);
+   }
+
+   public void avvia(Long id) throws Exception
+   {
+      getEm().createNativeQuery(
+               "UPDATE  " + Elaborazione.TABLE_NAME
+                        + " SET statoElaborazione = :STATO, dataStart = :DATA WHERE id = :ID")
+               .setParameter("ID", id)
+               .setParameter("DATA", new Date())
+               .setParameter("STATO", StatoElaborazione.AVVIATO.name()).executeUpdate();
+   }
+
    @Asynchronous
    public void avviato(Long id)
    {
       try
       {
-         getEm().createNativeQuery(
-                  "UPDATE  " + Elaborazione.TABLE_NAME
-                           + " SET statoElaborazione = :STATO, dataStart = :DATA WHERE id = :ID")
-                  .setParameter("ID", id)
-                  .setParameter("DATA", new Date())
-                  .setParameter("STATO", StatoElaborazione.AVVIATO.name()).executeUpdate();
+         avvia(id);
       }
       catch (Exception e)
       {
          logger.info(e.getMessage());
       }
 
+   }
+
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   public void avviato_newtx(Long id) throws Exception
+   {
+      avvia(id);
+   }
+
+   public void erra(Long id, String message, int righe) throws Exception
+   {
+      getEm().createNativeQuery(
+               "UPDATE  "
+                        + Elaborazione.TABLE_NAME
+                        + " SET statoElaborazione = :STATO, dataEnd = :DATA, message = :MSG, righe = :RIGHE WHERE id = :ID")
+               .setParameter("ID", id)
+               .setParameter("MSG", message)
+               .setParameter("RIGHE", righe)
+               .setParameter("DATA", new Date())
+               .setParameter("STATO", StatoElaborazione.ERRORE.name()).executeUpdate();
    }
 
    @Asynchronous
@@ -140,15 +173,7 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
    {
       try
       {
-         getEm().createNativeQuery(
-                  "UPDATE  "
-                           + Elaborazione.TABLE_NAME
-                           + " SET statoElaborazione = :STATO, dataEnd = :DATA, message = :MSG, righe = :RIGHE WHERE id = :ID")
-                  .setParameter("ID", id)
-                  .setParameter("MSG", message)
-                  .setParameter("RIGHE", righe)
-                  .setParameter("DATA", new Date())
-                  .setParameter("STATO", StatoElaborazione.ERRORE.name()).executeUpdate();
+         erra(id, message, righe);
       }
       catch (Exception e)
       {
@@ -157,24 +182,41 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
 
    }
 
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   public void errore_newtx(Long id, String message, int righe) throws Exception
+   {
+      erra(id, message, righe);
+   }
+
+   public void esegui(Long id, int righe) throws Exception
+   {
+      getEm().createNativeQuery(
+               "UPDATE  " + Elaborazione.TABLE_NAME + " SET statoElaborazione = :STATO, "
+                        + " dataEnd = :DATA, righe = :RIGHE WHERE id = :ID")
+               .setParameter("ID", id)
+               .setParameter("RIGHE", righe)
+               .setParameter("DATA", new Date())
+               .setParameter("STATO", StatoElaborazione.ESEGUITO.name()).executeUpdate();
+   }
+
    @Asynchronous
    public void eseguito(Long id, int righe)
    {
       try
       {
-         getEm().createNativeQuery(
-                  "UPDATE  " + Elaborazione.TABLE_NAME + " SET statoElaborazione = :STATO, "
-                           + " dataEnd = :DATA, righe = :RIGHE WHERE id = :ID")
-                  .setParameter("ID", id)
-                  .setParameter("RIGHE", righe)
-                  .setParameter("DATA", new Date())
-                  .setParameter("STATO", StatoElaborazione.ESEGUITO.name()).executeUpdate();
+         esegui(id, righe);
       }
       catch (Exception e)
       {
          logger.info(e.getMessage());
       }
 
+   }
+
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   public void eseguito_newtx(Long id, int righe) throws Exception
+   {
+      esegui(id, righe);
    }
 
    public Map<TipologiaInvio, List<Elaborazione>> getElaborazioniNonCongiunteEseguite()
@@ -340,5 +382,11 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       {
          logger.info(e.getMessage());
       }
+   }
+
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   public void persist_newtx(Object t) throws Exception
+   {
+      getEm().persist(t);
    }
 }

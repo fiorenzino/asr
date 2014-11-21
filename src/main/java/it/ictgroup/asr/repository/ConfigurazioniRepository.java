@@ -2,10 +2,13 @@ package it.ictgroup.asr.repository;
 
 import it.ictgroup.asr.model.Configurazione;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import org.giavacms.commons.model.Search;
 
@@ -63,6 +66,13 @@ public class ConfigurazioniRepository extends BaseRepository<Configurazione>
          separator = " and ";
       }
 
+   }
+
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   public List<Configurazione> getAll()
+   {
+      // TODO Auto-generated method stub
+      return super.getAllList();
    }
 
 }

@@ -23,6 +23,8 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import org.giavacms.commons.model.Search;
@@ -74,7 +76,8 @@ public class FlussoService implements Serializable
       }
    }
 
-   @TransactionTimeout(value = 18000, unit = TimeUnit.SECONDS)
+   // @TransactionTimeout(value = 18000, unit = TimeUnit.SECONDS)
+   @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
    public <T extends BaseFlusso> void parse(TipologiaFlusso tipologiaFlusso, String nomeFile,
             String folder,
             Long idElaborazione) throws Exception
@@ -103,7 +106,7 @@ public class FlussoService implements Serializable
             if (flusso != null)
             {
                flusso.getElaborazione().setId(idElaborazione);
-               elaborazioniRepository.persistAsync(flusso);
+               elaborazioniRepository.persist_newtx(flusso);
             }
             else
             {
@@ -113,13 +116,13 @@ public class FlussoService implements Serializable
       }
       catch (Exception e)
       {
-         elaborazioniRepository.errore(idElaborazione, e.getMessage(), i);
+         elaborazioniRepository.errore_newtx(idElaborazione, e.getMessage(), i);
          logger.info(tipologiaFlusso.name() + " ESEGUITO CON ERRORE: " + idElaborazione + " file: " + folder
                   + nomeFile
                   + "num righe: " + i);
          return;
       }
-      elaborazioniRepository.eseguito(idElaborazione, i);
+      elaborazioniRepository.eseguito_newtx(idElaborazione, i);
       logger.info(tipologiaFlusso.name() + " ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile
                + "num righe: " + i);
    }
