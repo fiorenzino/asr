@@ -29,21 +29,39 @@ public class Flussoa2Repository extends BaseRepository<Flussoa2>
             String separator, StringBuffer sb, Map<String, Object> params)
    {
 
-      // elaborazione;
-      if (search.getObj().getElaborazione() != null && search.getObj().getElaborazione().getId() != null)
+      // id lotto;
+      if (search.getObj().getUid() != null)
       {
          sb.append(separator).append(alias)
-                  .append(".elaborazione.id = :elaborazioneId ");
-         params.put("elaborazioneId", search.getObj().getElaborazione().getId());
+                  .append(".uid = :uid ");
+         params.put("uid", search.getObj().getUid());
          separator = " and ";
       }
 
-      // nomeFile;
-      if (search.getObj().getNomeFile() != null && !search.getObj().getNomeFile().trim().isEmpty())
+      // regioneAddebitante;
+      if (search.getObj().getRegioneAddebitante() != null)
       {
          sb.append(separator).append(alias)
-                  .append(".nomeFile = :nomeFile ");
-         params.put("nomeFile", search.getObj().getNomeFile().trim().isEmpty());
+                  .append(".regioneAddebitante = :regioneAddebitante ");
+         params.put("regioneAddebitante", search.getObj().getRegioneAddebitante());
+         separator = " and ";
+      }
+
+      // codiceIstituto;
+      if (search.getObj().getCodiceIstituto() != null)
+      {
+         sb.append(separator).append(alias)
+                  .append(".codiceIstituto = :codiceIstituto ");
+         params.put("codiceIstituto", search.getObj().getCodiceIstituto());
+         separator = " and ";
+      }
+
+      // numeroDellaScheda;
+      if (search.getObj().getNumeroDellaScheda() != null)
+      {
+         sb.append(separator).append(alias)
+                  .append(".numeroDellaScheda = :numeroDellaScheda ");
+         params.put("numeroDellaScheda", search.getObj().getNumeroDellaScheda());
          separator = " and ";
       }
 

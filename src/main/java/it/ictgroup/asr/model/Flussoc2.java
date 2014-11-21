@@ -14,13 +14,7 @@ import it.ictgroup.asr.util.annotations.FieldIgnored;
 import it.ictgroup.asr.util.annotations.FixedLengthRecord;
 import it.ictgroup.asr.util.enums.FixedMode;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  * Created by stefano on 22/09/14.
@@ -47,7 +41,7 @@ public class Flussoc2 extends BaseFlusso
 
    // 13-18 Codice struttura erogante la prestazione
    @FieldFixedLength(6)
-   public String getCodiceStrutturaErogante;
+   public String codiceStrutturaErogante;
 
    // 19-28 Codice centro di costo
    @FieldFixedLength(10)
@@ -275,14 +269,14 @@ public class Flussoc2 extends BaseFlusso
       this.codiceStrutturaAccettante = codiceStrutturaAccettante;
    }
 
-   public String getGetCodiceStrutturaErogante()
+   public String getCodiceStrutturaErogante()
    {
-      return getCodiceStrutturaErogante;
+      return codiceStrutturaErogante;
    }
 
-   public void setGetCodiceStrutturaErogante(String getCodiceStrutturaErogante)
+   public void setCodiceStrutturaErogante(String codiceStrutturaErogante)
    {
-      this.getCodiceStrutturaErogante = getCodiceStrutturaErogante;
+      this.codiceStrutturaErogante = codiceStrutturaErogante;
    }
 
    public String getCodiceCentroDiCosto()
@@ -782,7 +776,7 @@ public class Flussoc2 extends BaseFlusso
                "regioneAddebitante='" + regioneAddebitante + '\'' +
                ", zonaTerritoriale='" + zonaTerritoriale + '\'' +
                ", codiceStrutturaAccettante='" + codiceStrutturaAccettante + '\'' +
-               ", getCodiceStrutturaErogante='" + getCodiceStrutturaErogante + '\'' +
+               ", codiceStrutturaErogante='" + codiceStrutturaErogante + '\'' +
                ", codiceCentroDiCosto='" + codiceCentroDiCosto + '\'' +
                ", numeroRicetta='" + numeroRicetta + '\'' +
                ", prioritaAccessoPrestazioni='" + prioritaAccessoPrestazioni + '\'' +
