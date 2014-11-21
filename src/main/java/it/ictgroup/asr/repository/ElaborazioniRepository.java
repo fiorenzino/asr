@@ -115,7 +115,7 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       try
       {
          getEm().createNativeQuery(
-                  "UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO, E.dataStart = :DATA WHERE E.ID = :ID")
+                  "UPDATE Elaborazione E SET E.StatoElaborazione = :STATO, E.dataStart = :DATA WHERE E.ID = :ID")
                   .setParameter("ID", id)
                   .setParameter("DATA", new Date())
                   .setParameter("STATO", StatoElaborazione.AVVIATO.name()).executeUpdate();
@@ -128,13 +128,15 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
    }
 
    @Asynchronous
-   public void errore(Long id)
+   public void errore(Long id, String message, int righe)
    {
       try
       {
          getEm().createNativeQuery(
-                  "UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO, E.dataEnd = :DATA WHERE E.ID = :ID")
+                  "UPDATE Elaborazione E SET E.StatoElaborazione = :STATO, E.dataEnd = :DATA, E.message = :MSG, E.righe = :RIGHE WHERE E.ID = :ID")
                   .setParameter("ID", id)
+                  .setParameter("MSG", message)
+                  .setParameter("RIGHE", righe)
                   .setParameter("DATA", new Date())
                   .setParameter("STATO", StatoElaborazione.ERRORE.name()).executeUpdate();
       }
@@ -151,7 +153,7 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       try
       {
          getEm().createNativeQuery(
-                  "UPDATE Elaborazione as E SET E.StatoElaborazione = :STATO, "
+                  "UPDATE Elaborazione E SET E.StatoElaborazione = :STATO, "
                            + " E.dataEnd = :DATA, E.righe = :RIGHE WHERE E.ID = :ID")
                   .setParameter("ID", id)
                   .setParameter("RIGHE", righe)

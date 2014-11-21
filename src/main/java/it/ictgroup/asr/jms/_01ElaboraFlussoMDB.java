@@ -25,7 +25,7 @@ import org.jboss.logging.Logger;
          @ActivationConfigProperty(propertyName = "maxSession", propertyValue = "1"),
          @ActivationConfigProperty(propertyName = "transactionTimeout", propertyValue = "3600"),
          @ActivationConfigProperty(propertyName = "dLQMaxResent", propertyValue = "0") })
-@TransactionTimeout(value = 6*60 * 60, unit = TimeUnit.SECONDS)
+@TransactionTimeout(value = 6 * 60 * 60, unit = TimeUnit.SECONDS)
 public class _01ElaboraFlussoMDB implements MessageListener
 {
 
@@ -57,8 +57,16 @@ public class _01ElaboraFlussoMDB implements MessageListener
       }
       catch (Throwable e)
       {
-         logger.error(e.getMessage(), e);
-         elaborazioniRepository.errore(idElaborazione);
+         try
+         {
+            logger.error(e.getMessage(), e);
+            elaborazioniRepository.errore(idElaborazione, e.getMessage(), 0);
+         }
+         catch (Throwable e2)
+         {
+            logger.error(e2.getMessage(), e2);
+         }
+
       }
    }
 }

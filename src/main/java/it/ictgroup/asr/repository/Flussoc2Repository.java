@@ -1,7 +1,9 @@
 package it.ictgroup.asr.repository;
 
+import it.ictgroup.asr.model.Flussoa2;
 import it.ictgroup.asr.model.Flussoc2;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -85,16 +87,65 @@ public class Flussoc2Repository extends BaseRepository<Flussoc2>
 
    }
 
-   // public Flussoc2 getRiferimento(Flussoc2 flussoc2)
-   // {
-   // Search<Flussoc2> search = new Search<Flussoc2>(Flussoc2.class);
-   // search.getObj().setRegioneAddebitante(flussoc2.getRegioneAddebitante());
-   // search.getObj().setZonaTerritoriale(flussoc2.getZonaTerritoriale());
-   // search.getObj().setId(flussoc2.getId());
-   // search.getObj().setProgressivoRigaPerRicetta(flussoc2.getProgressivoRigaPerRicetta());
-   // List<Flussoc2> resList = getList(search, 0, 0);
-   // return (resList != null && resList.size() > 0) ? resList.get(0) : null;
-   // }
+   public boolean updateWithErrori(String nomefile, String regioneAddebitante, String codiceStrutturaErogante,
+            String progressivoRigaPerRicetta, String err01, String err02, String err03,
+            String err04, String err05, String err06, String err07, String err08, String err09, String err10)
+   {
+      /*
+       * FLUSSO C1 - C2 - regione addebitante -> regioneAddebitante - cod. asl/azienda -> codiceStrutturaErogante?? - ID
+       * -> id - progressivo riga -> progressivoRigaPerRicetta
+       */
+      int numRow;
+      try
+      {
+         numRow = getEm()
+                  .createNativeQuery(
+                           "UPDATE flussoa2 "
+                                    + " SET err01= :err01, err02= :err02, err03= :err03, err04= :err04, err05= :err05, "
+                                    + " err06= :err06, err07= :err07, err08= :err08, err09= :err09, err10= :err10"
+                                    + " WHERE nomefile= :nomefile, progressivoRigaPerRicetta= :progressivoRigaPerRicetta, "
+                                    + "regioneAddebitante = :regioneAddebitante, codiceStrutturaErogante = :codiceStrutturaErogante")
+                  .setParameter("err01", err01)
+                  .setParameter("err02", err02)
+                  .setParameter("err03", err03)
+                  .setParameter("err04", err04)
+                  .setParameter("err05", err05)
+                  .setParameter("err06", err06)
+                  .setParameter("err07", err07)
+                  .setParameter("err08", err08)
+                  .setParameter("err09", err09)
+                  .setParameter("err10", err10)
+                  .setParameter("nomefile", nomefile)
+                  .setParameter("regioneAddebitante", regioneAddebitante)
+                  .setParameter("progressivoRigaPerRicetta", progressivoRigaPerRicetta)
+                  .setParameter("codiceStrutturaErogante", codiceStrutturaErogante)
+                  .executeUpdate();
+      }
+      catch (Exception e)
+      {
+         logger.info("flussoa2 non trovato - nomefile: " + nomefile + ", regioneAddebitante:" + regioneAddebitante
+                  + ", codiceASL: " + codiceStrutturaErogante + ", codiceStrutturaErogante" +
+                  codiceStrutturaErogante + ",progressivoRigaPerRicetta: " + progressivoRigaPerRicetta);
+         return false;
+      }
+
+      return numRow > 0 ? true : false;
+
+   }
+
+   public Map<String, Flussoc2> getMappaRigheDaCorreggere(String nomeFile, List<Long> ids)
+   {
+      Search<Flussoc2> search = new Search<Flussoc2>(Flussoc2.class);
+      search.getObj().setNomeFile(nomeFile);
+
+      List<Flussoc2> righe = getList(search, 0, 0);
+      Map<String, Flussoc2> mappa = new HashMap<String, Flussoc2>();
+      for (Flussoc2 flussoc2 : righe)
+      {
+         mappa.put(flussoc2.getProgressivoRigaPerRicetta(), flussoc2);
+      }
+      return mappa;
+   }
 
    @Asynchronous
    public void persistAsync(Flussoc2 flussoc2)

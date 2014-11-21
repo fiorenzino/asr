@@ -27,6 +27,7 @@ public class Elaborazione implements Serializable
    private StatoElaborazione statoElaborazione;
    private boolean congiunta;
    private int righe;
+   private String message;
 
    public Elaborazione()
    {
@@ -137,5 +138,15 @@ public class Elaborazione implements Serializable
    public void setRighe(int righe)
    {
       this.righe = righe;
+   }
+
+   public String getMessage()
+   {
+      return message;
+   }
+
+   public void setMessage(String message)
+   {
+      this.message = message;
    }
 }

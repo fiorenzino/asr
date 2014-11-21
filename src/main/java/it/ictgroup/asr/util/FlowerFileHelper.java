@@ -17,6 +17,7 @@ public class FlowerFileHelper<T>
    public String line;
    public Class<T> typeArgumentClass;
    public List<FileField> fields;
+   public int size;
 
    public FlowerFileHelper(Class<T> typeArgumentClass)
    {
@@ -45,11 +46,13 @@ public class FlowerFileHelper<T>
          }
 
       }
-
+      this.size = from;
    }
 
    public T valorize(String line) throws Exception
    {
+      if (line.length() < size)
+         throw new Exception("Linea di dimensione inferiore a quanto aspettato");
       T obj = this.typeArgumentClass.newInstance();
       int maxlength = line.length();
       for (FileField fileField : fields)
