@@ -13,11 +13,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = Elaborazione.TABLE_NAME)
 public class Elaborazione implements Serializable
 {
    private static final long serialVersionUID = 1L;
+   public static final String TABLE_NAME = "elaborazione";
    private Long id;
    private Configurazione configurazione;
    private Date dataCreazione;

@@ -6,13 +6,16 @@ import it.ictgroup.asr.util.annotations.FixedLengthRecord;
 import it.ictgroup.asr.util.enums.FixedMode;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
 @Entity
+@Table(name = Flussoa1.TABLE_NAME)
 public class Flussoa1 extends BaseFlusso
 {
    @FieldIgnored
    private static final long serialVersionUID = 1L;
+   public static final String TABLE_NAME = "flussoa1";
 
    // 1-8
    // Codice istituto di ricovero

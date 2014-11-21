@@ -10,15 +10,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = Configurazione.TABLE_NAME)
 public class Configurazione implements Serializable
 {
 
-   /**
-    * 
-    */
    private static final long serialVersionUID = 1L;
+   public static final String TABLE_NAME = "configurazione";
    private Long id;
    private String nome;
    private TipologiaFlusso tipologiaFlusso;

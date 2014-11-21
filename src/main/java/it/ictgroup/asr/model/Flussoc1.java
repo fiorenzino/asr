@@ -6,16 +6,16 @@ import it.ictgroup.asr.util.annotations.FixedLengthRecord;
 import it.ictgroup.asr.util.enums.FixedMode;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Table;
 
 @FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
 @Entity
+@Table(name = Flussoc1.TABLE_NAME)
 public class Flussoc1 extends BaseFlusso
 {
    @FieldIgnored
    private static final long serialVersionUID = 1L;
+   public static final String TABLE_NAME = "flussoc1";
 
    @FieldFixedLength(3)
    // 1-3 Regione addebitante 3

@@ -1,6 +1,12 @@
 package it.ictgroup.asr.repository;
 
 import it.ictgroup.asr.model.Elaborazione;
+import it.ictgroup.asr.model.Flussoa1;
+import it.ictgroup.asr.model.Flussoa2;
+import it.ictgroup.asr.model.Flussoa2r;
+import it.ictgroup.asr.model.Flussoc1;
+import it.ictgroup.asr.model.Flussoc2;
+import it.ictgroup.asr.model.Flussoc2r;
 import it.ictgroup.asr.model.enums.StatoElaborazione;
 import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import it.ictgroup.asr.model.enums.TipologiaInvio;
@@ -104,7 +110,8 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
    {
 
       List<String> result = getEm()
-               .createNativeQuery("SELECT DISTINCT(fileName) FROM Elaborazione where configurazione_id=  :ID")
+               .createNativeQuery(
+                        "SELECT DISTINCT(fileName) FROM " + Elaborazione.TABLE_NAME + " where configurazione_id=  :ID")
                .setParameter("ID", id).getResultList();
       return result;
    }
@@ -115,7 +122,8 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       try
       {
          getEm().createNativeQuery(
-                  "UPDATE Elaborazione E SET E.StatoElaborazione = :STATO, E.dataStart = :DATA WHERE E.ID = :ID")
+                  "UPDATE  " + Elaborazione.TABLE_NAME
+                           + " SET statoElaborazione = :STATO, dataStart = :DATA WHERE id = :ID")
                   .setParameter("ID", id)
                   .setParameter("DATA", new Date())
                   .setParameter("STATO", StatoElaborazione.AVVIATO.name()).executeUpdate();
@@ -133,7 +141,9 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       try
       {
          getEm().createNativeQuery(
-                  "UPDATE Elaborazione E SET E.StatoElaborazione = :STATO, E.dataEnd = :DATA, E.message = :MSG, E.righe = :RIGHE WHERE E.ID = :ID")
+                  "UPDATE  "
+                           + Elaborazione.TABLE_NAME
+                           + " SET statoElaborazione = :STATO, dataEnd = :DATA, message = :MSG, righe = :RIGHE WHERE id = :ID")
                   .setParameter("ID", id)
                   .setParameter("MSG", message)
                   .setParameter("RIGHE", righe)
@@ -153,8 +163,8 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       try
       {
          getEm().createNativeQuery(
-                  "UPDATE Elaborazione E SET E.StatoElaborazione = :STATO, "
-                           + " E.dataEnd = :DATA, E.righe = :RIGHE WHERE E.ID = :ID")
+                  "UPDATE  " + Elaborazione.TABLE_NAME + " SET statoElaborazione = :STATO, "
+                           + " dataEnd = :DATA, righe = :RIGHE WHERE id = :ID")
                   .setParameter("ID", id)
                   .setParameter("RIGHE", righe)
                   .setParameter("DATA", new Date())
@@ -172,7 +182,8 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       Map<TipologiaInvio, List<Elaborazione>> mappa = new HashMap<TipologiaInvio, List<Elaborazione>>();
       List<Elaborazione> list = getEm()
                .createQuery(
-                        "SELECT e FROM Elaborazione e WHERE e.congiunta = :congiunta AND e.statoElaborazione = :statoElaborazione",
+                        "SELECT e FROM " + Elaborazione.class.getSimpleName()
+                                 + "  WHERE congiunta = :congiunta AND statoElaborazione = :statoElaborazione",
                         Elaborazione.class)
                .setParameter("congiunta", false)
                .setParameter("statoElaborazione", StatoElaborazione.ESEGUITO)
@@ -235,25 +246,25 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
          switch (elaborazione.getConfigurazione().getTipologiaFlusso())
          {
          case A1:
-            query = "DELETE FROM Flussoa1 WHERE elaborazione_id = :ID";
+            query = "DELETE FROM  " + Flussoa1.TABLE_NAME + " WHERE elaborazione_id = :ID";
             break;
          case A2:
-            query = "DELETE FROM Flussoa2 WHERE elaborazione_id = :ID";
+            query = "DELETE FROM  " + Flussoa2.TABLE_NAME + " WHERE elaborazione_id = :ID";
             break;
          case A2R:
-            query = "DELETE FROM Flussoa2 WHERE elaborazione_id = :ID";
+            query = "DELETE FROM  " + Flussoa2r.TABLE_NAME + " WHERE elaborazione_id = :ID";
             break;
          case B:
             query = null;
             break;
          case C1:
-            query = "DELETE FROM Flussoc1 WHERE elaborazione_id = :ID";
+            query = "DELETE FROM  " + Flussoc1.TABLE_NAME + " WHERE elaborazione_id = :ID";
             break;
          case C2:
-            query = "DELETE FROM Flussoc2 WHERE elaborazione_id = :ID";
+            query = "DELETE FROM  " + Flussoc2.TABLE_NAME + " WHERE elaborazione_id = :ID";
             break;
          case C2R:
-            query = "DELETE FROM Flussoc2r WHERE elaborazione_id = :ID";
+            query = "DELETE FROM  " + Flussoc2r.TABLE_NAME + " WHERE elaborazione_id = :ID";
             break;
          case D:
             query = null;
@@ -280,25 +291,25 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       switch (tipologiaFlusso)
       {
       case A1:
-         query = "select count(*) FROM Flussoa1 WHERE elaborazione_id = :ID";
+         query = "select count(*) FROM " + Flussoa1.TABLE_NAME + " WHERE elaborazione_id = :ID";
          break;
       case A2:
-         query = "select count(*) FROM Flussoa2 WHERE elaborazione_id = :ID";
+         query = "select count(*) FROM " + Flussoa2.TABLE_NAME + " WHERE elaborazione_id = :ID";
          break;
       case A2R:
-         query = "select count(*) FROM Flussoa2 WHERE elaborazione_id = :ID";
+         query = "select count(*) FROM " + Flussoa2r.TABLE_NAME + " WHERE elaborazione_id = :ID";
          break;
       case B:
          query = null;
          break;
       case C1:
-         query = "select count(*) FROM Flussoc1 WHERE elaborazione_id = :ID";
+         query = "select count(*) FROM " + Flussoc1.TABLE_NAME + " WHERE elaborazione_id = :ID";
          break;
       case C2:
-         query = "select count(*) FROM Flussoc2 WHERE elaborazione_id = :ID";
+         query = "select count(*) FROM " + Flussoc2.TABLE_NAME + " WHERE elaborazione_id = :ID";
          break;
       case C2R:
-         query = "select count(*) FROM Flussoc2r WHERE elaborazione_id = :ID";
+         query = "select count(*) FROM " + Flussoc2r.TABLE_NAME + " WHERE elaborazione_id = :ID";
          break;
       case D:
          query = null;

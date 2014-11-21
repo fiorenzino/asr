@@ -4,7 +4,6 @@ import it.ictgroup.asr.model.enums.StatoInvio;
 import it.ictgroup.asr.model.enums.TipologiaInvio;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,13 +15,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = Invio.TABLE_NAME)
 public class Invio implements Serializable
 {
 
    private static final long serialVersionUID = 1L;
+   public static final String TABLE_NAME = "invio";
    private Long id;
    private TipologiaInvio tipologiaInvio;
    private Applicazione applicazione;

@@ -1,6 +1,5 @@
 package it.ictgroup.asr.repository;
 
-import it.ictgroup.asr.model.Flussoa2;
 import it.ictgroup.asr.model.Flussoc2;
 
 import java.util.HashMap;
@@ -100,8 +99,9 @@ public class Flussoc2Repository extends BaseRepository<Flussoc2>
       {
          numRow = getEm()
                   .createNativeQuery(
-                           "UPDATE flussoa2 "
-                                    + " SET err01= :err01, err02= :err02, err03= :err03, err04= :err04, err05= :err05, "
+                           "UPDATE  "
+                                    + Flussoc2.TABLE_NAME
+                                    + "SET err01= :err01, err02= :err02, err03= :err03, err04= :err04, err05= :err05, "
                                     + " err06= :err06, err07= :err07, err08= :err08, err09= :err09, err10= :err10"
                                     + " WHERE nomefile= :nomefile, progressivoRigaPerRicetta= :progressivoRigaPerRicetta, "
                                     + "regioneAddebitante = :regioneAddebitante, codiceStrutturaErogante = :codiceStrutturaErogante")

@@ -15,6 +15,7 @@ import it.ictgroup.asr.util.annotations.FixedLengthRecord;
 import it.ictgroup.asr.util.enums.FixedMode;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created by stefano on 22/09/14.
@@ -22,10 +23,12 @@ import javax.persistence.Entity;
 
 @FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
 @Entity
+@Table(name = Flussoc2.TABLE_NAME)
 public class Flussoc2 extends BaseFlusso
 {
    @FieldIgnored
    private static final long serialVersionUID = 1L;
+   public static final String TABLE_NAME = "flussoc2";
 
    // 1-3 Regione addebitante
    @FieldFixedLength(3)

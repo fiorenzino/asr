@@ -43,7 +43,9 @@ public class ApplicazioniRepository extends BaseRepository<Applicazione>
       Applicazione applicazione = null;
       try
       {
-         applicazione = getEm().createQuery("select a from Applicazione a where a.sigla = :sigla", Applicazione.class)
+         applicazione = getEm()
+                  .createQuery("select a from " + Applicazione.class.getSimpleName() + " a where a.sigla = :sigla",
+                           Applicazione.class)
                   .setParameter("sigla", sigla)
                   .getSingleResult();
       }

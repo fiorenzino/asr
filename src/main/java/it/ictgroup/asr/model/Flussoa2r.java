@@ -16,14 +16,17 @@ import it.ictgroup.asr.util.annotations.FixedLengthRecord;
 import it.ictgroup.asr.util.enums.FixedMode;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
 @Entity
+@Table(name = Flussoa2r.TABLE_NAME)
 public class Flussoa2r extends BaseFlusso
 {
 
    @FieldIgnored
    private static final long serialVersionUID = 1L;
+   public static final String TABLE_NAME = "flussoa2r";
    // 1-8
    // codice istituto
    // AN
