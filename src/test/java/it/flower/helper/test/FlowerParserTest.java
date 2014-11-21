@@ -1,8 +1,6 @@
 package it.flower.helper.test;
 
-import it.ictgroup.asr.model.Flussoc1;
-import it.ictgroup.asr.model.Flussoc2;
-import it.ictgroup.asr.model.Flussoc2r;
+import it.ictgroup.asr.model.*;
 import it.ictgroup.asr.util.FlowerFileHelper;
 import it.ictgroup.asr.util.annotations.FieldFixedLength;
 import it.ictgroup.asr.util.annotations.FieldIgnored;
@@ -267,6 +265,82 @@ public class FlowerParserTest
             if(!flussic2.containsKey(key))
             {
                Assert.fail("Chiave flussoc2r " + key + " non presente");
+            }
+         }
+      }
+      catch (Exception e)
+      {
+         logger.error(e.getMessage());
+
+      }
+   }
+
+
+   @Test
+   public void trovaCorrispondenzaA2()
+   {
+      try
+      {
+         FlowerFileHelper<Flussoa1> filedReader = new FlowerFileHelper<Flussoa1>(Flussoa1.class);
+
+         Path path = Paths.get(new File(
+                  // "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/ARSAE-20131231-20130101-a1.txt")
+                  // "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/ARSPE-20131231-20130101-a1.txt")
+                  "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/ARSRE-20131231-20130101-a1.txt")
+                  .getAbsolutePath());
+         HashMap<String, Flussoa1> flussia1 = new HashMap<String, Flussoa1>();
+         try (Scanner scanner = new Scanner(path, StandardCharsets.UTF_8.name()))
+         {
+            int i = 0;
+            Flussoa1 flussoa1 = null;
+            while (scanner.hasNextLine())
+            {
+               i++;
+               flussoa1 = filedReader.valorize(scanner.nextLine());
+               String key = flussoa1.getRegioneAddebitante() + flussoa1.getCodiceIstitutoDiRicovero() + flussoa1.getNumeroDellaScheda();
+               System.out.println("a1 - " + i + ") " + key);
+               if(flussia1.containsKey(key))
+               {
+                  Assert.fail("Chiave flussoa1 " + key + " già presente");
+               }
+               flussia1.put(key, flussoa1);
+            }
+         }
+
+         FlowerFileHelper<Flussoa2> fileReadera2 = new FlowerFileHelper<Flussoa2>(Flussoa2.class);
+
+         Path path2 = Paths.get(new File(
+                  // "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/ARSAE-20131231-20130101-a2.txt")
+                  // "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/ARSPE-20131231-20130101-a2.txt")
+                  "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/ARSRE-20131231-20130101-a2.txt")
+                  .getAbsolutePath());
+         HashMap<String, Flussoa2> flussia2 = new HashMap<String, Flussoa2>();
+
+         try (Scanner scanner = new Scanner(path2, StandardCharsets.UTF_8.name()))
+         {
+            int i = 0;
+            Flussoa2 flussoa2 = null;
+            while (scanner.hasNextLine())
+            {
+               i++;
+               flussoa2 = fileReadera2.valorize(scanner.nextLine());
+               String key = flussoa2.getRegioneAddebitante() + flussoa2.getCodiceIstituto() + flussoa2.getNumeroDellaScheda();
+               System.out.println("a2 - " + i + ") " + key);
+               if(flussia2.containsKey(key))
+               {
+                  Assert.fail("Chiave flussoa2 " + key + " già presente");
+               }
+               flussia2.put(key, flussoa2);
+            }
+         }
+
+         Iterator<String> it = flussia1.keySet().iterator();
+         while(it.hasNext())
+         {
+            String key = it.next();
+            if(!flussia2.containsKey(key))
+            {
+               Assert.fail("Chiave flussoa2 " + key + " non presente");
             }
          }
       }
