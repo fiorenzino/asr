@@ -14,8 +14,8 @@
 		<profile>
 			<id>postgresql</id>
 			<properties>
-				<default_schema>asrP</default_schema>
-				<hbm2ddl.auto></hbm2ddl.auto>
+				<default_schema>public</default_schema>
+				<hbm2ddl.auto>update</hbm2ddl.auto>
 				<show_sql>true</show_sql>
 				<format_sql>true</format_sql>
 				<jta-data-source>java:jboss/datasources/AsrDS</jta-data-source>

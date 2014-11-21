@@ -25,7 +25,7 @@ import org.jboss.logging.Logger;
          @ActivationConfigProperty(propertyName = "maxSession", propertyValue = "1"),
          @ActivationConfigProperty(propertyName = "transactionTimeout", propertyValue = "3600"),
          @ActivationConfigProperty(propertyName = "dLQMaxResent", propertyValue = "0") })
-@TransactionTimeout(value = 60 * 60, unit = TimeUnit.SECONDS)
+@TransactionTimeout(value = 6*60 * 60, unit = TimeUnit.SECONDS)
 public class _01ElaboraFlussoMDB implements MessageListener
 {
 
