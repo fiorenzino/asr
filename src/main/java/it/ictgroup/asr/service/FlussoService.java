@@ -71,7 +71,8 @@ public class FlussoService implements Serializable
          {
             i++;
             flussoa1 = filedReader.valorize(scanner.nextLine());
-            logger.info(tipologiaFlusso.name() + ")" + i);
+            if (i % 10 == 0)
+               logger.info(tipologiaFlusso.name() + ")" + i);
             flussoa1.getElaborazione().setId(idElaborazione);
             elaborazioniRepository.persistAsync(flussoa1);
          }
