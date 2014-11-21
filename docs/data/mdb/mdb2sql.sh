@@ -142,33 +142,34 @@ confirm () {
 }
 
 # $1 : sql_dialect
-# $2 : DEST_DIR
+# $2 : mdb file
+# $3 : DEST_DIR
 generateSchemas () {
-    if [ $# -lt 2 ]; then
-        echo -e "${red}You have to pass MDB file and dir path args${normal}"
+    if [ $# -lt 3 ]; then
+        echo -e "${red}You have to pass sql dialect, MDB file, and dir path args${normal}"
     fi
 
-    for table in `mdb-tables -1 ${1}`;
+    for table in `mdb-tables -1 ${2}`;
     do
-        tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]*//g' | sed 's/[-]*//g' )
+        tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]*/_/g' | sed 's/[-]*/_/g' | tr '[:upper:]' '[:lower:]' )
         echo -e "Generating schema for ${bold}$tableNoWhiteSpaces${normal}"
-        mdb-schema -T "$table" "$1" | sed -e "s/$table/$tableNoWhiteSpaces/g" > "$2/$tableNoWhiteSpaces.sql";
+        mdb-schema -T "$table" "$2" "$1" | sed -e "s/$table/$tableNoWhiteSpaces/g" > "$3/$tableNoWhiteSpaces.sql";
     done
 }
 
 # $1 : sql_dialect
-# $2 : database
+# $2 : mdb file
 # $3 : DEST_DIR
 generateInserts () {
-    if [ $# -lt 2 ]; then
-        echo -e "${red}You have to pass MDB file and dir path args${normal}"
+    if [ $# -lt 3 ]; then
+        echo -e "${red}You have to pass sql dialect, MDB file, and dir path args${normal}"
     fi
 
     for table in `mdb-tables -1 ${2}`;
     do
         tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]*//g' | sed 's/[-]*//g' )
         echo -e "Generating inserts for ${bold}$tableNoWhiteSpaces${normal}"
-        mdb-export -H -I "$1" "$2" "$table" | sed -e "s/$table/$tableNoWhiteSpaces/g" >> "$3/$tableNoWhiteSpaces.sql";
+        mdb-export -H -I "$1" -q \' "$2" "$table" | sed -e "s/$table/$tableNoWhiteSpaces/g" >> "$3/$tableNoWhiteSpaces.sql";
     done
 }
 
@@ -263,7 +264,7 @@ case $action in
         ### Schema ###
         echo
         echo -e "${orange}Generating SQL schema scripts...${normal}"
-        generateSchemas "$MDB_FILE" "$DEST_DIR"
+        generateSchemas "$dialect" "$MDB_FILE" "$DEST_DIR"
         echo -e "${orange}SQL schema scripts generation done!${normal}"
 
         ### Insert ###
