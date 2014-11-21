@@ -168,15 +168,15 @@
                         <background-validation>true</background-validation>
                     </validation>
                 </datasource>
-                <datasource jndi-name="java:jboss/datasources/AsrDS" pool-name="AsrDSPool" enabled="true" use-java-context="true" use-ccm="true">
-                    <connection-url>jdbc:postgresql://localhost:5432/asr</connection-url>
+                <datasource jndi-name="java:jboss/datasources/PostgresqlDS" pool-name="PostgresqlDS" enabled="true" use-java-context="true" use-ccm="true">
+                    <connection-url>jdbc:postgresql://localhost:5432/asr?autoReconnect=true</connection-url>
                     <driver>postgresql</driver>
                     <pool>
                         <flush-strategy>IdleConnections</flush-strategy>
                     </pool>
                     <security>
-                        <user-name>fiorenzo</user-name>
-                        <password>flower</password>
+                        <user-name>asr</user-name>
+                        <password>asr</password>
                     </security>
                     <validation>
                         <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
@@ -191,7 +191,9 @@
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
                     </driver>
-                    <driver name="postgresql" module="org.postgresql"/>
+                    <driver name="postgresql" module="org.postgresql">
+                        <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
+                    </driver>
                 </drivers>
             </datasources>
         </subsystem>

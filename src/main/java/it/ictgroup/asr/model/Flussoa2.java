@@ -384,70 +384,70 @@ public class Flussoa2 extends BaseFlusso
    // AN
    // 1
    @FieldFixedLength(1)
-   public String Err01;
+   public String err01;
    // 253
    // ERR02 – Errori sulla residenza
    // AN
    // 1
    @FieldFixedLength(1)
-   public String Err02;
+   public String err02;
    // 254
    // ERR03 - Errori sulla prestazione
    // AN
    // 1
    @FieldFixedLength(1)
-   public String Err03;
+   public String err03;
    // 255
    // ERR04 - Caratteristiche del ricovero
    // AN
    // 1
    @FieldFixedLength(1)
-   public String Err04;
+   public String err04;
    // 256
    // ERR05 - errori sulla chiave del record
    // AN
    // 1
    @FieldFixedLength(1)
-   public String Err05;
+   public String err05;
    // 257
    // ERR06 - Errori sull’importo e sulla sua
    // determinabilità
    // AN
    // 1
    @FieldFixedLength(1)
-   public String Err06;
+   public String err06;
    // 258
    // ERR07 - Ricoveri ripetuti
    // AN
    // 1
    @FieldFixedLength(1)
-   public String Err07;
+   public String err07;
    // 259
    // ERR08 - Errori sulla data della
    // prestazione
    // AN
    // 1
    @FieldFixedLength(1)
-   public String Err08;
+   public String err08;
    // 260
    // ERR09 - Errore onere della degenza
    // AN
    // 1
    @FieldFixedLength(1)
-   public String Err09;
+   public String err09;
    // 261
    // ERR10 - Errore sulla Regione/Azienda
    // USL iniziale di addebito
    // AN
    // 1
    @FieldFixedLength(1)
-   public String Err10;
+   public String err10;
    // 262-264
    // Regione/Azienda iniziale di addebito
    // AN
    // 3
    @FieldFixedLength(3)
-   public String RegioneAziendaInizialeDiAddebito;
+   public String regioneAziendaInizialeDiAddebito;
    // 265-270
    // Ripetizione
    // AN
@@ -1050,112 +1050,112 @@ public class Flussoa2 extends BaseFlusso
 
    public String getErr01()
    {
-      return Err01;
+      return err01;
    }
 
    public void setErr01(String err01)
    {
-      Err01 = err01;
+      this.err01 = err01;
    }
 
    public String getErr02()
    {
-      return Err02;
+      return err02;
    }
 
    public void setErr02(String err02)
    {
-      Err02 = err02;
+      this.err02 = err02;
    }
 
    public String getErr03()
    {
-      return Err03;
+      return err03;
    }
 
    public void setErr03(String err03)
    {
-      Err03 = err03;
+      this.err03 = err03;
    }
 
    public String getErr04()
    {
-      return Err04;
+      return err04;
    }
 
    public void setErr04(String err04)
    {
-      Err04 = err04;
+      this.err04 = err04;
    }
 
    public String getErr05()
    {
-      return Err05;
+      return err05;
    }
 
    public void setErr05(String err05)
    {
-      Err05 = err05;
+      this.err05 = err05;
    }
 
    public String getErr06()
    {
-      return Err06;
+      return err06;
    }
 
    public void setErr06(String err06)
    {
-      Err06 = err06;
+      this.err06 = err06;
    }
 
    public String getErr07()
    {
-      return Err07;
+      return err07;
    }
 
    public void setErr07(String err07)
    {
-      Err07 = err07;
+      this.err07 = err07;
    }
 
    public String getErr08()
    {
-      return Err08;
+      return err08;
    }
 
    public void setErr08(String err08)
    {
-      Err08 = err08;
+      this.err08 = err08;
    }
 
    public String getErr09()
    {
-      return Err09;
+      return err09;
    }
 
    public void setErr09(String err09)
    {
-      Err09 = err09;
+      this.err09 = err09;
    }
 
    public String getErr10()
    {
-      return Err10;
+      return err10;
    }
 
    public void setErr10(String err10)
    {
-      Err10 = err10;
+      this.err10 = err10;
    }
 
    public String getRegioneAziendaInizialeDiAddebito()
    {
-      return RegioneAziendaInizialeDiAddebito;
+      return regioneAziendaInizialeDiAddebito;
    }
 
    public void setRegioneAziendaInizialeDiAddebito(String regioneAziendaInizialeDiAddebito)
    {
-      RegioneAziendaInizialeDiAddebito = regioneAziendaInizialeDiAddebito;
+      this.regioneAziendaInizialeDiAddebito = regioneAziendaInizialeDiAddebito;
    }
 
    public String getRipetizione()
@@ -1272,18 +1272,18 @@ public class Flussoa2 extends BaseFlusso
                         + ", " : "")
                + (posizioneContabile != null ? "posizioneContabile=" + posizioneContabile + ", " : "")
                + (trasmissioneInRegione != null ? "trasmissioneInRegione=" + trasmissioneInRegione + ", " : "")
-               + (Err01 != null ? "Err01=" + Err01 + ", " : "")
-               + (Err02 != null ? "Err02=" + Err02 + ", " : "")
-               + (Err03 != null ? "Err03=" + Err03 + ", " : "")
-               + (Err04 != null ? "Err04=" + Err04 + ", " : "")
-               + (Err05 != null ? "Err05=" + Err05 + ", " : "")
-               + (Err06 != null ? "Err06=" + Err06 + ", " : "")
-               + (Err07 != null ? "Err07=" + Err07 + ", " : "")
-               + (Err08 != null ? "Err08=" + Err08 + ", " : "")
-               + (Err09 != null ? "Err09=" + Err09 + ", " : "")
-               + (Err10 != null ? "Err10=" + Err10 + ", " : "")
-               + (RegioneAziendaInizialeDiAddebito != null ? "RegioneAziendaInizialeDiAddebito="
-                        + RegioneAziendaInizialeDiAddebito + ", " : "")
+               + (err01 != null ? "err01=" + err01 + ", " : "")
+               + (err02 != null ? "err02=" + err02 + ", " : "")
+               + (err03 != null ? "err03=" + err03 + ", " : "")
+               + (err04 != null ? "err04=" + err04 + ", " : "")
+               + (err05 != null ? "err05=" + err05 + ", " : "")
+               + (err06 != null ? "err06=" + err06 + ", " : "")
+               + (err07 != null ? "err07=" + err07 + ", " : "")
+               + (err08 != null ? "err08=" + err08 + ", " : "")
+               + (err09 != null ? "err09=" + err09 + ", " : "")
+               + (err10 != null ? "err10=" + err10 + ", " : "")
+               + (regioneAziendaInizialeDiAddebito != null ? "regioneAziendaInizialeDiAddebito="
+                        + regioneAziendaInizialeDiAddebito + ", " : "")
                + (ripetizione != null ? "ripetizione=" + ripetizione : "") + "]";
    }
 
