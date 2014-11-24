@@ -127,49 +127,60 @@ public class FlussoService implements Serializable
                + "num righe: " + i);
    }
 
-   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
    public void updateRigheInErrore(Long elaborazioneId, String nomeFile, TipologiaFlusso tipologiaFlusso)
+            throws Exception
    {
       switch (tipologiaFlusso)
       {
       case A2R:
          Search<Flussoa2r> searchA2r = new Search<Flussoa2r>(Flussoa2r.class);
          searchA2r.getObj().getElaborazione().setId(elaborazioneId);
-         List<Flussoa2r> flussoa2rList = flussoa2rRepository.getList(searchA2r, 0, 0);
-         for (Flussoa2r flussoa2r : flussoa2rList)
+         int size1 = flussoa2rRepository.getListSize_newtx(searchA2r);
+         int ii = 0;
+         while (ii < size1)
          {
-            // String nomefile, String regioneAddebitante, String codiceIstituto,
-            // String numerodellascheda,
-            boolean res = false;
-            if (AppConstants.CORREGGO)
+            if (ii + 50 > size1)
             {
-               res = flussoa2Repository.updateWithErrori(flussoa2r.getNomeFile().replace("a2r.txt", "a2.txt"),
-                        flussoa2r.getRegioneAddebitante(),
-                        flussoa2r.getCodiceIstituto(),
-                        flussoa2r.getNumeroDellaScheda(), flussoa2r.getErr01(), flussoa2r.getErr02(),
-                        flussoa2r.getErr03(), flussoa2r.getErr04(), flussoa2r.getErr05(), flussoa2r.getErr06(),
-                        flussoa2r.getErr07(), flussoa2r.getErr08(), flussoa2r.getErr09(), flussoa2r.getErr10());
+               ii = size1;
+            }
+            logger.info("correggo: " + ii + "/" + size1 + ", elaborazioneId:" + elaborazioneId);
+            List<Flussoa2r> flussoa2rList = flussoa2rRepository.getList_newtx(searchA2r, ii, 50);
+            for (Flussoa2r flussoa2r : flussoa2rList)
+            {
+               boolean res = false;
+               if (AppConstants.CORREGGO)
+               {
+                  res = flussoa2Repository.updateWithErrori(flussoa2r.getNomeFile().replace("a2r.txt", "a2.txt"),
+                           flussoa2r.getRegioneAddebitante(),
+                           flussoa2r.getCodiceIstituto(),
+                           flussoa2r.getNumeroDellaScheda(), flussoa2r.getErr01(), flussoa2r.getErr02(),
+                           flussoa2r.getErr03(), flussoa2r.getErr04(), flussoa2r.getErr05(), flussoa2r.getErr06(),
+                           flussoa2r.getErr07(), flussoa2r.getErr08(), flussoa2r.getErr09(), flussoa2r.getErr10());
 
+               }
+               else
+               {
+                  res = flussoa2Repository.findErrori(flussoa2r.getNomeFile().replace("a2r.txt", "a2.txt"),
+                           flussoa2r.getRegioneAddebitante(),
+                           flussoa2r.getCodiceIstituto(),
+                           flussoa2r.getNumeroDellaScheda());
+               }
+               if (!res)
+               {
+                  logger.info("NON trovato:" + flussoa2r.getNomeFile().replace("a2r.txt", "a2.txt") + ", " +
+                           flussoa2r.getRegioneAddebitante() + ", " +
+                           flussoa2r.getCodiceIstituto() + "," + flussoa2r.getNumeroDellaScheda());
+               }
             }
-            else
-            {
-               res = flussoa2Repository.findErrori(flussoa2r.getNomeFile().replace("a2r.txt", "a2.txt"),
-                        flussoa2r.getRegioneAddebitante(),
-                        flussoa2r.getCodiceIstituto(),
-                        flussoa2r.getNumeroDellaScheda());
-            }
-            if (!res)
-            {
-               logger.info("NON trovato:" + flussoa2r.getNomeFile().replace("a2r.txt", "a2.txt") + ", " +
-                        flussoa2r.getRegioneAddebitante() + ", " +
-                        flussoa2r.getCodiceIstituto() + "," + flussoa2r.getNumeroDellaScheda());
-            }
+            ii += 50;
          }
+
          break;
       case C2R:
          Search<Flussoc2r> searchC2r = new Search<Flussoc2r>(Flussoc2r.class);
          searchC2r.getObj().getElaborazione().setId(elaborazioneId);
-         int size = flussoc2rRepository.getListSize(searchC2r);
+         int size = flussoc2rRepository.getListSize_newtx(searchC2r);
          int i = 0;
          while (i < size)
          {
@@ -178,7 +189,7 @@ public class FlussoService implements Serializable
                i = size;
             }
             logger.info("correggo: " + i + "/" + size + ", elaborazioneId:" + elaborazioneId);
-            List<Flussoc2r> flussoc2rList = flussoc2rRepository.getList(searchC2r, i, 50);
+            List<Flussoc2r> flussoc2rList = flussoc2rRepository.getList_newtx(searchC2r, i, 50);
             for (Flussoc2r flussoc2r : flussoc2rList)
             {
                boolean res = false;

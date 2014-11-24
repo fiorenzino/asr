@@ -78,10 +78,6 @@
 							<h:commandLink action="#{elaborazioniController.listPage}">
 								<h:outputText value="Lista" />
 							</h:commandLink>
-							<br />
-							<h:commandLink action="#{elaborazioniController.elabora}">
-								<h:outputText value="Lancia nuova elaborazione" />
-							</h:commandLink>
 						</h:panelGroup>
 					</h:panelGrid>
 				</p:panel>
@@ -101,18 +97,54 @@
 							<h:commandLink action="#{inviiController.listPage}">
 								<h:outputText value="Lista" />
 							</h:commandLink>
-							<br />
-							<h:commandLink action="#{inviiController.verificaInvii}">
-								<h:outputText value="Verifica Invii" />
-							</h:commandLink>
-							<br />
-							<h:commandLink action="#{inviiController.correggiErrori}">
-								<h:outputText value="Correggi Errori" />
-							</h:commandLink>
 						</h:panelGroup>
 					</h:panelGrid>
 				</p:panel>
 
+
+
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				<p:panel style="width: 600px; height: 120px;" styleClass="highlight"
+					rendered="#{inviiController.clear}">
+					<f:facet name="header">
+						<h:outputText value="Operazioni" />
+					</f:facet>
+					<h:panelGrid columns="6">
+
+						<h:panelGroup
+							style="vertical-align:middle; font-size: 48px; padding: 10px;"
+							layout="block">
+							<i class="fa fa-circle"> </i>
+						</h:panelGroup>
+						<h:panelGroup style="vertical-align:middle;">
+							<h:commandLink action="#{elaborazioniController.elabora}">
+								<h:outputText value="Lancia nuova elaborazione" />
+							</h:commandLink>
+						</h:panelGroup>
+						<h:panelGroup
+							style="vertical-align:middle; font-size: 48px; padding: 10px;"
+							layout="block">
+							<i class="fa fa-circle-o"> </i>
+						</h:panelGroup>
+						<h:panelGroup style="vertical-align:middle;">
+							<h:commandLink action="#{inviiController.verificaInvii}">
+								<h:outputText value="Verifica Invii" />
+							</h:commandLink>
+						</h:panelGroup>
+						<h:panelGroup
+							style="vertical-align:middle; font-size: 48px; padding: 10px;"
+							layout="block">
+							<i class="fa fa-circle-o-notch"> </i>
+						</h:panelGroup>
+						<h:panelGroup style="vertical-align:middle;">
+							<h:commandLink action="#{inviiController.correggiErrori}">
+								<h:outputText value="Correggi Errori" />
+							</h:commandLink>
+						</h:panelGroup>
+
+					</h:panelGrid>
+				</p:panel>
 
 
 			</h:panelGrid>

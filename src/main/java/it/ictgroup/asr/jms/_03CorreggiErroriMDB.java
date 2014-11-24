@@ -23,7 +23,6 @@ import org.jboss.logging.Logger;
          @ActivationConfigProperty(propertyName = "destination", propertyValue = AppConstants.CORREGGI_ERRORI_ASR_QUEUE),
          @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
          @ActivationConfigProperty(propertyName = "maxSession", propertyValue = "1"),
-         @ActivationConfigProperty(propertyName = "transactionTimeout", propertyValue = "3600"),
          @ActivationConfigProperty(propertyName = "dLQMaxResent", propertyValue = "0") })
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class _03CorreggiErroriMDB implements MessageListener
@@ -39,6 +38,7 @@ public class _03CorreggiErroriMDB implements MessageListener
    @Inject
    FlussoService flussoService;
 
+   @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
    public void onMessage(Message message)
    {
       MapMessage msg = (MapMessage) message;

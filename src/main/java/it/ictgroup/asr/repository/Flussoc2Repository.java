@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.ejb.Asynchronous;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import org.giavacms.commons.model.Search;
 
@@ -86,6 +88,7 @@ public class Flussoc2Repository extends BaseRepository<Flussoc2>
 
    }
 
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
    public boolean updateWithErrori(String nomefile, String regioneAddebitante, String codiceStrutturaErogante,
             String progressivoRigaPerRicetta, String id, String err01, String err02, String err03,
             String err04, String err05, String err06, String err07, String err08, String err09, String err10)
@@ -133,6 +136,7 @@ public class Flussoc2Repository extends BaseRepository<Flussoc2>
 
    }
 
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
    public boolean findErrori(String nomefile, String regioneAddebitante, String codiceStrutturaErogante,
             String progressivoRigaPerRicetta, String id)
    {
