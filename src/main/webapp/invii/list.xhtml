@@ -58,7 +58,8 @@
 					<h:outputText value="#{m.id}" />
 				</p:column>
 				<p:column
-					headerText="sigla &lt;br/&gt; tipologia invio &lt;br/&gt; applicazione">
+					headerText="sigla &lt;br/&gt; tipologia invio &lt;br/&gt; applicazione"
+					width="20%">
 					<h:outputText value="#{m.sigla}" />
 					<br />
 					<h:outputText value="#{m.tipologiaInvio.name()}" />
@@ -74,22 +75,36 @@
 						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 					</h:outputText>
 				</p:column>
-				<p:column headerText="files">
-					<h:outputText value="#{m.file1.fileName}"
-						rendered="#{not empty m.file1}" />
-					<br />
-					<h:outputText value="#{m.file2.fileName}"
-						rendered="#{not empty m.file2}" />
-					<br />
-					<h:outputText value="#{m.fileRitorno.fileName}"
-						rendered="#{not empty m.fileRitorno}" />
+				<p:column headerText="files" width="30%">
+					<h:panelGrid border="0">
+						<h:panelGroup>
+							<h:outputText value="#{m.file1.fileName}"
+								rendered="#{not empty m.file1}" />
+							<br />
+							<h:outputText value="#{m.file2.fileName}"
+								rendered="#{not empty m.file2}" />
+							<br />
+							<h:outputText value="#{m.fileRitorno.fileName}"
+								rendered="#{not empty m.fileRitorno}" />
+						</h:panelGroup>
+						<h:panelGroup>
+							<center>
+								<p:commandLink immediate="true" style="font-size: 24px;"
+									title="vedi elaborazioni"
+									action="#{elaborazioniController.cercaPerSigla(m.sigla)}"
+									styleClass="fa fa-refresh navLink" ajax="false">
+								</p:commandLink>
+							</center>
+						</h:panelGroup>
+					</h:panelGrid>
+
 				</p:column>
 
 
-				<p:column headerText="stato">
+				<p:column headerText="stato" width="20%">
 					<h:outputText value="#{m.statoInvio.name()}" />
 				</p:column>
-				<p:column headerText="applicati errori">
+				<p:column headerText="correzione righe">
 					<h:outputText value="SI" rendered="#{m.applicatiErrori}" />
 					<h:outputText value="NO" rendered="#{not m.applicatiErrori}" />
 

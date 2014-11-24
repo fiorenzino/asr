@@ -13,6 +13,9 @@
 	<profiles>
 		<profile>
 			<id>postgresql</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<properties>
 				<default_schema>public</default_schema>
 				<hbm2ddl.auto>update</hbm2ddl.auto>
@@ -24,9 +27,6 @@
 		</profile>
 		<profile>
 			<id>mysql</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 			<properties>
 				<default_schema>asr</default_schema>
 				<hbm2ddl.auto>update</hbm2ddl.auto>

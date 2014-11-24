@@ -68,6 +68,14 @@ public class ElaborazioniController extends AbstractLazyController<Elaborazione>
       return editPage();
    }
 
+   public String cercaPerSigla(String sigla)
+   {
+      reset();
+      getSearch().getObj().setFileName(sigla);
+      super.refreshModel();
+      return listPage();
+   }
+
    @Override
    public String delete()
    {

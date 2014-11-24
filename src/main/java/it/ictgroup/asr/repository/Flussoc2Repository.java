@@ -141,19 +141,20 @@ public class Flussoc2Repository extends BaseRepository<Flussoc2>
       Long numRow;
       try
       {
-         numRow = (Long) getEm()
+         Object res = getEm()
                   .createNativeQuery(
                            "SELECT count(id) FROM  "
                                     + Flussoc2.TABLE_NAME
-                                    + " WHERE nomefile= :nomefile, progressivoRigaPerRicetta= :progressivoRigaPerRicetta, "
-                                    + "regioneAddebitante = :regioneAddebitante, codiceStrutturaErogante = :codiceStrutturaErogante, "
-                                    + " id = :id")
+                                    + " WHERE nomefile= :nomefile AND progressivoRigaPerRicetta= :progressivoRigaPerRicetta AND "
+                                    + "regioneAddebitante = :regioneAddebitante AND codiceStrutturaErogante = :codiceStrutturaErogante "
+                                    + " AND id = :id")
                   .setParameter("nomefile", nomefile)
                   .setParameter("regioneAddebitante", regioneAddebitante)
                   .setParameter("progressivoRigaPerRicetta", progressivoRigaPerRicetta)
                   .setParameter("codiceStrutturaErogante", codiceStrutturaErogante)
                   .setParameter("id", id)
                   .getSingleResult();
+         numRow = Long.parseLong(res.toString());
       }
       catch (Exception e)
       {
