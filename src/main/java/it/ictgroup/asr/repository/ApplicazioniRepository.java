@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import org.giavacms.commons.model.Search;
 
@@ -38,6 +40,7 @@ public class ApplicazioniRepository extends BaseRepository<Applicazione>
 
    }
 
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
    public Applicazione findBySigla(String sigla)
    {
       Applicazione applicazione = null;

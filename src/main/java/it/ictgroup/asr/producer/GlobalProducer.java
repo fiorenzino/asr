@@ -1,10 +1,12 @@
 package it.ictgroup.asr.producer;
 
+import it.ictgroup.asr.model.Applicazione;
 import it.ictgroup.asr.model.Configurazione;
 import it.ictgroup.asr.model.enums.StatoElaborazione;
 import it.ictgroup.asr.model.enums.StatoInvio;
 import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import it.ictgroup.asr.model.enums.TipologiaInvio;
+import it.ictgroup.asr.repository.ApplicazioniRepository;
 import it.ictgroup.asr.repository.ConfigurazioniRepository;
 
 import java.util.ArrayList;
@@ -29,6 +31,9 @@ public class GlobalProducer extends AbstractProducer
 
    @Inject
    ConfigurazioniRepository configurazioniRepository;
+
+   @Inject
+   ApplicazioniRepository applicazioniRepository;
 
    @Produces
    @Named
@@ -100,6 +105,23 @@ public class GlobalProducer extends AbstractProducer
 
    @Produces
    @Named
+   public SelectItem[] getApplicazioniItems()
+   {
+      if (super.getItems().get(Applicazione.class) == null)
+      {
+         List<SelectItem> applicazioneItemss = new ArrayList<SelectItem>();
+         applicazioneItemss.add(new SelectItem(null, "Applicazione..."));
+         for (Applicazione applicazione : applicazioniRepository.getAllList())
+         {
+            applicazioneItemss.add(new SelectItem(applicazione.getId(), applicazione.getNome()));
+         }
+         super.getItems().put(Applicazione.class, applicazioneItemss.toArray(new SelectItem[] {}));
+      }
+      return super.getItems().get(Applicazione.class);
+   }
+
+   @Produces
+   @Named
    public MenuModel getBreadCrumbs()
    {
       return PrimeUtils.primeBreadcrumbs();
@@ -107,14 +129,18 @@ public class GlobalProducer extends AbstractProducer
 
    public SelectItem[] getConfigurazioniItems(TipologiaInvio tipologiaInvio)
    {
-      List<SelectItem> configurazioniItems = new ArrayList<SelectItem>();
-      configurazioniItems.add(new SelectItem(null, "configurazione..."));
-      for (Configurazione configurazione : configurazioniRepository.getAllList())
+      if (super.getItems().get(Configurazione.class) == null)
       {
-         if (configurazione.getTipologiaFlusso().name().startsWith(tipologiaInvio.name())
-                  && configurazione.getTipologiaFlusso().name().endsWith("R"))
-            configurazioniItems.add(new SelectItem(configurazione.getId(), configurazione.getNome()));
+         List<SelectItem> configurazioniItems = new ArrayList<SelectItem>();
+         configurazioniItems.add(new SelectItem(null, "configurazione..."));
+         for (Configurazione configurazione : configurazioniRepository.getAllList())
+         {
+            if (configurazione.getTipologiaFlusso().name().startsWith(tipologiaInvio.name())
+                     && configurazione.getTipologiaFlusso().name().endsWith("R"))
+               configurazioniItems.add(new SelectItem(configurazione.getId(), configurazione.getNome()));
+         }
+         super.getItems().put(Configurazione.class, configurazioniItems.toArray(new SelectItem[] {}));
       }
-      return configurazioniItems.toArray(new SelectItem[] {});
+      return super.getItems().get(Configurazione.class);
    }
 }

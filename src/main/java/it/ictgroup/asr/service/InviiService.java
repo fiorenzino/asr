@@ -1,32 +1,39 @@
 package it.ictgroup.asr.service;
 
 import it.ictgroup.asr.management.AppConstants;
-import it.ictgroup.asr.management.AppKeys;
 import it.ictgroup.asr.model.Applicazione;
 import it.ictgroup.asr.model.Elaborazione;
 import it.ictgroup.asr.model.Invio;
 import it.ictgroup.asr.model.enums.StatoInvio;
+import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import it.ictgroup.asr.model.enums.TipologiaInvio;
 import it.ictgroup.asr.repository.ApplicazioniRepository;
 import it.ictgroup.asr.repository.ElaborazioniRepository;
 import it.ictgroup.asr.repository.InviiRepository;
+import it.ictgroup.asr.util.QueueUtils;
 import it.ictgroup.asr.util.SiglaUtils;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
 import javax.jms.Queue;
 
+import org.jboss.logging.Logger;
+
 @Stateless
 public class InviiService
 {
+
+   Logger logger = Logger.getLogger(InviiService.class);
 
    @Inject
    ElaborazioniRepository elaborazioniRepository;
@@ -38,13 +45,34 @@ public class InviiService
    ApplicazioniRepository applicazioniRepository;
 
    @Inject
+   FlussoService flussoService;
+
+   @Inject
    @JMSConnectionFactory("java:/ConnectionFactory")
    private JMSContext context;
 
    @Resource(lookup = AppConstants.VERIFICA_INVIO_ASR_QUEUE)
-   private Queue verificaInvioAsrQueue;;
+   private Queue verificaInvioAsrQueue;
 
-   public void verifica() throws Exception
+   @Resource(lookup = AppConstants.CORREGGI_ERRORI_ASR_QUEUE)
+   private Queue correggiErroriAsrQueue;
+
+   @Asynchronous
+   @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+   public void verificaInvii_async()
+   {
+      try
+      {
+         verificaInvii();
+      }
+      catch (Exception e)
+      {
+         logger.info(e.getMessage());
+      }
+   }
+
+   @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+   public void verificaInvii() throws Exception
    {
       // carico tutti gli invii non
 
@@ -59,36 +87,32 @@ public class InviiService
             boolean sendToVerify = false;
             if (invio == null)
             {
-               invio = new Invio();
-               invio.setSigla(sigla);
-               invio.setTipologiaInvio(tipologiaInvio);
-               Applicazione applicazione = applicazioniRepository.findBySigla(SiglaUtils.getApplicazione(elaborazione
-                        .getFileName()));
-               invio.setApplicazione(applicazione);
-               Date periodoA = SiglaUtils.getPeriodoA(elaborazione
-                        .getFileName());
-               invio.setPeriodoA(periodoA);
                Date periodoDa = SiglaUtils.getPeriodoDa(elaborazione
                         .getFileName());
-               invio.setPeriodoDa(periodoDa);
-               invio.setStatoInvio(StatoInvio.INCOMPLETO);
-               invio = inviiRepository.persist(invio);
+               Date periodoA = SiglaUtils.getPeriodoA(elaborazione
+                        .getFileName());
+               Applicazione applicazione = applicazioniRepository.findBySigla(SiglaUtils.getApplicazione(elaborazione
+                        .getFileName()));
+               invio = new Invio(sigla, tipologiaInvio, applicazione, periodoA, periodoDa, StatoInvio.INCOMPLETO);
+               invio = inviiRepository.persist_newtx(invio);
             }
             switch (elaborazione.getConfigurazione().getTipologiaFlusso())
             {
             case A1:
             case C1:
                invio.setFile1(elaborazione);
-               if (invio.getFile2() != null)
+               if (invio.getFile2() != null && invio.getFileRitorno() == null)
                {
+                  invio.setStatoInvio(StatoInvio.IN_ATTESA_DI_ESITO);
                   sendToVerify = true;
                }
                break;
             case A2:
             case C2:
                invio.setFile2(elaborazione);
-               if (invio.getFile1() != null)
+               if (invio.getFile1() != null && invio.getFileRitorno() == null)
                {
+                  invio.setStatoInvio(StatoInvio.IN_ATTESA_DI_ESITO);
                   sendToVerify = true;
                }
                break;
@@ -104,25 +128,55 @@ public class InviiService
             {
                inviiRepository.update(invio);
             }
+            else
+            {
+               logger.info("NON HO ID");
+            }
             elaborazione.setCongiunta(true);
-            elaborazioniRepository.update(elaborazione);
+            elaborazioniRepository.updateCongiunta(elaborazione.getId());
             if (sendToVerify)
             {
-               send(invio);
+               QueueUtils.sendVerificaInvioAsr(context, verificaInvioAsrQueue, invio);
             }
          }
       }
 
    }
 
-   public void send(Invio invio)
+   @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+   public void verificaCongruenza(Long idElaborazione1, Long idElaborazione2, Long idInvio,
+            TipologiaFlusso tipologiaFlusso1,
+            TipologiaFlusso tipologiaFlusso2)
    {
-      Map<String, Object> map = new HashMap<>();
-      map.put(AppKeys.ELABORAZIONE_ID_1.name(), invio.getFile1().getId());
-      map.put(AppKeys.ELABORAZIONE_ID_2.name(), invio.getFile2().getId());
-      map.put(AppKeys.INVIO_ID.name(), invio.getId());
-      map.put(AppKeys.TIPOLOGIA_FLUSSO_1.name(), invio.getFile1().getConfigurazione().getTipologiaFlusso().name());
-      map.put(AppKeys.TIPOLOGIA_FLUSSO_2.name(), invio.getFile2().getConfigurazione().getTipologiaFlusso().name());
-      context.createProducer().send(verificaInvioAsrQueue, map);
+      try
+      {
+         int count1 = elaborazioniRepository.countRighe(idElaborazione1, tipologiaFlusso1);
+         int count2 = elaborazioniRepository.countRighe(idElaborazione2, tipologiaFlusso2);
+         if (count1 != count2)
+         {
+            inviiRepository.updateStato(idInvio, StatoInvio.ERRORE_COERENZA);
+         }
+      }
+      catch (Exception e)
+      {
+         logger.info(e.getMessage());
+      }
+   }
+
+   @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+   public void correggiErrori()
+   {
+      List<Invio> inviiDaCorreggere = inviiRepository.getInviiDaCorreggere();
+      for (Invio invio : inviiDaCorreggere)
+      {
+         correggiSingolo(invio);
+      }
+   }
+
+   @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+   public void correggiSingolo(Invio invio)
+   {
+      QueueUtils.sendCorreggiErroriAsr(context, correggiErroriAsrQueue, invio.getFileRitorno().getId(),
+               invio.getId());
    }
 }

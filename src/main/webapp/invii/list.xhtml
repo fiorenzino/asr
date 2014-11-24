@@ -13,6 +13,12 @@
 		<h:form id="mainForm">
 			<h:panelGrid columns="5" id="buttonGrid">
 
+				<h:outputLabel for="applicazione" value="Applicazione: " />
+				<p:selectOneMenu style="width: 200px;" id="applicazione"
+					value="#{inviiController.search.obj.applicazione.id}">
+					<f:selectItems value="#{applicazioniItems}" />
+				</p:selectOneMenu>
+
 				<h:outputLabel for="tipologiaInvio" value="Tipologia invio:" />
 				<p:selectOneMenu style="width: 200px;" id="tipologiaInvio"
 					value="#{inviiController.search.obj.tipologiaInvio}">
@@ -26,6 +32,10 @@
 					value="#{inviiController.search.obj.statoInvio}">
 					<f:selectItems value="#{statiInvioItems}" />
 				</p:selectOneMenu>
+
+				<h:outputLabel for="sigla" value="Sigla: " />
+				<p:inputText id="sigla" style="width: 200px;"
+					value="#{inviiController.search.obj.sigla}" />
 
 			</h:panelGrid>
 			<h:panelGrid columns="2">
@@ -79,9 +89,21 @@
 				<p:column headerText="stato">
 					<h:outputText value="#{m.statoInvio.name()}" />
 				</p:column>
-				<p:column headerText="errori">
-					<h:outputText value="#{m.errori}" />
+				<p:column headerText="applicati errori">
+					<h:outputText value="SI" rendered="#{m.applicatiErrori}" />
+					<h:outputText value="NO" rendered="#{not m.applicatiErrori}" />
+
+
+					<p:commandLink immediate="true" style="font-size: 24px;"
+						title="correggo errori"
+						action="#{inviiController.correggiSingolo}"
+						rendered="#{not m.applicatiErrori and m.statoInvio.name() eq 'ESITATO_CON_ERRORI'}"
+						styleClass="fa fa-circle-o-notch navLink" ajax="false">
+					</p:commandLink>
+
 				</p:column>
+
+
 
 				<p:column headerText="operazioni">
 
@@ -112,8 +134,11 @@
 
 			<br />
 
-			<p:commandButton action="#{inviiController.elabora}"
+			<p:commandButton action="#{inviiController.verificaInvii}"
 				value="Verifica Invii" immediate="true" ajax="false" />
+
+			<p:commandButton action="#{inviiController.correggiErrori}"
+				value="Correggi Errori" immediate="true" ajax="false" />
 
 		</h:form>
 

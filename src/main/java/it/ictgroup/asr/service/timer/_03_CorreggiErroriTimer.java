@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 
 @Singleton
-public class _02_VerificaInviiTimer implements Serializable
+public class _03_CorreggiErroriTimer implements Serializable
 {
 
    Logger logger = Logger.getLogger(getClass());

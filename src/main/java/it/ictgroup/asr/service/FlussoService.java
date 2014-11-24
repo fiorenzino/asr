@@ -1,5 +1,6 @@
 package it.ictgroup.asr.service;
 
+import it.ictgroup.asr.management.AppConstants;
 import it.ictgroup.asr.model.BaseFlusso;
 import it.ictgroup.asr.model.Flussoa1;
 import it.ictgroup.asr.model.Flussoa2;
@@ -20,7 +21,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -28,7 +28,6 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 
 import org.giavacms.commons.model.Search;
-import org.jboss.ejb3.annotation.TransactionTimeout;
 import org.jboss.logging.Logger;
 
 @Stateless
@@ -105,6 +104,7 @@ public class FlussoService implements Serializable
             }
             if (flusso != null)
             {
+               flusso.setNomeFile(nomeFile);
                flusso.getElaborazione().setId(idElaborazione);
                elaborazioniRepository.persist_newtx(flusso);
             }
@@ -127,6 +127,7 @@ public class FlussoService implements Serializable
                + "num righe: " + i);
    }
 
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
    public void updateRigheInErrore(Long elaborazioneId, String nomeFile, TipologiaFlusso tipologiaFlusso)
    {
       switch (tipologiaFlusso)
@@ -139,25 +140,75 @@ public class FlussoService implements Serializable
          {
             // String nomefile, String regioneAddebitante, String codiceIstituto,
             // String numerodellascheda,
-            flussoa2Repository.updateWithErrori(flussoa2r.getNomeFile(), flussoa2r.getRegioneAddebitante(),
-                     flussoa2r.getCodiceIstituto(),
-                     flussoa2r.getNumeroDellaScheda(), flussoa2r.getErr01(), flussoa2r.getErr02(),
-                     flussoa2r.getErr03(), flussoa2r.getErr04(), flussoa2r.getErr05(), flussoa2r.getErr06(),
-                     flussoa2r.getErr07(), flussoa2r.getErr08(), flussoa2r.getErr09(), flussoa2r.getErr10());
+            boolean res = false;
+            if (AppConstants.CORREGGO)
+            {
+               res = flussoa2Repository.updateWithErrori(flussoa2r.getNomeFile(),
+                        flussoa2r.getRegioneAddebitante(),
+                        flussoa2r.getCodiceIstituto(),
+                        flussoa2r.getNumeroDellaScheda(), flussoa2r.getErr01(), flussoa2r.getErr02(),
+                        flussoa2r.getErr03(), flussoa2r.getErr04(), flussoa2r.getErr05(), flussoa2r.getErr06(),
+                        flussoa2r.getErr07(), flussoa2r.getErr08(), flussoa2r.getErr09(), flussoa2r.getErr10());
+
+            }
+            else
+            {
+               res = flussoa2Repository.findErrori(flussoa2r.getNomeFile(), flussoa2r.getRegioneAddebitante(),
+                        flussoa2r.getCodiceIstituto(),
+                        flussoa2r.getNumeroDellaScheda());
+            }
+            if (res)
+            {
+               logger.info("trovato!");
+            }
+            else
+            {
+               logger.info("NON trovato!");
+            }
          }
          break;
       case C2R:
          Search<Flussoc2r> searchC2r = new Search<Flussoc2r>(Flussoc2r.class);
          searchC2r.getObj().getElaborazione().setId(elaborazioneId);
-         List<Flussoc2r> flussoc2rList = flussoc2rRepository.getList(searchC2r, 0, 0);
-         for (Flussoc2r flussoc2r : flussoc2rList)
+         int size = flussoc2rRepository.getListSize(searchC2r);
+         int i = 0;
+         while (i < size)
          {
-            flussoc2Repository.updateWithErrori(flussoc2r.getNomeFile(), flussoc2r.getRegioneAddebitante(),
-                     flussoc2r.getCodiceStrutturaErogante(),
-                     flussoc2r.getProgressivoRigaPerRicetta(), flussoc2r.getId(), flussoc2r.getErr01(),
-                     flussoc2r.getErr02(),
-                     flussoc2r.getErr03(), flussoc2r.getErr04(), flussoc2r.getErr05(), flussoc2r.getErr06(),
-                     flussoc2r.getErr07(), flussoc2r.getErr08(), flussoc2r.getErr09(), flussoc2r.getErr10());
+            if (i + 50 > size)
+            {
+               i = size;
+            }
+            logger.info("correggo: " + i + "/" + size + ", elaborazioneId:" + elaborazioneId);
+            List<Flussoc2r> flussoc2rList = flussoc2rRepository.getList(searchC2r, i, 50);
+            for (Flussoc2r flussoc2r : flussoc2rList)
+            {
+               boolean res = false;
+               if (AppConstants.CORREGGO)
+               {
+                  res = flussoc2Repository.updateWithErrori(flussoc2r.getNomeFile(), flussoc2r.getRegioneAddebitante(),
+                           flussoc2r.getCodiceStrutturaErogante(),
+                           flussoc2r.getProgressivoRigaPerRicetta(), flussoc2r.getId(), flussoc2r.getErr01(),
+                           flussoc2r.getErr02(),
+                           flussoc2r.getErr03(), flussoc2r.getErr04(), flussoc2r.getErr05(), flussoc2r.getErr06(),
+                           flussoc2r.getErr07(), flussoc2r.getErr08(), flussoc2r.getErr09(), flussoc2r.getErr10());
+               }
+               else
+               {
+                  res = flussoc2Repository.findErrori(flussoc2r.getNomeFile(), flussoc2r.getRegioneAddebitante(),
+                           flussoc2r.getCodiceStrutturaErogante(),
+                           flussoc2r.getProgressivoRigaPerRicetta(), flussoc2r.getId());
+               }
+               if (res)
+               {
+                  logger.info("trovato!");
+               }
+               else
+               {
+                  logger.info("NON trovato!");
+               }
+
+            }
+            i += 50;
          }
          break;
 

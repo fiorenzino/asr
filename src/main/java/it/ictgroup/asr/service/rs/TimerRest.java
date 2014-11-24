@@ -44,7 +44,7 @@ public class TimerRest
    public String invii() throws Exception
    {
       // _01_P7mFolderPollerTimer.executeNow();
-      inviiService.verifica();
+      inviiService.verificaInvii();
       return "OK";
    }
 

@@ -20,7 +20,7 @@ public class Flussoc2rRepository extends BaseRepository<Flussoc2r>
    @Override
    protected String getDefaultOrderBy()
    {
-      return " x asc ";
+      return " uid asc ";
    }
 
    @Override

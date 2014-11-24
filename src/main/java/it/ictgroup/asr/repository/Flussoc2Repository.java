@@ -133,6 +133,40 @@ public class Flussoc2Repository extends BaseRepository<Flussoc2>
 
    }
 
+   public boolean findErrori(String nomefile, String regioneAddebitante, String codiceStrutturaErogante,
+            String progressivoRigaPerRicetta, String id)
+   {
+      // String key = flussoc2.getRegioneAddebitante() + flussoc2.getCodiceStrutturaErogante() + flussoc2.getId() +
+      // flussoc2.getProgressivoRigaPerRicetta();
+      Long numRow;
+      try
+      {
+         numRow = (Long) getEm()
+                  .createNativeQuery(
+                           "SELECT count(id) FROM  "
+                                    + Flussoc2.TABLE_NAME
+                                    + " WHERE nomefile= :nomefile, progressivoRigaPerRicetta= :progressivoRigaPerRicetta, "
+                                    + "regioneAddebitante = :regioneAddebitante, codiceStrutturaErogante = :codiceStrutturaErogante, "
+                                    + " id = :id")
+                  .setParameter("nomefile", nomefile)
+                  .setParameter("regioneAddebitante", regioneAddebitante)
+                  .setParameter("progressivoRigaPerRicetta", progressivoRigaPerRicetta)
+                  .setParameter("codiceStrutturaErogante", codiceStrutturaErogante)
+                  .setParameter("id", id)
+                  .getSingleResult();
+      }
+      catch (Exception e)
+      {
+         logger.info("flussoc2 non trovato - nomefile: " + nomefile + ", regioneAddebitante:" + regioneAddebitante
+                  + ", id: " + id + ", codiceStrutturaErogante" +
+                  codiceStrutturaErogante + ",progressivoRigaPerRicetta: " + progressivoRigaPerRicetta);
+         return false;
+      }
+
+      return numRow > 0 ? true : false;
+
+   }
+
    public Map<String, Flussoc2> getMappaRigheDaCorreggere(String nomeFile, List<Long> ids)
    {
       Search<Flussoc2> search = new Search<Flussoc2>(Flussoc2.class);
