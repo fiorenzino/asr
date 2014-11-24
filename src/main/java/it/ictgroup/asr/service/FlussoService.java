@@ -143,7 +143,7 @@ public class FlussoService implements Serializable
             boolean res = false;
             if (AppConstants.CORREGGO)
             {
-               res = flussoa2Repository.updateWithErrori(flussoa2r.getNomeFile(),
+               res = flussoa2Repository.updateWithErrori(flussoa2r.getNomeFile().replace("a2r.txt", "a2.txt"),
                         flussoa2r.getRegioneAddebitante(),
                         flussoa2r.getCodiceIstituto(),
                         flussoa2r.getNumeroDellaScheda(), flussoa2r.getErr01(), flussoa2r.getErr02(),
@@ -153,7 +153,8 @@ public class FlussoService implements Serializable
             }
             else
             {
-               res = flussoa2Repository.findErrori(flussoa2r.getNomeFile(), flussoa2r.getRegioneAddebitante(),
+               res = flussoa2Repository.findErrori(flussoa2r.getNomeFile().replace("a2r.txt", "a2.txt"),
+                        flussoa2r.getRegioneAddebitante(),
                         flussoa2r.getCodiceIstituto(),
                         flussoa2r.getNumeroDellaScheda());
             }
@@ -163,7 +164,9 @@ public class FlussoService implements Serializable
             }
             else
             {
-               logger.info("NON trovato!");
+               logger.info("NON trovato:" + flussoa2r.getNomeFile().replace("a2r.txt", "a2.txt") + ", " +
+                        flussoa2r.getRegioneAddebitante() + ", " +
+                        flussoa2r.getCodiceIstituto() + "," + flussoa2r.getNumeroDellaScheda());
             }
          }
          break;
@@ -185,7 +188,8 @@ public class FlussoService implements Serializable
                boolean res = false;
                if (AppConstants.CORREGGO)
                {
-                  res = flussoc2Repository.updateWithErrori(flussoc2r.getNomeFile(), flussoc2r.getRegioneAddebitante(),
+                  res = flussoc2Repository.updateWithErrori(flussoc2r.getNomeFile().replace("c2r.txt", "c2.txt"),
+                           flussoc2r.getRegioneAddebitante(),
                            flussoc2r.getCodiceStrutturaErogante(),
                            flussoc2r.getProgressivoRigaPerRicetta(), flussoc2r.getId(), flussoc2r.getErr01(),
                            flussoc2r.getErr02(),
@@ -194,7 +198,8 @@ public class FlussoService implements Serializable
                }
                else
                {
-                  res = flussoc2Repository.findErrori(flussoc2r.getNomeFile(), flussoc2r.getRegioneAddebitante(),
+                  res = flussoc2Repository.findErrori(flussoc2r.getNomeFile().replace("c2r.txt", "c2.txt"),
+                           flussoc2r.getRegioneAddebitante(),
                            flussoc2r.getCodiceStrutturaErogante(),
                            flussoc2r.getProgressivoRigaPerRicetta(), flussoc2r.getId());
                }
@@ -204,7 +209,10 @@ public class FlussoService implements Serializable
                }
                else
                {
-                  logger.info("NON trovato!");
+                  logger.info("NON trovato:" + flussoc2r.getNomeFile().replace("c2r.txt", "c2.txt") + ", " +
+                           flussoc2r.getRegioneAddebitante() + ", " +
+                           flussoc2r.getCodiceStrutturaErogante() + ", " +
+                           flussoc2r.getProgressivoRigaPerRicetta() + "," + flussoc2r.getId());
                }
 
             }
