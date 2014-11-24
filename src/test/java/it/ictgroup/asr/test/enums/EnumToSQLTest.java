@@ -22,6 +22,6 @@ public class EnumToSQLTest
    @Test
    public void enumToSQLTest()
    {
-      EnumToSQL.enumToSQL(enumsPkg, sqlFileName);
+      EnumToSQL.enumToSQL(enumsPkg, sqlFileName, EnumToSQL.SQLDialect.POSTGRES);
    }
 }

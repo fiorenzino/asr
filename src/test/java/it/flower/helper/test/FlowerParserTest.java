@@ -192,7 +192,85 @@ public class FlowerParserTest
    }
 
    @Test
-   public void trovaCorrispondenzaC2()
+   public void trovaCorrispondenzaC1C2()
+   {
+      try
+      {
+         FlowerFileHelper<Flussoc1> filedReader = new FlowerFileHelper<Flussoc1>(Flussoc1.class);
+         Path path = Paths.get(new File(
+                  // "/Users/fiorenzo/workspace-all/workspace/asr/docs/data/flussi/FM_WD-20131231-20131201-c1.txt")
+                  // "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/FM_WD-20131231-20131201-c1.txt")
+                  // "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/WD-20131130-20131101-c1.txt")
+                  // "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/WD-20131031-20131001-c1.txt")
+                  "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/NC-20130331-20130301-c1.txt")
+//                  "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/LA-20130131-20130101-c1.txt")
+                  .getAbsolutePath());
+         HashMap<String, Flussoc1> flussic1 = new HashMap<String, Flussoc1>();
+         try (Scanner scanner = new Scanner(path, StandardCharsets.UTF_8.name()))
+         {
+            int i = 0;
+            Flussoc1 flussoc1 = null;
+            while (scanner.hasNextLine())
+            {
+               i++;
+               flussoc1 = filedReader.valorize(scanner.nextLine());
+               String key = flussoc1.getRegioneAddebitante() + flussoc1.getCodiceStrutturaErogante()
+                        + flussoc1.getId() + flussoc1.getProgressivoRigaPerRicetta();
+               if(flussic1.containsKey(key))
+               {
+                  Assert.fail("Chiave flussoc1 " + key + " già presente");
+               }
+               flussic1.put(key, flussoc1);
+            }
+         }
+
+         FlowerFileHelper<Flussoc2> filedReaderc2 = new FlowerFileHelper<Flussoc2>(Flussoc2.class);
+         Path path2 = Paths.get(new File(
+                  // "/Users/fiorenzo/workspace-all/workspace/asr/docs/data/flussi/FM_WD-20131231-20131201-c2.txt")
+                  // "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/FM_WD-20131231-20131201-c2.txt")
+                  // "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/WD-20131130-20131101-c2.txt")
+                  // "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/WD-20131031-20131001-c2.txt")
+                  "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/NC-20130331-20130301-c2.txt")
+//                  "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/LA-20130131-20130101-c2.txt")
+                  .getAbsolutePath());
+         HashMap<String, Flussoc2> flussic2 = new HashMap<String, Flussoc2>();
+         try (Scanner scanner = new Scanner(path2, StandardCharsets.UTF_8.name()))
+         {
+            int i = 0;
+            Flussoc2 flussoc2 = null;
+            while (scanner.hasNextLine())
+            {
+               i++;
+               flussoc2 = filedReaderc2.valorize(scanner.nextLine());
+               String key = flussoc2.getRegioneAddebitante() + flussoc2.getCodiceStrutturaErogante()
+                        + flussoc2.getId() + flussoc2.getProgressivoRigaPerRicetta();
+               if(flussic2.containsKey(key))
+               {
+                  Assert.fail("Chiave flussoc2 " + key + " già presente");
+               }
+               flussic2.put(key, flussoc2);
+            }
+         }
+
+         Iterator<String> it = flussic2.keySet().iterator();
+         while(it.hasNext())
+         {
+            String key = it.next();
+            if(!flussic2.containsKey(key))
+            {
+               Assert.fail("Chiave flussoc2r " + key + " non presente");
+            }
+         }
+      }
+      catch (Exception e)
+      {
+         logger.error(e.getMessage());
+
+      }
+   }
+
+   @Test
+   public void trovaCorrispondenzaC2C2R()
    {
       try
       {
@@ -206,7 +284,6 @@ public class FlowerParserTest
                   // "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/NC-20130331-20130301-c2r.txt")
                   "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/LA-20130131-20130101-c2r.txt")
                   .getAbsolutePath());
-//         List<Flussoc2r> flussic2r = new ArrayList<Flussoc2r>();
          HashMap<String, Flussoc2r> flussic2r = new HashMap<String, Flussoc2r>();
          try (Scanner scanner = new Scanner(path, StandardCharsets.UTF_8.name()))
          {
@@ -216,7 +293,6 @@ public class FlowerParserTest
             {
                i++;
                flussoc2r = filedReader.valorize(scanner.nextLine());
-//               flussic2r.add(flussoc2r);
                String key = flussoc2r.getRegioneAddebitante() + flussoc2r.getCodiceStrutturaErogante()
                         + flussoc2r.getId() + flussoc2r.getProgressivoRigaPerRicetta();
                if(flussic2r.containsKey(key))
@@ -236,7 +312,6 @@ public class FlowerParserTest
                   // "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/NC-20130331-20130301-c2.txt")
                   "/home/stefano/work/workspaces/asur/asr/docs/data/flussi2/LA-20130131-20130101-c2.txt")
                   .getAbsolutePath());
-//         List<Flussoc2> flussic2 = new ArrayList<Flussoc2>();
          HashMap<String, Flussoc2> flussic2 = new HashMap<String, Flussoc2>();
 
          try (Scanner scanner = new Scanner(path2, StandardCharsets.UTF_8.name()))
@@ -247,7 +322,6 @@ public class FlowerParserTest
             {
                i++;
                flussoc2 = filedReaderc2.valorize(scanner.nextLine());
-//               flussic2.add(flussoc2);
                String key = flussoc2.getRegioneAddebitante() + flussoc2.getCodiceStrutturaErogante()
                         + flussoc2.getId() + flussoc2.getProgressivoRigaPerRicetta();
                if(flussic2.containsKey(key))
@@ -277,7 +351,7 @@ public class FlowerParserTest
 
 
    @Test
-   public void trovaCorrispondenzaA2()
+   public void trovaCorrispondenzaA1A2()
    {
       try
       {
