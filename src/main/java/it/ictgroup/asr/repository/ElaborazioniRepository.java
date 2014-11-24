@@ -7,7 +7,9 @@ import it.ictgroup.asr.model.Flussoa2r;
 import it.ictgroup.asr.model.Flussoc1;
 import it.ictgroup.asr.model.Flussoc2;
 import it.ictgroup.asr.model.Flussoc2r;
+import it.ictgroup.asr.model.Invio;
 import it.ictgroup.asr.model.enums.StatoElaborazione;
+import it.ictgroup.asr.model.enums.StatoInvio;
 import it.ictgroup.asr.model.enums.TipologiaFlusso;
 import it.ictgroup.asr.model.enums.TipologiaInvio;
 
@@ -119,12 +121,6 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       return result;
    }
 
-   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-   public void persist_newtx(Elaborazione elaborazione) throws Exception
-   {
-      getEm().persist(elaborazione);
-   }
-
    public void avvia(Long id) throws Exception
    {
       getEm().createNativeQuery(
@@ -219,6 +215,7 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       esegui(id, righe);
    }
 
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
    public Map<TipologiaInvio, List<Elaborazione>> getElaborazioniNonCongiunteEseguite()
    {
       Map<TipologiaInvio, List<Elaborazione>> mappa = new HashMap<TipologiaInvio, List<Elaborazione>>();
@@ -327,6 +324,7 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
       delete(id);
    }
 
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
    public int countRighe(Long id, TipologiaFlusso tipologiaFlusso) throws Exception
    {
       String query = "";
@@ -385,8 +383,29 @@ public class ElaborazioniRepository extends BaseRepository<Elaborazione>
    }
 
    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-   public void persist_newtx(Object t) throws Exception
+   public <T> void persist_newtx(T t) throws Exception
    {
       getEm().persist(t);
+   }
+
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   public <T> void update_newtx(T t) throws Exception
+   {
+      getEm().merge(t);
+   }
+
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   public void updateCongiunta(Long id) throws Exception
+   {
+      getEm().createNativeQuery(
+               "UPDATE " + Elaborazione.TABLE_NAME + " SET congiunta = :CONGIUNTA WHERE id = :ID")
+               .setParameter("ID", id)
+               .setParameter("CONGIUNTA", true).executeUpdate();
+   }
+
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   public <T> T fetch_newtx(Object key) throws Exception
+   {
+      return (T) getEm().find(super.getEntityType(), key);
    }
 }

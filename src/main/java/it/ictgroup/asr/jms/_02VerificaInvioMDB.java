@@ -2,13 +2,13 @@ package it.ictgroup.asr.jms;
 
 import it.ictgroup.asr.management.AppConstants;
 import it.ictgroup.asr.management.AppKeys;
-import it.ictgroup.asr.model.enums.StatoInvio;
 import it.ictgroup.asr.model.enums.TipologiaFlusso;
-import it.ictgroup.asr.repository.ElaborazioniRepository;
-import it.ictgroup.asr.repository.InviiRepository;
+import it.ictgroup.asr.service.InviiService;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.jms.MapMessage;
 import javax.jms.Message;
@@ -20,19 +20,16 @@ import org.jboss.logging.Logger;
          @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
          @ActivationConfigProperty(propertyName = "destination", propertyValue = AppConstants.VERIFICA_INVIO_ASR_QUEUE),
          @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
-         @ActivationConfigProperty(propertyName = "maxSession", propertyValue = "1"),
-         @ActivationConfigProperty(propertyName = "transactionTimeout", propertyValue = "3600"),
+         @ActivationConfigProperty(propertyName = "maxSession", propertyValue = "20"),
          @ActivationConfigProperty(propertyName = "dLQMaxResent", propertyValue = "0") })
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class _02VerificaInvioMDB implements MessageListener
 {
 
    Logger logger = Logger.getLogger(getClass());
 
    @Inject
-   ElaborazioniRepository elaborazioniRepository;
-
-   @Inject
-   InviiRepository inviiRepository;
+   InviiService inviiService;
 
    public void onMessage(Message message)
    {
@@ -50,19 +47,12 @@ public class _02VerificaInvioMDB implements MessageListener
          tipologiaFlusso1 = TipologiaFlusso.valueOf(msg.getString(AppKeys.TIPOLOGIA_FLUSSO_1.name()));
          tipologiaFlusso2 = TipologiaFlusso.valueOf(msg.getString(AppKeys.TIPOLOGIA_FLUSSO_2.name()));
 
-         logger.info("onMessage(), idElaborazione1:" + idElaborazione1 + " idElaborazione2 = " + idElaborazione2
+         logger.info("_02VerificaInvioMDB: onMessage(), idElaborazione1:" + idElaborazione1 + " idElaborazione2 = "
+                  + idElaborazione2
                   + " idInvio =" + idInvio + " tipologiaFlusso1= " + tipologiaFlusso1 + " tipologiaFlusso2= "
                   + tipologiaFlusso2);
-         int count1 = elaborazioniRepository.countRighe(idElaborazione1, tipologiaFlusso1);
-         int count2 = elaborazioniRepository.countRighe(idElaborazione2, tipologiaFlusso2);
-         if (count1 == count2)
-         {
-            inviiRepository.updateStato(idInvio, StatoInvio.IN_ATTESA_DI_ESITO);
-         }
-         else
-         {
-            inviiRepository.updateStato(idInvio, StatoInvio.ERRORE_COERENZA);
-         }
+         inviiService.verificaCongruenza(idElaborazione1, idElaborazione2, idInvio, tipologiaFlusso1, tipologiaFlusso2);
+
       }
       catch (Throwable e)
       {

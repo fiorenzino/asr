@@ -57,38 +57,28 @@
 				<p:column headerText="configurazione">
 					<h:outputText value="#{m.configurazione.nome}" />
 				</p:column>
-
-				<p:column headerText="data creazione">
+				<p:column headerText="date creazione/inizio/fine" width="20%">
 					<center>
 						<h:outputText value="#{m.dataCreazione}">
 							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
 								timeZone="Europe/Rome" />
 						</h:outputText>
-					</center>
-				</p:column>
-				<p:column headerText="data inizio">
-					<center>
+						<br />
 						<h:outputText value="#{m.dataStart}">
 							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
 								timeZone="Europe/Rome" />
 						</h:outputText>
-					</center>
-				</p:column>
-				<p:column headerText="data fine">
-					<center>
+						<br />
 						<h:outputText value="#{m.dataEnd}">
 							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
 								timeZone="Europe/Rome" />
 						</h:outputText>
 					</center>
 				</p:column>
-				<p:column headerText="nome file">
+				<p:column headerText="nome file/num righe" width="30%">
 					<center>
 						<h:outputText value="#{m.fileName}" />
-					</center>
-				</p:column>
-				<p:column headerText="n.ro righe">
-					<center>
+						<br />
 						<h:outputText value="#{m.righe}" />
 					</center>
 				</p:column>

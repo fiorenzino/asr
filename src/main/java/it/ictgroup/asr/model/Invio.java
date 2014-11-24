@@ -35,6 +35,22 @@ public class Invio implements Serializable
    private Elaborazione file2;
    private Elaborazione fileRitorno;
    private StatoInvio statoInvio;
+   private boolean applicatiErrori;
+
+   public Invio()
+   {
+   }
+
+   public Invio(String sigla, TipologiaInvio tipologiaInvio, Applicazione applicazione, Date periodoA, Date periodoDa,
+            StatoInvio statoInvio)
+   {
+      this.sigla = sigla;
+      this.tipologiaInvio = tipologiaInvio;
+      this.applicazione = applicazione;
+      this.periodoA = periodoA;
+      this.periodoDa = periodoDa;
+      this.statoInvio = statoInvio;
+   }
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +67,8 @@ public class Invio implements Serializable
    @ManyToOne
    public Applicazione getApplicazione()
    {
+      if (applicazione == null)
+         this.applicazione = new Applicazione();
       return applicazione;
    }
 
@@ -153,6 +171,16 @@ public class Invio implements Serializable
    public void setSigla(String sigla)
    {
       this.sigla = sigla;
+   }
+
+   public boolean isApplicatiErrori()
+   {
+      return applicatiErrori;
+   }
+
+   public void setApplicatiErrori(boolean applicatiErrori)
+   {
+      this.applicatiErrori = applicatiErrori;
    }
 
 }

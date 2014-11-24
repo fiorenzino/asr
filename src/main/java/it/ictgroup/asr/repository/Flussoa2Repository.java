@@ -115,6 +115,40 @@ public class Flussoa2Repository extends BaseRepository<Flussoa2>
 
    }
 
+   public boolean findErrori(String nomefile, String regioneAddebitante, String codiceIstituto,
+            String numerodellascheda)
+   {
+      /*
+       * String key = flussoa1.getRegioneAddebitante() + flussoa1.getCodiceIstitutoDiRicovero() +
+       * flussoa1.getNumeroDellaScheda();
+       */
+      Long numRow;
+      try
+      {
+         numRow = (Long) getEm()
+                  .createNativeQuery(
+                           "SELECT count(id) FROM "
+                                    + Flussoa2.TABLE_NAME
+                                    + " WHERE nomefile= :nomefile, numerodellascheda= :numerodellascheda, "
+                                    + "regioneAddebitante = :regioneAddebitante, codiceIstituto = :codiceIstituto")
+                  .setParameter("nomefile", nomefile)
+                  .setParameter("regioneAddebitante", regioneAddebitante)
+                  .setParameter("numerodellascheda", numerodellascheda)
+                  .setParameter("codiceIstituto", codiceIstituto)
+                  .getSingleResult();
+      }
+      catch (Exception e)
+      {
+         logger.info("flussoa2 non trovato - nomefile: " + nomefile + ", regioneAddebitante:" + regioneAddebitante
+                  + ", codiceIstituto: " + codiceIstituto + ",numerodellascheda: "
+                  + numerodellascheda);
+         return false;
+      }
+
+      return numRow > 0 ? true : false;
+
+   }
+
    public Map<String, Flussoa2> getMappaRigheDaCorreggere(String nomeFile, List<Long> ids)
    {
       Search<Flussoa2> search = new Search<Flussoa2>(Flussoa2.class);

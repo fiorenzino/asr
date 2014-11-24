@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -77,17 +75,32 @@ public class InviiController extends AbstractLazyController<Invio>
       this.file = file;
    }
 
-   public String elabora()
+   public String verificaInvii()
    {
       try
       {
-         inviiService.verifica();
+         inviiService.verificaInvii_async();
          FacesMessageUtils
                   .addFacesMessage("Lancio Verifica Invii effettuata con successo. Attenzione: il processo puo' durare diversi minuti.");
       }
       catch (Exception e)
       {
          FacesMessageUtils.addFacesMessage("Eccezione durante il lancio della verifica invii!");
+      }
+      return null;
+   }
+
+   public String correggiErrori()
+   {
+      try
+      {
+         inviiService.correggiErrori();
+         FacesMessageUtils
+                  .addFacesMessage("Lancio correzione errori effettuata con successo. Attenzione: il processo puo' durare diversi minuti.");
+      }
+      catch (Exception e)
+      {
+         FacesMessageUtils.addFacesMessage("Eccezione durante il lancio della correzione errori!");
       }
       return null;
    }
@@ -110,9 +123,18 @@ public class InviiController extends AbstractLazyController<Invio>
       return null;
    }
 
+   public String correggiSingolo()
+   {
+      Invio invio = (Invio) getModel().getRowData();
+      inviiService.correggiSingolo(invio);
+      FacesMessageUtils.addFacesMessage("Procedo con invio errori");
+      return null;
+   }
+
    public String segnaSenzaErrori()
    {
       Invio invio = getModel().getRowData();
+      invio.setApplicatiErrori(true);
       invio.setStatoInvio(StatoInvio.ESITATO_SENZA_ERRORI);
       inviiRepository.update(invio);
       FacesMessageUtils.addFacesMessage("Aggiornato con successo");
@@ -127,7 +149,7 @@ public class InviiController extends AbstractLazyController<Invio>
          return null;
 
       }
-      if (getConfigurazione().getId() != null)
+      if (getConfigurazione().getId() == null)
       {
          FacesMessageUtils.addFacesMessage("configurazione non selezionata");
          return null;

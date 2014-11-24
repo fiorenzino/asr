@@ -2,8 +2,9 @@ package it.ictgroup.asr.jms;
 
 import it.ictgroup.asr.management.AppConstants;
 import it.ictgroup.asr.management.AppKeys;
-import it.ictgroup.asr.model.enums.TipologiaFlusso;
+import it.ictgroup.asr.model.Elaborazione;
 import it.ictgroup.asr.repository.ElaborazioniRepository;
+import it.ictgroup.asr.repository.InviiRepository;
 import it.ictgroup.asr.service.FlussoService;
 
 import javax.ejb.ActivationConfigProperty;
@@ -17,57 +18,51 @@ import javax.jms.MessageListener;
 
 import org.jboss.logging.Logger;
 
-@MessageDriven(name = "_01ElaboraFlussoMDB", activationConfig = {
+@MessageDriven(name = "_03CorreggiErroriMDB", activationConfig = {
          @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
-         @ActivationConfigProperty(propertyName = "destination", propertyValue = AppConstants.FLUSSI_ASR_QUEUE),
+         @ActivationConfigProperty(propertyName = "destination", propertyValue = AppConstants.CORREGGI_ERRORI_ASR_QUEUE),
          @ActivationConfigProperty(propertyName = "acknowledgeMode", propertyValue = "Auto-acknowledge"),
          @ActivationConfigProperty(propertyName = "maxSession", propertyValue = "1"),
          @ActivationConfigProperty(propertyName = "transactionTimeout", propertyValue = "3600"),
          @ActivationConfigProperty(propertyName = "dLQMaxResent", propertyValue = "0") })
-// @TransactionTimeout(value = 6 * 60 * 60, unit = TimeUnit.SECONDS)
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-public class _01ElaboraFlussoMDB implements MessageListener
+public class _03CorreggiErroriMDB implements MessageListener
 {
 
    Logger logger = Logger.getLogger(getClass());
 
    @Inject
-   FlussoService flussoService;
+   ElaborazioniRepository elaborazioniRepository;
+   @Inject
+   InviiRepository inviiRepository;
 
    @Inject
-   ElaborazioniRepository elaborazioniRepository;
+   FlussoService flussoService;
 
    public void onMessage(Message message)
    {
       MapMessage msg = (MapMessage) message;
-      TipologiaFlusso tipologiaFlusso = null;
-      String nomeFile = null;
-      String folder = null;
       Long idElaborazione = null;
+      Long idInvio = null;
+
       try
       {
-         tipologiaFlusso = TipologiaFlusso.valueOf(msg.getString(AppKeys.TIPOLOGIA_FLUSSO.name()));
-         nomeFile = msg.getString(AppKeys.NOME_FILE.name());
-         folder = msg.getString(AppKeys.NOME_FOLDER.name());
          idElaborazione = msg.getLong(AppKeys.ELABORAZIONE_ID.name());
+         idInvio = msg.getLong(AppKeys.INVIO_ID.name());
+         logger.info("_03CorreggiErroriMDB: onMessage(), idElaborazione:" + idElaborazione);
 
-         logger.info("_01ElaboraFlussoMDB: onMessage(), tipologiaFlusso:" + tipologiaFlusso + " nomeFile = " + nomeFile);
-         elaborazioniRepository.avviato_newtx(idElaborazione);
-         flussoService.parse(tipologiaFlusso, nomeFile, folder, idElaborazione);
+         Elaborazione elaborazione = elaborazioniRepository.fetch_newtx(idElaborazione);
+
+         flussoService.updateRigheInErrore(
+                  elaborazione.getId(),
+                  elaborazione.getFileName(),
+                  elaborazione.getConfigurazione().getTipologiaFlusso());
+         inviiRepository.updateLavorazioneErrori(idInvio);
 
       }
       catch (Throwable e)
       {
-         try
-         {
-            logger.error(e.getMessage(), e);
-            elaborazioniRepository.errore(idElaborazione, e.getMessage(), 0);
-         }
-         catch (Throwable e2)
-         {
-            logger.error(e2.getMessage(), e2);
-         }
-
+         logger.error(e.getMessage(), e);
       }
    }
 }
