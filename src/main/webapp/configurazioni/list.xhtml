@@ -50,20 +50,18 @@
 						<h:outputText value="#{m.id}" />
 					</center>
 				</p:column>
-				<p:column headerText="nome">
+				<p:column headerText="nome &lt;br/&gt; tipologia flusso">
 					<center>
 						<h:outputText value="#{m.nome}" />
-					</center>
-				</p:column>
-				<p:column headerText="Tipologia flusso">
-					<center>
+						<br />
 						<h:outputText value="#{m.tipologiaFlusso.name()}" />
 					</center>
 				</p:column>
-				<p:column headerText="folder">
+
+				<p:column headerText="folder" width="40%">
 					<h:outputText value="#{m.folder}" />
 				</p:column>
-				<p:column headerText="orderBy">
+				<p:column headerText="ordine di lettura">
 					<center>
 						<h:outputText value="#{m.orderBy}" />
 					</center>
