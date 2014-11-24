@@ -27,7 +27,7 @@ public class _01_FolderPollerTimer implements Serializable
 
    boolean isWorking = false;
 
-   @Schedule(hour = "*", minute = "0/2", persistent = false, info = "ogni 2 minuto di ogni ora")
+   @Schedule(hour = "*", minute = "0/30", persistent = false, info = "ogni mezzora")
    // @TransactionTimeout(value = 10L, unit = TimeUnit.MINUTES)
    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
    public void execute()

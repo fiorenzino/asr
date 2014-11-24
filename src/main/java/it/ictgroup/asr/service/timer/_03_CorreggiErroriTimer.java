@@ -27,7 +27,7 @@ public class _03_CorreggiErroriTimer implements Serializable
 
    boolean isWorking = false;
 
-   @Schedule(hour = "*", minute = "0/10", persistent = false, info = "ogni 2 minuto di ogni ora")
+   @Schedule(hour = "*", minute = "0/30", persistent = false, info = "ogni 30 minuto di ogni ora")
    // @TransactionTimeout(value = 10L, unit = TimeUnit.MINUTES)
    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
    public void execute()

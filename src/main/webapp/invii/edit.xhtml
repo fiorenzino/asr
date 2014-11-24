@@ -31,13 +31,13 @@
 					value="#{inviiController.element.applicazione.nome}" />
 
 
-				<h:outputLabel value="applicazione:" for="periodoDa" />
+				<h:outputLabel value="periodo Da: " for="periodoDa" />
 				<h:outputText id="periodoDa"
 					value="#{inviiController.element.periodoDa}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
 				</h:outputText>
 
-				<h:outputLabel value="applicazione:" for="periodoA" />
+				<h:outputLabel value="periodo A: " for="periodoA" />
 				<h:outputText id="periodoA"
 					value="#{inviiController.element.periodoA}">
 					<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Europe/Rome" />
@@ -54,7 +54,7 @@
 				<p:selectOneMenu style="width: 200px;"
 					value="#{inviiController.configurazione.id}">
 					<f:selectItems
-						value="#{globalProducer.getConfigurazioniItems(inviiController.element.tipologiaInvio)}" />
+						value="#{globalProducer.getConfigurazioniPerTipologiaItems(inviiController.element.tipologiaInvio)}" />
 				</p:selectOneMenu>
 
 

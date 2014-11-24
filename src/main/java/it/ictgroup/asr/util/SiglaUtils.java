@@ -58,6 +58,12 @@ public class SiglaUtils
       return sdf.parse(getPezzi(sigla)[2]);
    }
 
+   public static String getPeriodoString(Date date) throws Exception
+   {
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+      return sdf.format(date);
+   }
+
    private static String[] getPezzi(String sigla) throws Exception
    {
       String[] pezzi = sigla.split("-");

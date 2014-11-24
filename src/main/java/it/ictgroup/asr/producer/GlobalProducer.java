@@ -1,5 +1,6 @@
 package it.ictgroup.asr.producer;
 
+import it.ictgroup.asr.controller.ConfigurazioniController;
 import it.ictgroup.asr.model.Applicazione;
 import it.ictgroup.asr.model.Configurazione;
 import it.ictgroup.asr.model.enums.StatoElaborazione;
@@ -122,17 +123,34 @@ public class GlobalProducer extends AbstractProducer
 
    @Produces
    @Named
+   public SelectItem[] getConfigurazioniItems()
+   {
+      if (super.getItems().get(Configurazione.class) == null)
+      {
+         List<SelectItem> configurazioniItems = new ArrayList<SelectItem>();
+         configurazioniItems.add(new SelectItem(null, "Configurazione..."));
+         for (Configurazione configurazione : configurazioniRepository.getAllList())
+         {
+            configurazioniItems.add(new SelectItem(configurazione.getId(), configurazione.getNome()));
+         }
+         super.getItems().put(Configurazione.class, configurazioniItems.toArray(new SelectItem[] {}));
+      }
+      return super.getItems().get(Configurazione.class);
+   }
+
+   @Produces
+   @Named
    public MenuModel getBreadCrumbs()
    {
       return PrimeUtils.primeBreadcrumbs();
    }
 
-   public SelectItem[] getConfigurazioniItems(TipologiaInvio tipologiaInvio)
+   public SelectItem[] getConfigurazioniPerTipologiaItems(TipologiaInvio tipologiaInvio)
    {
-      if (super.getItems().get(Configurazione.class) == null)
+      if (super.getItems().get(ConfigurazioniController.class) == null)
       {
          List<SelectItem> configurazioniItems = new ArrayList<SelectItem>();
-         configurazioniItems.add(new SelectItem(null, "configurazione..."));
+         configurazioniItems.add(new SelectItem(null, "Configurazione..."));
          for (Configurazione configurazione : configurazioniRepository.getAllList())
          {
             if (configurazione.getTipologiaFlusso().name().startsWith(tipologiaInvio.name())
@@ -141,6 +159,6 @@ public class GlobalProducer extends AbstractProducer
          }
          super.getItems().put(Configurazione.class, configurazioniItems.toArray(new SelectItem[] {}));
       }
-      return super.getItems().get(Configurazione.class);
+      return super.getItems().get(ConfigurazioniController.class);
    }
 }

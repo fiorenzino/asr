@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	template="/WEB-INF/layout/t.xhtml">
+
+	<ui:define name="title">Caricamento File da elaborare</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="mainForm" enctype="multipart/form-data">
+
+			<p:panelGrid columns="2"
+				columnClasses="fixedWidth25,fixedWidth25,fixedWidth25, fixedWidth25"
+				style="width:75%">
+				<f:facet name="header">Non caricare i file di Risposta: usare la sezione invii</f:facet>
+
+				<h:outputLabel value="Applicazione: " for="applicazione" />
+				<p:selectOneMenu style="width: 200px;" id="applicazione"
+					value="#{elaborazioniController.applicazione.id}">
+					<f:selectItems value="#{applicazioniItems}" />
+				</p:selectOneMenu>
+
+
+				<h:outputLabel value="Configurazione: " for="configurazione" />
+				<p:selectOneMenu style="width: 200px;" id="configurazione"
+					value="#{elaborazioniController.configurazione.id}">
+					<f:selectItems value="#{configurazioniItems}" />
+				</p:selectOneMenu>
+
+
+				<h:outputLabel value="Periodo Da: " for="periodoDa" />
+				<p:calendar id="periodoDa"
+					value="#{elaborazioniController.dataPeriodoDa}" />
+
+				<h:outputLabel value="Periodo A: " for="periodoA" />
+				<p:calendar id="periodoA"
+					value="#{elaborazioniController.dataPeriodoA}" />
+
+
+
+				<h:outputLabel value="carica file risposta: " for="risposta" />
+				<p:fileUpload value="#{elaborazioniController.file1}" mode="simple"
+					skinSimple="true" />
+			</p:panelGrid>
+
+			<br />
+
+			<h:panelGrid columns="1" id="buttonGrid">
+
+				<p:commandButton action="#{elaborazioniController.salvaFile}"
+					value="Carica File" ajax="false" />
+
+			</h:panelGrid>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
