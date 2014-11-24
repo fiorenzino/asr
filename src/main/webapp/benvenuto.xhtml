@@ -66,7 +66,7 @@
 				<p:panel style="width: 290px; height: 120px;" styleClass="highlight"
 					rendered="#{elaborazioniController.clear}">
 					<f:facet name="header">
-						<h:outputText value="Elaborazioni Singole" />
+						<h:outputText value="Elaborazioni" />
 					</f:facet>
 					<h:panelGrid columns="2">
 						<h:panelGroup
@@ -110,8 +110,17 @@
 					<f:facet name="header">
 						<h:outputText value="Operazioni" />
 					</f:facet>
-					<h:panelGrid columns="6">
-
+					<h:panelGrid columns="8">
+						<h:panelGroup
+							style="vertical-align:middle; font-size: 48px; padding: 10px;"
+							layout="block">
+							<i class="fa fa-upload"> </i>
+						</h:panelGroup>
+						<h:panelGroup style="vertical-align:middle;">
+							<h:commandLink action="#{elaborazioniController.caricaFile}">
+								<h:outputText value="Carica Flusso" />
+							</h:commandLink>
+						</h:panelGroup>
 						<h:panelGroup
 							style="vertical-align:middle; font-size: 48px; padding: 10px;"
 							layout="block">
@@ -119,7 +128,7 @@
 						</h:panelGroup>
 						<h:panelGroup style="vertical-align:middle;">
 							<h:commandLink action="#{elaborazioniController.elabora}">
-								<h:outputText value="Lancia nuova elaborazione" />
+								<h:outputText value="Verifica elaborazioni" />
 							</h:commandLink>
 						</h:panelGroup>
 						<h:panelGroup
