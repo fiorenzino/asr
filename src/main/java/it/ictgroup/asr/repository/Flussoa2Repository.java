@@ -125,17 +125,19 @@ public class Flussoa2Repository extends BaseRepository<Flussoa2>
       Long numRow;
       try
       {
-         numRow = (Long) getEm()
+
+         Object res = getEm()
                   .createNativeQuery(
                            "SELECT count(id) FROM "
                                     + Flussoa2.TABLE_NAME
-                                    + " WHERE nomefile= :nomefile, numerodellascheda= :numerodellascheda, "
-                                    + "regioneAddebitante = :regioneAddebitante, codiceIstituto = :codiceIstituto")
+                                    + " WHERE nomefile= :nomefile AND numerodellascheda= :numerodellascheda AND "
+                                    + "regioneAddebitante = :regioneAddebitante AND codiceIstituto = :codiceIstituto")
                   .setParameter("nomefile", nomefile)
                   .setParameter("regioneAddebitante", regioneAddebitante)
                   .setParameter("numerodellascheda", numerodellascheda)
                   .setParameter("codiceIstituto", codiceIstituto)
                   .getSingleResult();
+         numRow = Long.parseLong(res.toString());
       }
       catch (Exception e)
       {

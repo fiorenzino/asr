@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.giavacms.commons.annotation.EditPage;
 import org.giavacms.commons.annotation.ListPage;
 import org.giavacms.commons.annotation.OwnRepository;
@@ -173,8 +174,14 @@ public class InviiController extends AbstractLazyController<Invio>
       }
       try
       {
+         byte[] content = file.getContents();
+         String contentType = file.getContentType();
+         byte[] bites = IOUtils.toByteArray(file.getInputstream());
+         System.out
+                  .println("content size: " + (content != null ? content.length : 0) + ", contentType: " + contentType
+                           + (bites != null ? bites.length : 0));
 
-         FileUtils.writeByteArrayToFile(new File(nomeFile), file.getContents());
+         FileUtils.writeByteArrayToFile(new File(nomeFile), bites);
       }
       catch (IOException e)
       {
