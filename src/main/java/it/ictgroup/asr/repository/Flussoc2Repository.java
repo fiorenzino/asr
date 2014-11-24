@@ -97,12 +97,12 @@ public class Flussoc2Repository extends BaseRepository<Flussoc2>
       {
          numRow = getEm()
                   .createNativeQuery(
-                           "UPDATE  "
+                           "UPDATE "
                                     + Flussoc2.TABLE_NAME
-                                    + "SET err01= :err01, err02= :err02, err03= :err03, err04= :err04, err05= :err05, "
-                                    + " err06= :err06, err07= :err07, err08= :err08, err09= :err09, err10= :err10"
-                                    + " WHERE nomefile= :nomefile, progressivoRigaPerRicetta= :progressivoRigaPerRicetta, "
-                                    + "regioneAddebitante = :regioneAddebitante, codiceStrutturaErogante = :codiceStrutturaErogante, "
+                                    + " SET err01 = :err01, err02 = :err02, err03 = :err03, err04 = :err04, err05 = :err05, "
+                                    + " err06 = :err06, err07 = :err07, err08 = :err08, err09 = :err09, err10 = :err10 "
+                                    + " WHERE nomefile= :nomefile AND progressivoRigaPerRicetta = :progressivoRigaPerRicetta AND "
+                                    + " regioneAddebitante = :regioneAddebitante AND codiceStrutturaErogante = :codiceStrutturaErogante AND "
                                     + " id = :id")
                   .setParameter("err01", err01)
                   .setParameter("err02", err02)

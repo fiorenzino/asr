@@ -158,11 +158,7 @@ public class FlussoService implements Serializable
                         flussoa2r.getCodiceIstituto(),
                         flussoa2r.getNumeroDellaScheda());
             }
-            if (res)
-            {
-               logger.info("trovato!");
-            }
-            else
+            if (!res)
             {
                logger.info("NON trovato:" + flussoa2r.getNomeFile().replace("a2r.txt", "a2.txt") + ", " +
                         flussoa2r.getRegioneAddebitante() + ", " +
@@ -203,11 +199,7 @@ public class FlussoService implements Serializable
                            flussoc2r.getCodiceStrutturaErogante(),
                            flussoc2r.getProgressivoRigaPerRicetta(), flussoc2r.getId());
                }
-               if (res)
-               {
-                  logger.info("trovato!");
-               }
-               else
+               if (!res)
                {
                   logger.info("NON trovato:" + flussoc2r.getNomeFile().replace("c2r.txt", "c2.txt") + ", " +
                            flussoc2r.getRegioneAddebitante() + ", " +

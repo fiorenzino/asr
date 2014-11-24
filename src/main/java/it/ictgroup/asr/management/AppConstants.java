@@ -12,6 +12,6 @@ public class AppConstants
 
    public static final String CORREGGI_ERRORI_ASR_QUEUE = "java:/jms/queue/correggiErroriAsr";
 
-   public static final boolean CORREGGO = false;
+   public static final boolean CORREGGO = true;
 
 }

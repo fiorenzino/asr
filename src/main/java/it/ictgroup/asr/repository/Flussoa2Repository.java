@@ -83,10 +83,10 @@ public class Flussoa2Repository extends BaseRepository<Flussoa2>
                   .createNativeQuery(
                            "UPDATE "
                                     + Flussoa2.TABLE_NAME
-                                    + " SET err01= :err01, err02= :err02, err03= :err03, err04= :err04, err05= :err05, "
-                                    + " err06= :err06, err07= :err07, err08= :err08, err09= :err09, err10= :err10"
-                                    + " WHERE nomefile= :nomefile, numerodellascheda= :numerodellascheda, "
-                                    + "regioneAddebitante = :regioneAddebitante, codiceIstituto = :codiceIstituto")
+                                    + " SET err01 = :err01, err02 = :err02, err03 = :err03, err04 = :err04, err05 = :err05, "
+                                    + " err06 = :err06, err07 = :err07, err08 = :err08, err09 = :err09, err10 = :err10"
+                                    + " WHERE nomefile= :nomefile AND numerodellascheda= :numerodellascheda AND "
+                                    + " regioneAddebitante = :regioneAddebitante AND codiceIstituto = :codiceIstituto")
                   .setParameter("err01", err01)
                   .setParameter("err02", err02)
                   .setParameter("err03", err03)
