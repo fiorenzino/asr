@@ -119,6 +119,13 @@ ovviamente
 Per cambiare password di un utente postgresql:
 ALTER USER <username> WITH PASSWORD '<newpassword>';
 
+Creazione schema:
+create schema asr;
+
+Setup tabelle base:
+psql -h localhost -U asr -W asr < configurazione.sql
+psql -h localhost -U asr -W asr < applicazione.sql
+
 
 
 -------------------------------------------------------------

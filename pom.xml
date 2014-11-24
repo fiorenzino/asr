@@ -17,7 +17,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<default_schema>public</default_schema>
+				<default_schema>asr</default_schema>
 				<hbm2ddl.auto>update</hbm2ddl.auto>
 				<show_sql>false</show_sql>
 				<format_sql>false</format_sql>
