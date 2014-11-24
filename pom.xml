@@ -183,6 +183,33 @@
 					<target>${version.jdk}</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<goals>
+					<goal>exploded</goal>
+				</goals>
+				<configuration>
+					<!-- deployment descriptor ufficiali -->
+					<filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+					<!-- altri deployment descriptor e risorse -->
+					<webResources>
+						<resource>
+							<directory>src/main/webapp</directory>
+							<filtering>true</filtering>
+							<includes>
+								<include>WEB-INF/web.xml</include>
+								<include>WEB-INF/jboss-web.xml</include>
+								<include>**/*.xhtml</include>
+							</includes>
+						</resource>
+						<!-- this doesn't work here: perhaps src/main/resources is not a webapp 
+							path <resource> <directory>src/main/resources</directory> <filtering>true</filtering> 
+							<includes> <include>**/persistence.xml</include> </includes> </resource> -->
+					</webResources>
+				</configuration>
+			</plugin>
 		</plugins>
 
 		<!-- Substitution of maven properties -->
