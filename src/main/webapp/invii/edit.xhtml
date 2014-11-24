@@ -52,9 +52,9 @@
 
 				<h:outputLabel value="configurazione: " for="configurazione" />
 				<p:selectOneMenu style="width: 200px;"
-					value="#{inviiController.element.configurazione.id}">
+					value="#{inviiController.configurazione.id}">
 					<f:selectItems
-						value="#{globalProducer.getConfigurazioniItems(getElement.getTipologiaInvio())}" />
+						value="#{globalProducer.getConfigurazioniItems(inviiController.element.tipologiaInvio)}" />
 				</p:selectOneMenu>
 
 

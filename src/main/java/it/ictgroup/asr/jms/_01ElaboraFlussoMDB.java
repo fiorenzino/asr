@@ -54,6 +54,7 @@ public class _01ElaboraFlussoMDB implements MessageListener
          logger.info("onMessage(), tipologiaFlusso:" + tipologiaFlusso + " nomeFile = " + nomeFile);
          elaborazioniRepository.avviato_newtx(idElaborazione);
          flussoService.parse(tipologiaFlusso, nomeFile, folder, idElaborazione);
+
       }
       catch (Throwable e)
       {

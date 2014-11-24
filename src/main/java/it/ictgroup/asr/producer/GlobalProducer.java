@@ -111,7 +111,8 @@ public class GlobalProducer extends AbstractProducer
       configurazioniItems.add(new SelectItem(null, "configurazione..."));
       for (Configurazione configurazione : configurazioniRepository.getAllList())
       {
-         if (configurazione.getTipologiaFlusso().name().startsWith(tipologiaInvio.name()))
+         if (configurazione.getTipologiaFlusso().name().startsWith(tipologiaInvio.name())
+                  && configurazione.getTipologiaFlusso().name().endsWith("R"))
             configurazioniItems.add(new SelectItem(configurazione.getId(), configurazione.getNome()));
       }
       return configurazioniItems.toArray(new SelectItem[] {});

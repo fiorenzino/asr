@@ -68,14 +68,13 @@ public class Flussoa2Repository extends BaseRepository<Flussoa2>
 
    }
 
-   public boolean updateWithErrori(String nomefile, String regioneAddebitante, String aziendaUsl,
-            String codiceIstituto,
+   public boolean updateWithErrori(String nomefile, String regioneAddebitante, String codiceIstituto,
             String numerodellascheda, String err01, String err02, String err03,
             String err04, String err05, String err06, String err07, String err08, String err09, String err10)
    {
       /*
-       * FLUSSO A1 - A2 - regione addebitante -> regioneAddebitante - cod asl/azienda -> aziendaUsl - cod istituto ->
-       * codiceIstituto - num scheda -> numeroDellaScheda
+       * String key = flussoa1.getRegioneAddebitante() + flussoa1.getCodiceIstitutoDiRicovero() +
+       * flussoa1.getNumeroDellaScheda();
        */
       int numRow;
       try
@@ -87,7 +86,7 @@ public class Flussoa2Repository extends BaseRepository<Flussoa2>
                                     + " SET err01= :err01, err02= :err02, err03= :err03, err04= :err04, err05= :err05, "
                                     + " err06= :err06, err07= :err07, err08= :err08, err09= :err09, err10= :err10"
                                     + " WHERE nomefile= :nomefile, numerodellascheda= :numerodellascheda, "
-                                    + "regioneAddebitante = :regioneAddebitante, codiceASL = :codiceASL")
+                                    + "regioneAddebitante = :regioneAddebitante, codiceIstituto = :codiceIstituto")
                   .setParameter("err01", err01)
                   .setParameter("err02", err02)
                   .setParameter("err03", err03)
@@ -101,14 +100,14 @@ public class Flussoa2Repository extends BaseRepository<Flussoa2>
                   .setParameter("nomefile", nomefile)
                   .setParameter("regioneAddebitante", regioneAddebitante)
                   .setParameter("numerodellascheda", numerodellascheda)
-                  .setParameter("aziendaUsl", aziendaUsl)
+                  .setParameter("codiceIstituto", codiceIstituto)
                   .executeUpdate();
       }
       catch (Exception e)
       {
          logger.info("flussoa2 non trovato - nomefile: " + nomefile + ", regioneAddebitante:" + regioneAddebitante
-                  + ", codiceASL: " + aziendaUsl + ", codiceIstituto" +
-                  codiceIstituto + ",numerodellascheda: " + numerodellascheda);
+                  + ", codiceIstituto: " + codiceIstituto + ",numerodellascheda: "
+                  + numerodellascheda);
          return false;
       }
 

@@ -137,8 +137,10 @@ public class FlussoService implements Serializable
          List<Flussoa2r> flussoa2rList = flussoa2rRepository.getList(searchA2r, 0, 0);
          for (Flussoa2r flussoa2r : flussoa2rList)
          {
+            // String nomefile, String regioneAddebitante, String codiceIstituto,
+            // String numerodellascheda,
             flussoa2Repository.updateWithErrori(flussoa2r.getNomeFile(), flussoa2r.getRegioneAddebitante(),
-                     "aziendaUsl", flussoa2r.getCodiceIstituto(),
+                     flussoa2r.getCodiceIstituto(),
                      flussoa2r.getNumeroDellaScheda(), flussoa2r.getErr01(), flussoa2r.getErr02(),
                      flussoa2r.getErr03(), flussoa2r.getErr04(), flussoa2r.getErr05(), flussoa2r.getErr06(),
                      flussoa2r.getErr07(), flussoa2r.getErr08(), flussoa2r.getErr09(), flussoa2r.getErr10());
@@ -152,7 +154,8 @@ public class FlussoService implements Serializable
          {
             flussoc2Repository.updateWithErrori(flussoc2r.getNomeFile(), flussoc2r.getRegioneAddebitante(),
                      flussoc2r.getCodiceStrutturaErogante(),
-                     flussoc2r.getProgressivoRigaPerRicetta(), flussoc2r.getErr01(), flussoc2r.getErr02(),
+                     flussoc2r.getProgressivoRigaPerRicetta(), flussoc2r.getId(), flussoc2r.getErr01(),
+                     flussoc2r.getErr02(),
                      flussoc2r.getErr03(), flussoc2r.getErr04(), flussoc2r.getErr05(), flussoc2r.getErr06(),
                      flussoc2r.getErr07(), flussoc2r.getErr08(), flussoc2r.getErr09(), flussoc2r.getErr10());
          }

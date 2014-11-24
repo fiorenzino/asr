@@ -106,7 +106,7 @@ public class InviiController extends AbstractLazyController<Invio>
       // ELIMINO TUTTE LE ELABORAZIONI COINVOLTE
 
       // ELIMINO INVIO
-
+      FacesMessageUtils.addFacesMessage("Non ancora implementato");
       return null;
    }
 
@@ -161,4 +161,5 @@ public class InviiController extends AbstractLazyController<Invio>
 
       return listPage();
    }
+
 }
