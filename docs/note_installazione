@@ -101,7 +101,7 @@ ovviamente
 Per cambiare password di un utente postgresql:
 ALTER USER <username> WITH PASSWORD '<newpassword>';
 
-Creazione schema (non più necessaria!!!! ora si usa o schema public):
+Creazione schema (non più necessaria!!!! ora si usa lo schema public):
 create schema asr;
 
 Setup tabelle base:
