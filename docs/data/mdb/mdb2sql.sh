@@ -32,6 +32,7 @@ DBUSER_DEFAULT=asr
 DBPSW_DEFAULT=asr
 MDB_FILE_DEFAULT=Spe_db.mdb
 DEST_DIR_DEFAULT=../db/additionaldata
+SCRIPTFILE_DEFAULT=trasc_strutture.sql
 IFS=$'\n'
 FORCE_SKIP_INSERT=0
 FORCE_INSERT=0
@@ -47,12 +48,14 @@ chooseAction () {
     echo -e "Select option:"
     echo -e "1) Generate SQL sripts from MDB file"
     echo -e "2) Import SQL scripts into the database"
+    echo -e "3) Import given SQL script into the database"
     echo -e -n "#? "
     while [ true ]; do
         read action
         case $action in
             1 ) break ;;
             2 ) break ;;
+            3 ) break ;;
             * ) echo "Invalid option. Try another one."; continue ;;
         esac
     done
@@ -99,6 +102,30 @@ chooseImportParams () {
 
     read -r -p "SQL scripts directory [$DEST_DIR_DEFAULT]: " DEST_DIR
     DEST_DIR=${DEST_DIR:-$DEST_DIR_DEFAULT}
+}
+
+chooseGivenImportParams () {
+    read -t 1 -n 10000 discard
+
+    chooseDialect
+
+    read -r -p "Database host [$DBHOST_DEFAULT]: " DBHOST
+    DBHOST=${DBHOST:-$DBHOST_DEFAULT}
+
+    read -r -p "Database username [$DBUSER_DEFAULT]: " DBUSER
+    DBUSER=${DBUSER:-$DBUSER_DEFAULT}
+
+    read -r -p "Database password [$DBPSW_DEFAULT]: " DBPSW
+    DBPSW=${DBPSW:-$DBPSW_DEFAULT}
+
+    read -r -p "Database name [$DBNAME_DEFAULT]: " DBNAME
+    DBNAME=${DBNAME:-$DBNAME_DEFAULT}
+
+    read -r -p "SQL scripts directory [$DEST_DIR_DEFAULT]: " DEST_DIR
+    DEST_DIR=${DEST_DIR:-$DEST_DIR_DEFAULT}
+
+    read -r -p "SQL script file [$SCRIPTFILE_DEFAULT]: " SCRIPTFILE
+    SCRIPTFILE=${SCRIPTFILE:-$SCRIPTFILE_DEFAULT}
 }
 
 chooseGenerateParams () {
@@ -151,7 +178,7 @@ generateSchemas () {
 
     for table in `mdb-tables -1 ${2}`;
     do
-        tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]*/_/g' | sed 's/[-]*/_/g' | tr '[:upper:]' '[:lower:]' )
+        tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]/_/g' | sed 's/[-]/_/g' | sed 's/_\+/_/g' | tr '[[:upper:]]' '[[:lower:]]' )
         echo -e "Generating schema for ${bold}$tableNoWhiteSpaces${normal}"
         mdb-schema -T "$table" "$2" "$1" | sed -e "s/$table/$tableNoWhiteSpaces/g" > "$3/$tableNoWhiteSpaces.sql";
     done
@@ -167,7 +194,7 @@ generateInserts () {
 
     for table in `mdb-tables -1 ${2}`;
     do
-        tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]*//g' | sed 's/[-]*//g' )
+        tableNoWhiteSpaces=$( echo $table | sed -e 's/[[:space:]]/_/g' | sed 's/[-]/_/g' | sed 's/_\+/_/g' | tr '[[:upper:]]' '[[:lower:]]' )
         echo -e "Generating inserts for ${bold}$tableNoWhiteSpaces${normal}"
         mdb-export -H -I "$1" -q \' "$2" "$table" | sed -e "s/$table/$tableNoWhiteSpaces/g" >> "$3/$tableNoWhiteSpaces.sql";
     done
@@ -213,6 +240,15 @@ importScripts () {
             fi
         fi
     done
+}
+
+# $1 : sql_dialect
+# $2 : script_path
+importGivenScript () {
+    if [ $# -lt 2 ]; then
+        echo -e "${red}You have to pass sql dialect and sql script path args${normal}"
+    fi
+    execInsert "$1" "$2"
 }
 
 importScriptsWithQuestions () {
@@ -278,6 +314,13 @@ case $action in
         chooseImportParams
         echo
         importScriptsWithQuestions
+        ;;
+
+    3)
+        chooseGivenImportParams
+        echo
+
+        importGivenScript "$dialect" "$DEST_DIR/$SCRIPTFILE"
         ;;
 
     * )

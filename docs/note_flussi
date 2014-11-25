@@ -1,0 +1,16 @@
+-------------------------------------------------------------
+NOTE FLUSSI
+-------------------------------------------------------------
+
+
+File A1 e A2:
+- le righe NON sono univoche a livello globale, ma solo all'interno del file cui appartengono.
+Chiave per collegare riga file A1 con la corrispondente del file A2:
+    codice regione addebitante + codice ASL/Azienda + codice istituto + numero scheda.
+
+
+
+File C1 e C2:
+- le righe NON sono univoche a livello globale, ma solo all'interno del file cui appartengono.
+Chiave per collegare riga file C1 con la corrispondente del file C2:
+    codice regione addebitante + codice ASL/Azienda + ID + progressivo riga.
