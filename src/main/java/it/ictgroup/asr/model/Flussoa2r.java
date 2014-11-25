@@ -10,10 +10,13 @@ import it.ictgroup.asr.model.enums.flussoa.TipologiaERR07FlussoA;
 import it.ictgroup.asr.model.enums.flussoa.TipologiaERR08FlussoA;
 import it.ictgroup.asr.model.enums.flussoa.TipologiaERR09FlussoA;
 import it.ictgroup.asr.model.enums.flussoa.TipologiaERR10FlussoA;
+import it.ictgroup.asr.util.annotations.FieldDatePattern;
 import it.ictgroup.asr.util.annotations.FieldFixedLength;
 import it.ictgroup.asr.util.annotations.FieldIgnored;
 import it.ictgroup.asr.util.annotations.FixedLengthRecord;
 import it.ictgroup.asr.util.enums.FixedMode;
+
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -56,13 +59,15 @@ public class Flussoa2r extends BaseFlusso
    // data
    // 8
    @FieldFixedLength(8)
-   public String dataDiRicovero;
+   @FieldDatePattern("ddMMyyyy")
+   public Date dataDiRicovero;
    // 29-36
    // data di prenotazione
    // data
    // 8
    @FieldFixedLength(8)
-   public String dataDiPrenotazione;
+   @FieldDatePattern("ddMMyyyy")
+   public Date dataDiPrenotazione;
    // 37-40
    // unità operativa di ammissione
    // AN
@@ -104,7 +109,8 @@ public class Flussoa2r extends BaseFlusso
    // data
    // 8
    @FieldFixedLength(8)
-   public String data1TrasferimentoInterno;
+   @FieldDatePattern("ddMMyyyy")
+   public Date data1TrasferimentoInterno;
    // 54-57
    // unità operativa 1° trasferimento interno
    // AN
@@ -122,7 +128,8 @@ public class Flussoa2r extends BaseFlusso
    // Data
    // 8
    @FieldFixedLength(8)
-   public String data2TrasferimentoInterno;
+   @FieldDatePattern("ddMMyyyy")
+   public Date data2TrasferimentoInterno;
    // 69-72
    // unità operativa 2° trasferimento interno
    // AN
@@ -140,7 +147,8 @@ public class Flussoa2r extends BaseFlusso
    // data
    // 8
    @FieldFixedLength(8)
-   public String data3TrasferimentoInterno;
+   @FieldDatePattern("ddMMyyyy")
+   public Date data3TrasferimentoInterno;
    // 84-87
    // unità operativa 3° trasferimento interno
    // AN
@@ -176,7 +184,8 @@ public class Flussoa2r extends BaseFlusso
    // data
    // 8
    @FieldFixedLength(8)
-   public String dataDiDimissioneoDiMorte;
+   @FieldDatePattern("ddMMyyyy")
+   public Date dataDiDimissioneoDiMorte;
    // 105
    // modalità di dimissione
    // AN
@@ -290,7 +299,8 @@ public class Flussoa2r extends BaseFlusso
    // data
    // 8
    @FieldFixedLength(8)
-   public String dataInterventoChirurgicoPrincipaleParto;
+   @FieldDatePattern("ddMMyyyy")
+   public Date dataInterventoChirurgicoPrincipaleParto;
    // 176-179
    // intervento chirurgico principale o parto
    // AN
@@ -497,22 +507,22 @@ public class Flussoa2r extends BaseFlusso
       this.regimeDiRicovero = regimeDiRicovero;
    }
 
-   public String getDataDiRicovero()
+   public Date getDataDiRicovero()
    {
       return dataDiRicovero;
    }
 
-   public void setDataDiRicovero(String dataDiRicovero)
+   public void setDataDiRicovero(Date dataDiRicovero)
    {
       this.dataDiRicovero = dataDiRicovero;
    }
 
-   public String getDataDiPrenotazione()
+   public Date getDataDiPrenotazione()
    {
       return dataDiPrenotazione;
    }
 
-   public void setDataDiPrenotazione(String dataDiPrenotazione)
+   public void setDataDiPrenotazione(Date dataDiPrenotazione)
    {
       this.dataDiPrenotazione = dataDiPrenotazione;
    }
@@ -577,12 +587,12 @@ public class Flussoa2r extends BaseFlusso
       this.traumatismioIntossicazioni = traumatismioIntossicazioni;
    }
 
-   public String getData1TrasferimentoInterno()
+   public Date getData1TrasferimentoInterno()
    {
       return data1TrasferimentoInterno;
    }
 
-   public void setData1TrasferimentoInterno(String data1TrasferimentoInterno)
+   public void setData1TrasferimentoInterno(Date data1TrasferimentoInterno)
    {
       this.data1TrasferimentoInterno = data1TrasferimentoInterno;
    }
@@ -608,12 +618,12 @@ public class Flussoa2r extends BaseFlusso
       this.giornateDiDegenzaNellUnitaOperativaDi1Trasferimento = giornateDiDegenzaNellUnitaOperativaDi1Trasferimento;
    }
 
-   public String getData2TrasferimentoInterno()
+   public Date getData2TrasferimentoInterno()
    {
       return data2TrasferimentoInterno;
    }
 
-   public void setData2TrasferimentoInterno(String data2TrasferimentoInterno)
+   public void setData2TrasferimentoInterno(Date data2TrasferimentoInterno)
    {
       this.data2TrasferimentoInterno = data2TrasferimentoInterno;
    }
@@ -639,12 +649,12 @@ public class Flussoa2r extends BaseFlusso
       this.giornateDiDegenzaNellUnitaOperativaDi2Trasferimento = giornateDiDegenzaNellUnitaOperativaDi2Trasferimento;
    }
 
-   public String getData3TrasferimentoInterno()
+   public Date getData3TrasferimentoInterno()
    {
       return data3TrasferimentoInterno;
    }
 
-   public void setData3TrasferimentoInterno(String data3TrasferimentoInterno)
+   public void setData3TrasferimentoInterno(Date data3TrasferimentoInterno)
    {
       this.data3TrasferimentoInterno = data3TrasferimentoInterno;
    }
@@ -700,12 +710,12 @@ public class Flussoa2r extends BaseFlusso
       this.unitaOperativaDiDimissione = unitaOperativaDiDimissione;
    }
 
-   public String getDataDiDimissioneoDiMorte()
+   public Date getDataDiDimissioneoDiMorte()
    {
       return dataDiDimissioneoDiMorte;
    }
 
-   public void setDataDiDimissioneoDiMorte(String dataDiDimissioneoDiMorte)
+   public void setDataDiDimissioneoDiMorte(Date dataDiDimissioneoDiMorte)
    {
       this.dataDiDimissioneoDiMorte = dataDiDimissioneoDiMorte;
    }
@@ -890,12 +900,12 @@ public class Flussoa2r extends BaseFlusso
       this.diagnosiConcomitanteComplicante5 = diagnosiConcomitanteComplicante5;
    }
 
-   public String getDataInterventoChirurgicoPrincipaleParto()
+   public Date getDataInterventoChirurgicoPrincipaleParto()
    {
       return dataInterventoChirurgicoPrincipaleParto;
    }
 
-   public void setDataInterventoChirurgicoPrincipaleParto(String dataInterventoChirurgicoPrincipaleParto)
+   public void setDataInterventoChirurgicoPrincipaleParto(Date dataInterventoChirurgicoPrincipaleParto)
    {
       this.dataInterventoChirurgicoPrincipaleParto = dataInterventoChirurgicoPrincipaleParto;
    }

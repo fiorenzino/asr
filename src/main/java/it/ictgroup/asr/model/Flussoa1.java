@@ -1,5 +1,8 @@
 package it.ictgroup.asr.model;
 
+import java.util.Date;
+
+import it.ictgroup.asr.util.annotations.FieldDatePattern;
 import it.ictgroup.asr.util.annotations.FieldFixedLength;
 import it.ictgroup.asr.util.annotations.FieldIgnored;
 import it.ictgroup.asr.util.annotations.FixedLengthRecord;
@@ -64,7 +67,8 @@ public class Flussoa1 extends BaseFlusso
    // data
    // 8
    @FieldFixedLength(8)
-   public String dataDiNascitaDellUtente;
+   @FieldDatePattern("ddMMyyyy")
+   public Date dataDiNascitaDellUtente;
    // 82-87
    // comune di nascita dell’utente
    // AN
@@ -210,12 +214,12 @@ public class Flussoa1 extends BaseFlusso
       this.sessoDellUtente = sessoDellUtente;
    }
 
-   public String getDataDiNascitaDellUtente()
+   public Date getDataDiNascitaDellUtente()
    {
       return dataDiNascitaDellUtente;
    }
 
-   public void setDataDiNascitaDellUtente(String dataDiNascitaDellUtente)
+   public void setDataDiNascitaDellUtente(Date dataDiNascitaDellUtente)
    {
       this.dataDiNascitaDellUtente = dataDiNascitaDellUtente;
    }

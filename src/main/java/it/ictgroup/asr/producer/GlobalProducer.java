@@ -11,6 +11,7 @@ import it.ictgroup.asr.repository.ApplicazioniRepository;
 import it.ictgroup.asr.repository.ConfigurazioniRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
@@ -143,6 +144,13 @@ public class GlobalProducer extends AbstractProducer
    public MenuModel getBreadCrumbs()
    {
       return PrimeUtils.primeBreadcrumbs();
+   }
+
+   @Produces
+   @Named
+   public Date getCurrentDate()
+   {
+      return new Date();
    }
 
    public SelectItem[] getConfigurazioniPerTipologiaItems(TipologiaInvio tipologiaInvio)

@@ -11,7 +11,12 @@
 
 		<h:form id="footerForm">
 			<h:outputText escape="false"
-				value="&lt;i&gt;Flussi ASUR v ${project.version} &lt;/i&gt; - " />
+				value="&lt;i&gt;Flussi ASUR v ${project.version} &lt;/i&gt;" />
+			<h:outputText value=" - " />
+			<h:outputText escape="false" value="#{currentDate}">
+				<f:convertDateTime pattern="EEEE dd/MM/yyyy HH:mm"
+					timeZone="Europe/Rome" locale="it" />
+			</h:outputText>
 		</h:form>
 	</center>
 </ui:composition>

@@ -1,27 +1,45 @@
-1) aggiornare i corrispondenti record per i flussi:
+1) aggiornare i corrispondenti record per i flussi: FATTO
  	- A2R => A2
  	- C2R => C2
  	da fare utilizzando query native asincrone
  
-2) permettere upload dei files a2R e C2R da maschera web e renaming corente a:
+2) permettere upload dei files a2R e C2R da maschera web e renaming corente a: FATTO
  	- nome applicazione
  	- periodo (dal al)
  	- tipologia di flusso
  	
-3) permettere upload dei flussi A1, A2, C1, C2
+3) permettere upload dei flussi A1, A2, C1, C2 FATTO
  	- rischio out of memory
  	
-4) chiudere il giro degli invii (upload del file A2R o C2r) o segnare come completo senza errori
+4) chiudere il giro degli invii (upload del file A2R o C2r) o segnare come completo senza errori FATTO
  
-5) rendere gli invii eliminabili:
+5) rendere gli invii eliminabili: FATTO- DA VERIFICARE
 	- con eliminazione a cascata dei file di elaborazione e flussi collegati
 
-6) configurare email
+6) configurare email NO
 
-7) configurare report
+7) configurare report NO
 
-8) aggiungere ulteriori controlli sui file dei flussi (oltre alla coerenza tra numero righe dei flussi A1 e A2/C1 e C2)
+8) aggiungere ulteriori controlli sui file dei flussi (oltre alla coerenza tra numero righe dei flussi A1 e A2/C1 e C2) OK
+-facciamo solo controllo numero righe
 
 9) completare le maschere dei vari flussi (aggiungere ricerca)
 
 10) aggiungere link ai vari report
+
+11) modificare le date stringhe in DATE REALI
+Flussoc2
+dataCompilazioneRicetta
+dataPrimaDisponibilitaErogazione
+dataPrenotazione
+dataPAC
+dataErogazionePrestazioni
+dataRefertazione
+Flussoa2
+dataDiRicovero
+dataDiPrenotazione
+data1TrasferimentoInterno
+data2TrasferimentoInterno
+data3TrasferimentoInterno
+dataDiDimissioneoDiMorte
+dataInterventoChirurgicoPrincipaleParto

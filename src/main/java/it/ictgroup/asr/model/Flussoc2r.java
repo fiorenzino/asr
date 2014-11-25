@@ -1,5 +1,7 @@
 package it.ictgroup.asr.model;
 
+import java.util.Date;
+
 import it.ictgroup.asr.model.enums.flussoc.TipologiaERR01FlussoC;
 import it.ictgroup.asr.model.enums.flussoc.TipologiaERR02FlussoC;
 import it.ictgroup.asr.model.enums.flussoc.TipologiaERR03FlussoC;
@@ -9,6 +11,7 @@ import it.ictgroup.asr.model.enums.flussoc.TipologiaERR06FlussoC;
 import it.ictgroup.asr.model.enums.flussoc.TipologiaERR07FlussoC;
 import it.ictgroup.asr.model.enums.flussoc.TipologiaERR08FlussoC;
 import it.ictgroup.asr.model.enums.flussoc.TipologiaERR10FlussoC;
+import it.ictgroup.asr.util.annotations.FieldDatePattern;
 import it.ictgroup.asr.util.annotations.FieldFixedLength;
 import it.ictgroup.asr.util.annotations.FieldIgnored;
 import it.ictgroup.asr.util.annotations.FixedLengthRecord;
@@ -17,15 +20,15 @@ import it.ictgroup.asr.util.enums.FixedMode;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-/**
- * Created by stefano on 22/09/14.
- */
-
 @FixedLengthRecord(fixedMode = FixedMode.AllowVariableLength)
 @Entity
 @Table(name = Flussoc2r.TABLE_NAME)
 public class Flussoc2r extends BaseFlusso
 {
+   // 16122013 => ddMMyyyy
+   // datacompilazionericetta, dataerogazioneprestazioni, datapac, dataprenotazione, dataprimadisponibilitaerogazione,
+   // datarefertazione
+
    @FieldIgnored
    private static final long serialVersionUID = 1L;
    public static final String TABLE_NAME = "flussoc2r";
@@ -88,27 +91,33 @@ public class Flussoc2r extends BaseFlusso
 
    // 55-62 Data di compilazione della ricetta
    @FieldFixedLength(8)
-   public String dataCompilazioneRicetta;
+   @FieldDatePattern("ddMMyyyy")
+   public Date dataCompilazioneRicetta;
 
    // 63-70 Data di prima disponibilità di erogazione
    @FieldFixedLength(8)
-   public String dataPrimaDisponibilitaErogazione;
+   @FieldDatePattern("ddMMyyyy")
+   public Date dataPrimaDisponibilitaErogazione;
 
    // 71-78 Data di prenotazione
    @FieldFixedLength(8)
-   public String dataPrenotazione;
+   @FieldDatePattern("ddMMyyyy")
+   public Date dataPrenotazione;
 
    // 79-86 Data inizio Prestazione Ambulatoriale Complessa (PAC) / data inizio ciclo di prestazioni
    @FieldFixedLength(8)
-   public String dataPAC;
+   @FieldDatePattern("ddMMyyyy")
+   public Date dataPAC;
 
    // 87-94 Data di erogazione delle prestazioni
    @FieldFixedLength(8)
-   public String dataErogazionePrestazioni;
+   @FieldDatePattern("ddMMyyyy")
+   public Date dataErogazionePrestazioni;
 
    // 95-102 Data di refertazione
    @FieldFixedLength(8)
-   public String dataRefertazione;
+   @FieldDatePattern("ddMMyyyy")
+   public Date dataRefertazione;
 
    // 103-104 Modalità di accesso alle prestazioni
    @FieldFixedLength(2)
@@ -382,62 +391,62 @@ public class Flussoc2r extends BaseFlusso
       this.progressivoRigaPerRicetta = progressivoRigaPerRicetta;
    }
 
-   public String getDataCompilazioneRicetta()
+   public Date getDataCompilazioneRicetta()
    {
       return dataCompilazioneRicetta;
    }
 
-   public void setDataCompilazioneRicetta(String dataCompilazioneRicetta)
+   public void setDataCompilazioneRicetta(Date dataCompilazioneRicetta)
    {
       this.dataCompilazioneRicetta = dataCompilazioneRicetta;
    }
 
-   public String getDataPrimaDisponibilitaErogazione()
+   public Date getDataPrimaDisponibilitaErogazione()
    {
       return dataPrimaDisponibilitaErogazione;
    }
 
-   public void setDataPrimaDisponibilitaErogazione(String dataPrimaDisponibilitaErogazione)
+   public void setDataPrimaDisponibilitaErogazione(Date dataPrimaDisponibilitaErogazione)
    {
       this.dataPrimaDisponibilitaErogazione = dataPrimaDisponibilitaErogazione;
    }
 
-   public String getDataPrenotazione()
+   public Date getDataPrenotazione()
    {
       return dataPrenotazione;
    }
 
-   public void setDataPrenotazione(String dataPrenotazione)
+   public void setDataPrenotazione(Date dataPrenotazione)
    {
       this.dataPrenotazione = dataPrenotazione;
    }
 
-   public String getDataPAC()
+   public Date getDataPAC()
    {
       return dataPAC;
    }
 
-   public void setDataPAC(String dataPAC)
+   public void setDataPAC(Date dataPAC)
    {
       this.dataPAC = dataPAC;
    }
 
-   public String getDataErogazionePrestazioni()
+   public Date getDataErogazionePrestazioni()
    {
       return dataErogazionePrestazioni;
    }
 
-   public void setDataErogazionePrestazioni(String dataErogazionePrestazioni)
+   public void setDataErogazionePrestazioni(Date dataErogazionePrestazioni)
    {
       this.dataErogazionePrestazioni = dataErogazionePrestazioni;
    }
 
-   public String getDataRefertazione()
+   public Date getDataRefertazione()
    {
       return dataRefertazione;
    }
 
-   public void setDataRefertazione(String dataRefertazione)
+   public void setDataRefertazione(Date dataRefertazione)
    {
       this.dataRefertazione = dataRefertazione;
    }
