@@ -1,22 +1,4 @@
 -------------------------------------------------------------
-NOTE FLUSSI
--------------------------------------------------------------
-
-
-File A1 e A2:
-- le righe NON sono univoche a livello globale, ma solo all'interno del file cui appartengono.
-Chiave per collegare riga file A1 con la corrispondente del file A2:
-    codice regione addebitante + codice ASL/Azienda + codice istituto + numero scheda.
-
-
-
-File C1 e C2:
-- le righe NON sono univoche a livello globale, ma solo all'interno del file cui appartengono.
-Chiave per collegare riga file A1 con la corrispondente del file A2:
-    codice regione addebitante + codice ASL/Azienda + ID + progressivo riga.
-
-
--------------------------------------------------------------
 MACCHINE VIRTUALI
 -------------------------------------------------------------
 
@@ -38,12 +20,50 @@ psw: postgres
 
 
 
-- 0.249.28.167 (Jasperreport Server 5.6.1)
+- 10.249.28.167 (Jasperreport Server 5.6.1)
 user: adminitrator
 psw: passn0one
 
 user: jasper
 psw: jasper
+
+
+
+-------------------------------------------------------------
+WILDFLY 8.2.0.Final
+-------------------------------------------------------------
+
+cd BOSS_HOME/bin/init.d
+cp wildfly-init-redhat.sh /etc/init.d/wildfly
+Now we will copy as well the wildfly.conf configuration file in the location where the startup script expects it:
+
+mkdir –p /etc/default
+
+cp wildfly.conf /etc/default/wildfly
+Within the wildfly.conf file adjust the settings in order to fit your installation:
+
+	JAVA_HOME="/usr/lib/jvm/java-8-oracle"
+
+	# Location of WildFly
+	JBOSS_HOME="/home/wildfly/wildfly-8.2.0.Final"
+
+	# The username who should own the process.
+	JBOSS_USER=wildfly
+
+	# The mode WildFly should start, standalone or domain
+	JBOSS_MODE=standalone
+
+	# Configuration for standalone mode
+	JBOSS_CONFIG=standalone-asur.xml
+
+
+Service:
+sudo service wildfly start|stop|restart
+
+Console amministrazione:
+user: wildfly
+psw: wildfly0
+
 
 
 -------------------------------------------------------------
@@ -70,6 +90,9 @@ sudo vim pg_hba.conf
 aggiungere le seguenti righe:
     host    all     all     10.249.28.167/31        trust
     host    all     all     10.249.28.165/31        trust
+Per consentire tutte le connessioni remote:
+    host    all     all     0.0.0.0/0		        trust
+
 sudo vim postgresql.conf
 scommentare listen_addresses='localhost' e sostituire con listen_addresses='*'
 
@@ -86,18 +109,30 @@ ovviamente
     username: il nome dell'utente che vuole accedere senza psw interattiva
     password: la password dell'utente
 
+Per cambiare password di un utente postgresql:
+ALTER USER <username> WITH PASSWORD '<newpassword>';
+
+create schema asr;
+
+Setup tabelle base:
+psql -h localhost -U asr -W asr < configurazione.sql
+psql -h localhost -U asr -W asr < applicazione.sql
+
+
+
 -------------------------------------------------------------
 JASPER
 -------------------------------------------------------------
 
 
-Instalazione jasper:
+Installazione jasper:
 1. scegliere "custom installation"
 2. scegliere "tomcat bundle"
 3. scegliere postgresql esistente
-3a. psw utente postgres: postgres
-3b. ip macchina postgres: 10.249.28.166
-3c. porta postgres di default
+3a. postgres bin directory: /usr/lib/postgresql/9.3/bin
+3b. psw utente postgres: postgres
+3c. ip macchina postgres: 10.249.28.166
+3d. porta postgres di default (5432)
 
 
 Configurazione jasper:
@@ -114,13 +149,28 @@ cd jasperreports-server-5.6.1/scripts/linux
 
 
 standalone-full.xml wildfly:
-<datasource jndi-name="java:jboss/datasources/AsrDS" pool-name="AsrDS" enable="true" use-java-context="true">
-    <connection-url>jdbc:postgresql://10.249.28.166:5432/asr?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&autoReconnectForPools=true</connection-url>
-    <driver>org.postgresql.Driver</driver>
-    <security>
-        <user-name>asr</user-name>
-        <password>asr</password>
-    </security>
+<datasource jndi-name="java:jboss/datasources/PostgresqlDS"
+	pool-name="PostgresqlDS" enabled="false" use-java-context="true"
+	use-ccm="true">
+	<connection-url>jdbc:postgresql://10.249.28.166:5432/asr</connection-url>
+	<driver>postgresql</driver>
+	<pool>
+		<flush-strategy>IdleConnections</flush-strategy>
+	</pool>
+	<security>
+		<user-name>asr</user-name>
+		<password>asr</password>
+	</security>
+	<validation>
+		<check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+		<background-validation>true</background-validation>
+		<background-validation-millis>60000</background-validation-millis>
+	</validation>
 </datasource>
+
+
+<driver name="postgresql" module="org.postgresql.jdbc">
+	<xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
+</driver>
 
 
