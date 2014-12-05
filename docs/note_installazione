@@ -57,6 +57,14 @@ Within the wildfly.conf file adjust the settings in order to fit your installati
 	JBOSS_CONFIG=standalone-asur.xml
 
 
+Service:
+sudo service wildfly start|stop|restart
+
+Console amministrazione:
+user: wildfly
+psw: wildfly0
+
+
 
 -------------------------------------------------------------
 POSTGRES
@@ -82,6 +90,9 @@ sudo vim pg_hba.conf
 aggiungere le seguenti righe:
     host    all     all     10.249.28.167/31        trust
     host    all     all     10.249.28.165/31        trust
+Per consentire tutte le connessioni remote:
+    host    all     all     0.0.0.0/0		        trust
+
 sudo vim postgresql.conf
 scommentare listen_addresses='localhost' e sostituire con listen_addresses='*'
 
@@ -101,7 +112,6 @@ ovviamente
 Per cambiare password di un utente postgresql:
 ALTER USER <username> WITH PASSWORD '<newpassword>';
 
-Creazione schema (non più necessaria!!!! ora si usa lo schema public):
 create schema asr;
 
 Setup tabelle base:
