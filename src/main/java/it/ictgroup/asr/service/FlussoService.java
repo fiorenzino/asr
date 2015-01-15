@@ -9,11 +9,7 @@ import it.ictgroup.asr.model.Flussoc1;
 import it.ictgroup.asr.model.Flussoc2;
 import it.ictgroup.asr.model.Flussoc2r;
 import it.ictgroup.asr.model.enums.TipologiaFlusso;
-import it.ictgroup.asr.repository.ElaborazioniRepository;
-import it.ictgroup.asr.repository.Flussoa2Repository;
-import it.ictgroup.asr.repository.Flussoa2rRepository;
-import it.ictgroup.asr.repository.Flussoc2Repository;
-import it.ictgroup.asr.repository.Flussoc2rRepository;
+import it.ictgroup.asr.repository.*;
 import it.ictgroup.asr.util.FlowerFileHelper;
 
 import java.io.Serializable;
@@ -39,6 +35,9 @@ public class FlussoService implements Serializable
 
    @Inject
    ElaborazioniRepository elaborazioniRepository;
+
+   @Inject
+   Flussoa1Repository flussoa1Repository;
 
    @Inject
    Flussoa2Repository flussoa2Repository;
@@ -123,8 +122,34 @@ public class FlussoService implements Serializable
          return;
       }
       elaborazioniRepository.eseguito_newtx(idElaborazione, i);
+      // cancello eventuali righe duplicate (possono esserci stati re-invii di record dei mesi precedenti)
       logger.info(tipologiaFlusso.name() + " ESEGUITO: " + idElaborazione + " file: " + folder + nomeFile
                + "num righe: " + i);
+      logger.info(tipologiaFlusso.name() + ": Rimozione duplicati (bulk delete)");
+      bulkDeleteDuplicates(tipologiaFlusso);
+      logger.info(tipologiaFlusso.name() + ": Rimozione duplicati ESEGUITA");
+   }
+
+   private void bulkDeleteDuplicates(TipologiaFlusso tipologiaFlusso)
+            throws Exception
+   {
+      switch (tipologiaFlusso)
+      {
+      case A1:
+         flussoa1Repository.bulkDeleteDuplicates();
+      case A2:
+         flussoa2Repository.bulkDeleteDuplicates();
+      case A2R:
+         return;
+      case C1:
+         return;
+      case C2:
+         return;
+      case C2R:
+         return;
+      default:
+         throw new Exception();
+      }
    }
 
    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
