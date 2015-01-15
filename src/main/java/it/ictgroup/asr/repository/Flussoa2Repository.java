@@ -182,4 +182,21 @@ public class Flussoa2Repository extends BaseRepository<Flussoa2>
       }
    }
 
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   public void bulkDeleteDuplicates()
+   {
+      getEm().createNativeQuery(
+               "delete from " + Flussoa2.TABLE_NAME + " "
+               + "where uid not in ( "
+                     + "select "
+                        + "max(a2.uid) as uid "
+                     + "from "
+                        + "flussoa2 a2 "
+                     + "group by "
+                        + "a2.codiceistituto, "
+                        + "a2.numerodellascheda"
+                     + ")"
+      ).executeUpdate();
+   }
+
 }

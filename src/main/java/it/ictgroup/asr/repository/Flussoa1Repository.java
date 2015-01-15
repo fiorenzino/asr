@@ -4,9 +4,7 @@ import it.ictgroup.asr.model.Flussoa1;
 
 import java.util.Map;
 
-import javax.ejb.Asynchronous;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
+import javax.ejb.*;
 
 import org.giavacms.commons.model.Search;
 
@@ -39,6 +37,22 @@ public class Flussoa1Repository extends BaseRepository<Flussoa1>
 
    }
 
- 
+   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+   public void bulkDeleteDuplicates()
+   {
+      getEm().createNativeQuery(
+               "delete from " + Flussoa1.TABLE_NAME + " "
+               + "where "
+                  + "uid not in ( "
+                     + "select "
+                        + "max(a1.uid) as uid "
+                     + "from "
+                        + "flussoa1 a1 "
+                     + "group by "
+                        + "a1.codiceistitutodiricovero, "
+                        + "a1.numerodellascheda"
+                     + ")"
+               ).executeUpdate();
+   }
 
 }
